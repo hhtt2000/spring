@@ -15,9 +15,8 @@
 </style>
 </head>
 <body ng-app="todomvc">
+	<P><strong>현재 시간은 ${serverTime}.</strong></P>
 	<ng-view />
-
-	<P>The time on the server is ${serverTime}.</P>
 	<script type="text/ng-template" id="todomvc-index.html">
 			<section id="todoapp">
 				<header id="header">
