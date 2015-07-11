@@ -30,10 +30,23 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		
+		/*mav.addObject("serverTime", formattedDate);
+		mav.setViewName("home");*/
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@RequestMapping(value="/getTime.jh", method=RequestMethod.POST)
+	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
+		HashMap<String, String> map = new HashMap<String, String>();
+		Date date = new Date();
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		String formattedDate = dateFormat.format(date);
+		
+		map.put("serverTime", formattedDate);
+		
+		return map;
 	}
 	
 }

@@ -15,8 +15,31 @@
 </style>
 </head>
 <body ng-app="todomvc">
-	<P><strong>현재 시간은 ${serverTime}.</strong></P>
+	<div>현재 시간은 &nbsp;<strong id="time"></strong></div>
 	<ng-view />
+	<script>
+		window.onload = function(){
+			repeatLoop();
+		}
+			
+		function repeatLoop(){
+			$.ajax({
+				url: "getTime.jh",
+				type: "post",
+				dataType: "json",
+				success: function(e){
+					var data = e.serverTime;
+					var strLength = data.length - 3;
+					var modifiedData = data.substring(0, strLength);
+					$('strong#time').text(modifiedData);
+				},
+				error: function(){
+					console.log('error');
+				}
+			});
+			setTimeout("repeatLoop()", 1000 * 60);
+		}
+	</script>
 	<script type="text/ng-template" id="todomvc-index.html">
 			<section id="todoapp">
 				<header id="header">
@@ -78,5 +101,6 @@
 	<script src="angularjs/js/services/todoStorage.js"></script>
 	<script src="angularjs/js/directives/todoFocus.js"></script>
 	<script src="angularjs/js/directives/todoEscape.js"></script>
+	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 </body>
 </html>
