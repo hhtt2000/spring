@@ -5,7 +5,7 @@
 * Spring framework 3.2.X
 * Apache-tomcat 7
 * Jenkins
-* Ubuntu 14.04.2 (Remote Server)
+* Ubuntu 14.04.2 (Remote server)
 * GitHub
 
 ### 참고
