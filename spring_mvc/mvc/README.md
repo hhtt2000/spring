@@ -9,4 +9,4 @@
 * GitHub
 
 ### 참고
-* todo list : https://github.com/tastejs/todomvc
+* To-do list : https://github.com/tastejs/todomvc
