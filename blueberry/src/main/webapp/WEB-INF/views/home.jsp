@@ -5,7 +5,6 @@
 <title>AngularJS • TodoMVC</title>
 <link rel="stylesheet" href="angularjs/node_modules/todomvc-common/base.css">
 <link rel="stylesheet" href="angularjs/node_modules/todomvc-app-css/index.css">
-<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.3.0/css/font-awesome.min.css">
 <style>
 [ng-cloak] {
 	display: none;
@@ -13,7 +12,7 @@
 </style>
 </head>
 <body ng-app="todomvc">
-	<div><a href="main.jh"><i class="fa fa-home"></i></a>&nbsp;현재 시간은 &nbsp;<strong id="time"></strong></div>
+	<div><a href="main.jh">Home</a>&nbsp;현재 시간은 &nbsp;<strong id="time"></strong></div>
 	<ng-view />
 	<script>
 		window.onload = function(){
