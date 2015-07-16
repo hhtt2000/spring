@@ -12,7 +12,7 @@
 </style>
 </head>
 <body ng-app="todomvc">
-	<div><a href="main.jh">Home</a>&nbsp;현재 시간은 &nbsp;<strong id="time"></strong></div>
+	<span><a href="main.jh">Home</a></span><span>현재 시간은 &nbsp;<strong id="time"></strong></span>
 	<ng-view />
 	<script>
 		window.onload = function(){
