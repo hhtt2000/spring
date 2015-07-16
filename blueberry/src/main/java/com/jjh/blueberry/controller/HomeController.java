@@ -4,6 +4,7 @@ import java.text.DateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,12 +27,14 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/todo.jh", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		locale = new Locale("ko", "KOREA");
+//		locale = new Locale("ko", "KOREA");
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
 		
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		dateFormat.setTimeZone(tz);
 		String formattedDate = dateFormat.format(date);
 		/*mav.addObject("serverTime", formattedDate);
 		mav.setViewName("home");*/
@@ -45,7 +48,9 @@ public class HomeController {
 		locale = new Locale("ko", "KOREA");
 		HashMap<String, String> map = new HashMap<String, String>();
 		Date date = new Date();
+		TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		dateFormat.setTimeZone(tz);
 		String formattedDate = dateFormat.format(date);
 		
 		map.put("serverTime", formattedDate);
