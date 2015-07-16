@@ -26,10 +26,11 @@ public class HomeController {
 	 */
 	@RequestMapping(value = "/todo.jh", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
+		locale = new Locale("ko", "KOREA");
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale.KOREA);
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
 		/*mav.addObject("serverTime", formattedDate);
@@ -41,9 +42,10 @@ public class HomeController {
 	
 	@RequestMapping(value="/getTime.jh", method=RequestMethod.POST)
 	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
+		locale = new Locale("ko", "KOREA");
 		HashMap<String, String> map = new HashMap<String, String>();
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale.KOREA);
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		String formattedDate = dateFormat.format(date);
 		
 		map.put("serverTime", formattedDate);
