@@ -5,6 +5,8 @@
 <title>AngularJS • TodoMVC</title>
 <link rel="stylesheet" href="angularjs/node_modules/todomvc-common/base.css">
 <link rel="stylesheet" href="angularjs/node_modules/todomvc-app-css/index.css">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 <style>
 [ng-cloak] {
 	display: none;
@@ -12,7 +14,7 @@
 </style>
 </head>
 <body ng-app="todomvc">
-	<span><a href="main.jh">Home</a></span><span>현재 시간은 &nbsp;<strong id="time"></strong></span>
+	<a href="main.jh"><span class="glyphicon glyphicon-home"></span></a><span>현재 시간은 &nbsp;<strong id="time"></strong></span>
 	<ng-view />
 	<script>
 		window.onload = function(){
