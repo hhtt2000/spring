@@ -1,6 +1,7 @@
 # Spring MVC 연습 프로젝트
 
 ### 개발환경
+* Windows 7
 * Java 8
 * Spring framework 3.6.x
 * Maven 4.0.0
