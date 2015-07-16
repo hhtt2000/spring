@@ -2,7 +2,8 @@
 
 ### 개발환경
 * Java 8
-* Spring framework 3.2.X
+* Spring framework 3.6.x
+* Maven 4.0.0
 * Apache-tomcat 7
 * Jenkins
 * Ubuntu 14.04.2 (Remote server)
