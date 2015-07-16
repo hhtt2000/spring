@@ -29,7 +29,7 @@ public class HomeController {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale.KOREA);
 		
 		String formattedDate = dateFormat.format(date);
 		/*mav.addObject("serverTime", formattedDate);
@@ -43,7 +43,7 @@ public class HomeController {
 	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
 		HashMap<String, String> map = new HashMap<String, String>();
 		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
+		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale.KOREA);
 		String formattedDate = dateFormat.format(date);
 		
 		map.put("serverTime", formattedDate);
