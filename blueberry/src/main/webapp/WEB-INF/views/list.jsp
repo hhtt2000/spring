@@ -4,11 +4,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Grape</title>
+<title>목록</title>
 </head>
 <body>
-<h1>Welcome!</h1>
-뭐하지?
-<a href="list.jh">목록</a>
+목록은 여기서
 </body>
 </html>

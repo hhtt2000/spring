@@ -1,4 +1,4 @@
-package com.jjh.blueberry;
+package com.jjh.blueberry.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
