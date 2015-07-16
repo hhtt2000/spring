@@ -15,7 +15,7 @@
 </style>
 </head>
 <body ng-app="todomvc">
-	<div><a href="main.jh">Home</a></div>&nbsp;
+	<div><a href="main.jh">Home</a>&nbsp;
 	<div>현재 시간은 &nbsp;<strong id="time"></strong></div>
 	<ng-view />
 	<script>

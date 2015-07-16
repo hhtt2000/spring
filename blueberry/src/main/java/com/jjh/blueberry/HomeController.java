@@ -51,4 +51,9 @@ public class HomeController {
 		return map;
 	}
 	
+	@RequestMapping("/main.jh")
+	public String main(Model model){
+		return "main";
+	}
+	
 }
