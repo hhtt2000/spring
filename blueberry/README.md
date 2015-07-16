@@ -3,7 +3,7 @@
 ### 개발환경
 * Windows 7
 * Java 8
-* Spring framework 3.6.x
+* Spring framework 3.x
 * Maven 4.0.0
 * Apache-tomcat 7
 * Jenkins
