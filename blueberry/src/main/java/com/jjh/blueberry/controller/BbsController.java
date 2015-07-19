@@ -12,4 +12,10 @@ public class BbsController {
 		
 		return "list";
 	}
+	
+	@RequestMapping("/newText.jh")
+	public String newText(Model model){
+		
+		return "newText";
+	}
 }
