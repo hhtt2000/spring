@@ -8,6 +8,8 @@
 * Apache-tomcat 7
 * Jenkins
 * Ubuntu 14.04.2 (Remote server)
+* MariaDB
+* Chrome browser
 * GitHub
 
 ### 참고
