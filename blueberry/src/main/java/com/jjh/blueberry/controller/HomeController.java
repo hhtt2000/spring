@@ -61,4 +61,9 @@ public class HomeController {
 		return "main";
 	}
 	
+	@RequestMapping("/test.jh")
+	public String test(Model model){
+		return "test";
+	}
+	
 }
