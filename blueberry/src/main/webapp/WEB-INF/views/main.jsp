@@ -37,7 +37,7 @@
           <a class="blog-nav-item active" href="main.jh">Home</a>
           <a class="blog-nav-item" href="#">New features</a>
           <a class="blog-nav-item" href="#">Press</a>
-          <a class="blog-nav-item" href="#">New hires</a>
+          <a class="blog-nav-item" href="testsql.jh">Test SQL</a>
           <a class="blog-nav-item" href="todo.jh">Todo</a>
         </nav>
       </div>
@@ -46,7 +46,7 @@
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">포도 블로그</h1>
+        <h1 class="blog-title">블로그</h1>
         <p class="lead blog-description">필요한 것들을 주렁주렁</p>
       </div>
 

@@ -61,4 +61,9 @@ public class HomeController {
 		return "main";
 	}
 	
+	@RequestMapping("/testsql.jh")
+	public String testsql(Model model){
+		return "testsql";
+	}
+	
 }
