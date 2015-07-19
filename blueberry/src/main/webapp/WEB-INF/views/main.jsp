@@ -46,7 +46,7 @@
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">Come to the Realization</h1>
+        <h1 class="blog-title">포도 블로그</h1>
         <p class="lead blog-description">필요한 것들을 주렁주렁</p>
       </div>
 
