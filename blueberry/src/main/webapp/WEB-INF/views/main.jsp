@@ -54,9 +54,9 @@
         <div class="col-sm-8 blog-main">
 
           <div class="blog-post">
-            <h2 class="blog-post-title">글 제목 들어옴</h2>
-            <p class="blog-post-meta">날짜 by <a href="#">이름</a></p>
-				--- 내용 ---
+            <h2 class="blog-post-title">${text.title}</h2>
+            <p class="blog-post-meta">날짜 by <a href="#">${text.name}</a></p>
+				${text.content}
           </div><!-- /.blog-post -->
 
           <div class="blog-post">

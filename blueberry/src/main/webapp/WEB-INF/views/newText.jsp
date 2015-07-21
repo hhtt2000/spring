@@ -5,33 +5,46 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-<link rel="stylesheet" href="medium-editor/css/medium-editor.css"> <!-- Core -->
-<link rel="stylesheet" href="medium-editor/css/themes/default.css"> <!-- or any other theme -->
+<!-- include libraries(jQuery, bootstrap, fontawesome) -->
+<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script> 
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+<!-- include summernote css/js-->
+<link href="summernote/summernote.css" rel="stylesheet">
+<script src="summernote/summernote.min.js"></script>
+<script type="text/javascript" src="summernote/lang/summernote-ko-KR.js"></script>
+<script src="summernote/plugin/summernote-ext-video.js"></script >
 <title>글쓰기</title>
 </head>
 <body>
 	<form action="newTextProcessing.jh" method="post">
 		<div class="form-group">
 			<label for="exampleInputTitle1">제목</label> <input
-				type="text" class="form-control" name="title" id="exampleInputTitle1"
-				placeholder="Title">
+				type="text" class="form-control" name="title" id="exampleInputTitle1">
 		</div>
 		<div class="form-group">
 			<label for="exampleInputName1">이름</label> <input
-				type="text" class="form-control" name="name" id="exampleInputName1"
-				placeholder="Name">
+				type="text" class="form-control" name="name" id="exampleInputName1">
 		</div>
 		<div class="form-group">
-			<label for="exampleInputContent1">내용</label>
-			<textarea class="form-control" name="content" id="exampleInputContent1" rows="5" placeholder="Content"></textarea>
+			<textarea id="summernote" name="content"></textarea>
 		</div>
 		<button type="submit" class="btn btn-default">확인</button>
 	</form>
-	<script
-		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-	<script src="medium-editor/js/medium-editor.js"></script>
-	<script>var editor = new MediumEditor('.editable');</script>
+	<script>
+		$(function(){
+			$('#summernote').summernote({
+				toolbar: [
+				          ['small', ['bold', 'italic', 'underline', 'clear', 'color',
+				                     'strikethrough', 'superscript', 'subscript',
+				                     'ul', 'ol', 'picture', 'link', 'video']],
+				          ['big', ['fontsize', 'paragraph', 'height', 'table']],
+				          ],
+				focus: true,
+				height: 250
+			});
+		});
+	</script>
 </body>
 </html>
