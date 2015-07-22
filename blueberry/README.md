@@ -16,3 +16,4 @@
 * To-do list : https://github.com/tastejs/todomvc
 * Design for main page : http://getbootstrap.com/examples/blog/
 * WYSIWYG : https://github.com/summernote/summernote.git
+* XSS issues when uploading youtube videos through the editor : https://github.com/naver/lucy-xss-filter.git (unsoloved)
