@@ -15,3 +15,4 @@
 ### 참고
 * To-do list : https://github.com/tastejs/todomvc
 * Design for main page : http://getbootstrap.com/examples/blog/
+* WYSIWYG : https://github.com/summernote/summernote.git
