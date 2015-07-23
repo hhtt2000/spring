@@ -16,4 +16,5 @@
 * To-do list : https://github.com/tastejs/todomvc
 * Design for main page : http://getbootstrap.com/examples/blog/
 * WYSIWYG : https://github.com/summernote/summernote.git
+* Date showing on article : https://github.com/moment/moment.git
 * XSS filtering : https://github.com/naver/lucy-xss-filter.git (Unsolved)
