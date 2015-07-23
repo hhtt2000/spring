@@ -135,7 +135,12 @@
 			<artifactId>mybatis</artifactId>
 			<version>3.3.0</version>
 		</dependency>
-
+		<!-- XSS -->
+		<dependency>
+			<groupId>com.navercorp.lucy</groupId>
+			<artifactId>lucy-xss</artifactId>
+			<version>1.6.3</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

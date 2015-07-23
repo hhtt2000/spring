@@ -1,11 +1,16 @@
 package com.jjh.blueberry.controller;
 
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.jjh.blueberry.dto.TextDto;
+import com.jjh.blueberry.dto.BoardDto;
+import com.nhncorp.lucy.security.xss.XssFilter;
 
 @Controller
 public class BbsController {
@@ -22,9 +27,10 @@ public class BbsController {
 		return "newText";
 	}
 	
-	@RequestMapping(value="/newTextProcessing.jh", method=RequestMethod.POST)
-	public String newTextProcessing(Model model, TextDto textDto) {
-		model.addAttribute("text", textDto);
-		return "forward:/main.jh";
+	@RequestMapping(value="/main.jh", method=RequestMethod.POST)
+	public String newTextProcessing(Model model, BoardDto boardDto) {
+		
+		model.addAttribute("text", boardDto);
+		return "main";
 	}
 }
