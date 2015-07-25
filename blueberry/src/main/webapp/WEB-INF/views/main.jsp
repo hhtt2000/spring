@@ -2,12 +2,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="text" class="com.jjh.blueberry.dto.BoardDto" />
+<jsp:useBean id="board" class="com.jjh.blueberry.dto.BoardDto" />
 <jsp:setProperty name="board" property="*" />
 <%
 	XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
-	String clean = filter.doFilter(text.getContent());
-	text.setContent(clean);
+	String clean = filter.doFilter(board.getContent());
+	board.setContent(clean);
 %>
 <!DOCTYPE html>
 <html>
@@ -24,8 +24,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 <!-- Custom styles for this template -->
-<link href="bootstrap/theme/blog.css" rel="stylesheet">
-<script src="momentjs/moment-with-locales.js"></script>
+<link href="resources/bootstrap/theme/blog.css" rel="stylesheet">
+<script src="resources/momentjs/moment-with-locales.js"></script>
 
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -67,6 +67,18 @@
 		<div class="row">
 
 			<div class="col-sm-8 blog-main">
+				<table class="table table-hover">
+					<tr>
+						<th>번호</th>
+						<th>제목</th>
+						<th>날짜</th>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td><a href="#">그냥 넣는 글</a></td>
+						<td>2015-07-25</td>
+					</tr>
+				</table>
 				<c:forEach begin="1" end="1">
 					<div class="blog-post">
 						<h2 class="blog-post-title">${board.title}</h2>
@@ -173,7 +185,7 @@
 			}
 			
 			var time = moment().locale('ko').calendar();
-			$('#relative-time').prepend(time);
+			$('#relative-time').prepend(time);				
 		});
 	</script>
 </body>

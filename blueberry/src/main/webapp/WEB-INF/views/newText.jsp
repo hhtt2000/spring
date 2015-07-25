@@ -4,20 +4,16 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- include libraries(jQuery, bootstrap, fontawesome) -->
-<script type="text/javascript"
-	src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
-<script type="text/javascript"
-	src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet"
-	href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
-<link href="bootstrap/theme/blog.css" rel="stylesheet">
+<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
+<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+<link href="resources/bootstrap/theme/blog.css" rel="stylesheet">
 <!-- include summernote css/js-->
-<link href="summernote/summernote.css" rel="stylesheet">
-<script src="summernote/summernote.min.js"></script>
-<script type="text/javascript" src="summernote/lang/summernote-ko-KR.js"></script>
-<script src="summernote/plugin/summernote-ext-video.js"></script>
+<link href="resources/summernote/summernote.css" rel="stylesheet">
+<script src="resources/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="resources/summernote/lang/summernote-ko-KR.js"></script>
+<script src="resources/summernote/plugin/summernote-ext-video.js"></script>
 <title>글쓰기</title>
 </head>
 <body>
