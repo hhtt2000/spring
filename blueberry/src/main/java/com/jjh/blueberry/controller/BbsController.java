@@ -33,4 +33,13 @@ public class BbsController {
 		model.addAttribute("text", boardDto);
 		return "main";
 	}
+	
+	@RequestMapping("/updateText.jh")
+	public String updateText(){
+		return "updateText";
+	}
+	@RequestMapping("/deleteText.jh")
+	public String deleteText(){
+		return "main";
+	}
 }

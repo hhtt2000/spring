@@ -81,10 +81,18 @@
 				</table>
 				<c:forEach begin="1" end="1">
 					<div class="blog-post">
-						<h2 class="blog-post-title">${board.title}</h2>
-						<p class="blog-post-meta" id="relative-time">
-							 &nbsp;by <a href="#">${board.name}</a>
-						</p>
+						<h2 class="blog-post-title">${board.title}</h2>							
+						<div class="row">
+							<div class="col-xs-12 col-sm-6 col-md-8">
+								<p class="blog-post-meta" id="relative-time">
+									 &nbsp;by <a href="#">${board.name}</a>
+								</p>
+							</div>
+							<div class="col-xs-6 col-md-4" id="buttons-delete-update">
+								<a class="btn btn-default btn-sm" href="updateText.jh" role="button">수정</a>
+								<a class="btn btn-warning btn-sm" href="deleteText.jh" role="button">삭제</a>
+							</div>
+						</div>
 						<div class="blog-post-content">${board.content}</div>
 					</div>
 				</c:forEach>
