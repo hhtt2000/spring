@@ -33,7 +33,7 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form action="main.jh" method="post">
+			<form action="insertProcessing.jh" method="post">
 				<div class="form-group">
 					<input type="text" class="form-control" name="title" placeholder="제목">
 				</div>

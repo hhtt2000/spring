@@ -1,20 +1,16 @@
 package com.jjh.blueberry.controller;
 
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
-import com.nhncorp.lucy.security.xss.XssFilter;
 
 @Controller
 public class BbsController {
-
+	
 	@RequestMapping("/list.jh")
 	public String list(Model model){
 		
@@ -27,11 +23,15 @@ public class BbsController {
 		return "newText";
 	}
 	
-	@RequestMapping(value="/main.jh", method=RequestMethod.POST)
+	@RequestMapping(value="/insertProcessing.jh", method=RequestMethod.POST)
 	public String newTextProcessing(Model model, BoardDto boardDto) {
-		
-		model.addAttribute("text", boardDto);
-		return "main";
+		BoardDao boardDao = new BoardDao();
+		int result = boardDao.insertText(boardDto);
+		if(result == 1){
+			return "redirect:main.jh";			
+		} else {
+			return "forward:newText.jh";
+		}
 	}
 	
 	@RequestMapping("/updateText.jh")
