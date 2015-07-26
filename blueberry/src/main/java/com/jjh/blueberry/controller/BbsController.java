@@ -2,6 +2,7 @@ package com.jjh.blueberry.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -11,34 +12,37 @@ import com.jjh.blueberry.dto.BoardDto;
 @Controller
 public class BbsController {
 	
-	@RequestMapping("/list.jh")
+	@RequestMapping("/list")
 	public String list(Model model){
 		
 		return "list";
 	}
 	
-	@RequestMapping("/newText.jh")
+	@RequestMapping("/newText")
 	public String newText(Model model){
 		
 		return "newText";
 	}
 	
-	@RequestMapping(value="/insertProcessing.jh", method=RequestMethod.POST)
+	@RequestMapping(value="/insertProcessing", method=RequestMethod.POST)
 	public String newTextProcessing(Model model, BoardDto boardDto) {
 		BoardDao boardDao = new BoardDao();
 		int result = boardDao.insertText(boardDto);
 		if(result == 1){
-			return "redirect:main.jh";			
+			return "redirect:main";			
 		} else {
-			return "forward:newText.jh";
+			return "forward:newText";
 		}
 	}
 	
-	@RequestMapping("/updateText.jh")
-	public String updateText(){
+	@RequestMapping("/updateText/{id}")
+	public String updateText(@PathVariable("id") int id, Model model){
+		BoardDao boardDao = new BoardDao();
+		BoardDto dto = boardDao.selectOne(id);
+		model.addAttribute("boardDto", dto);
 		return "updateText";
 	}
-	@RequestMapping("/deleteText.jh")
+	@RequestMapping("/deleteText")
 	public String deleteText(){
 		return "main";
 	}

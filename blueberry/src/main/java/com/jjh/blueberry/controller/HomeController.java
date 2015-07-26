@@ -25,7 +25,7 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@RequestMapping(value = "/todo.jh", method = RequestMethod.GET)
+	@RequestMapping(value = "/todo", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
@@ -41,7 +41,7 @@ public class HomeController {
 		return "home";
 	}
 	
-	@RequestMapping(value="/getTime.jh", method=RequestMethod.POST)
+	@RequestMapping(value="/getTime", method=RequestMethod.POST)
 	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
 //		locale = new Locale("ko", "KOREA");
 		HashMap<String, String> map = new HashMap<String, String>();
@@ -56,12 +56,12 @@ public class HomeController {
 		return map;
 	}
 	
-	@RequestMapping("/main.jh")
+	@RequestMapping("/main")
 	public String main(Model model){
 		return "main";
 	}
 	
-	@RequestMapping("/testsql.jh")
+	@RequestMapping("/testsql")
 	public String testsql(Model model){
 		return "testsql";
 	}

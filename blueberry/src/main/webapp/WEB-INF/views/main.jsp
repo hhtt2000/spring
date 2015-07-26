@@ -48,11 +48,11 @@
 	<div class="blog-masthead">
 		<div class="container row">
 			<nav class="blog-nav">
-				<a class="blog-nav-item active" href="main.jh">홈</a> <a
+				<a class="blog-nav-item active" href="main">홈</a> <a
 					class="blog-nav-item" href="#">New features</a> <a
-					class="blog-nav-item" href="newText.jh">글쓰기</a> <a
-					class="blog-nav-item" href="testsql.jh">Test SQL</a> <a
-					class="blog-nav-item" href="todo.jh">할일</a>
+					class="blog-nav-item" href="newText">글쓰기</a> <a
+					class="blog-nav-item" href="testsql">Test SQL</a> <a
+					class="blog-nav-item" href="todo">할일</a>
 			</nav>
 		</div>
 	</div>
@@ -89,8 +89,8 @@
 								</p>
 							</div>
 							<div class="col-xs-6 col-md-4" id="buttons-delete-update">
-								<a class="btn btn-default btn-sm" href="updateText.jh" role="button">수정</a>
-								<a class="btn btn-warning btn-sm" href="deleteText.jh" role="button">삭제</a>
+								<a class="btn btn-default btn-sm" href="updateText/${board.id}" role="button">수정</a>
+								<a class="btn btn-warning btn-sm" href="deleteText/${board.id}" role="button">삭제</a>
 							</div>
 						</div>
 						<div class="blog-post-content">${board.content}</div>

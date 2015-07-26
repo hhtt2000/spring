@@ -8,23 +8,23 @@
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
-<link href="resources/bootstrap/theme/blog.css" rel="stylesheet">
+<link href="${pageContext.servletContext.contextPath}/resources/bootstrap/theme/blog.css" rel="stylesheet">
 <!-- include summernote css/js-->
-<link href="resources/summernote/summernote.css" rel="stylesheet">
-<script src="resources/summernote/summernote.min.js"></script>
-<script type="text/javascript" src="resources/summernote/lang/summernote-ko-KR.js"></script>
-<script src="resources/summernote/plugin/summernote-ext-video.js"></script>
+<link href="${pageContext.servletContext.contextPath}/resources/summernote/summernote.css" rel="stylesheet">
+<script src="${pageContext.servletContext.contextPath}/resources/summernote/summernote.min.js"></script>
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/summernote/plugin/summernote-ext-video.js"></script>
 <title>글쓰기</title>
 </head>
 <body>
 	<div class="blog-masthead">
 		<div class="container row">
 			<nav class="blog-nav">
-				<a class="blog-nav-item active" href="main.jh">홈</a> <a
+				<a class="blog-nav-item active" href="${pageContext.servletContext.contextPath}/main">홈</a> <a
 					class="blog-nav-item" href="#">New features</a> <a
-					class="blog-nav-item" href="newText.jh">글쓰기</a> <a
-					class="blog-nav-item" href="testsql.jh">Test SQL</a> <a
-					class="blog-nav-item" href="todo.jh">할일</a>
+					class="blog-nav-item" href="${pageContext.servletContext.contextPath}/newText">글쓰기</a> <a
+					class="blog-nav-item" href="${pageContext.servletContext.contextPath}/testsql">Test SQL</a> <a
+					class="blog-nav-item" href="${pageContext.servletContext.contextPath}/todo">할일</a>
 			</nav>
 		</div>
 	</div>
@@ -33,7 +33,7 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form action="insertProcessing.jh" method="post">
+			<form action="insertProcessing" method="post">
 				<div class="form-group">
 					<input type="text" class="form-control" name="title" placeholder="제목">
 				</div>

@@ -8,6 +8,7 @@ public class BoardDto {
 	private String userid;
 	private String name;
 	private String title;
+
 	private String content;
 	private Timestamp date;
 
@@ -59,4 +60,9 @@ public class BoardDto {
 		this.date = date;
 	}
 
+	@Override
+	public String toString() {
+		return "BoardDto [id=" + id + ", userid=" + userid + ", name=" + name + ", title=" + title + ", content="
+				+ content + ", date=" + date + "]";
+	}
 }

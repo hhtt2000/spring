@@ -2,6 +2,7 @@ package com.jjh.blueberry.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 
@@ -54,5 +55,39 @@ public class BoardDao {
 		}
 		System.out.println("out of try: "+result);
 		return result;
+	}
+
+	public BoardDto selectOne(int id) {
+		BoardDto dto = new BoardDto();
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet rs = null;
+		try{
+			conn = dataSource.getConnection();
+			String sql = "SELECT userid, name, title, content, reg_date FROM board WHERE id = ?";
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			rs = preparedStatement.executeQuery();
+			
+			while(rs.next()){
+				dto.setId(id);
+				dto.setUserid(rs.getString(1));
+				dto.setName(rs.getString(2));
+				dto.setTitle(rs.getString(3));
+				dto.setContent(rs.getString(4));
+				dto.setDate(rs.getTimestamp(5));
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+				try {
+					if(rs != null)rs.close();
+					if(preparedStatement != null)preparedStatement.close();
+					if(conn != null)conn.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+		}
+		return dto;
 	}
 }
