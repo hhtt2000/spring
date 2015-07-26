@@ -48,11 +48,11 @@
 	<div class="blog-masthead">
 		<div class="container row">
 			<nav class="blog-nav">
-				<a class="blog-nav-item active" href="main">홈</a> <a
+				<a class="blog-nav-item active" href="${pageContext.servletContext.contextPath}/main">홈</a> <a
 					class="blog-nav-item" href="#">New features</a> <a
-					class="blog-nav-item" href="newText">글쓰기</a> <a
-					class="blog-nav-item" href="testsql">Test SQL</a> <a
-					class="blog-nav-item" href="todo">할일</a>
+					class="blog-nav-item" href="${pageContext.servletContext.contextPath}/newText">글쓰기</a> <a
+					class="blog-nav-item" href="${pageContext.servletContext.contextPath}/testsql">Test SQL</a> <a
+					class="blog-nav-item" href="${pageContext.servletContext.contextPath}/todo">할일</a>
 			</nav>
 		</div>
 	</div>
@@ -184,12 +184,13 @@
 		$(function() {
 			var curPath = window.location.pathname;
 			var splittedcurPathName = curPath.split("/");
-			var curPathName = splittedcurPathName[2];
-			var curNavPathName = $('.blog-nav-item').attr('href');
+			var curPathName = splittedcurPathName[splittedcurPathName.length - 1];
+			var splittedNavPathName = $('.blog-nav-item').attr('href').split("/");
+			var curNavPathName = splittedNavPathName[splittedNavPathName.length - 1];
 			var navLength = $('.blog-nav').children().length;
 			if(curNavPathName !== curPathName){
 				$('.blog-nav-item.active').removeClass('active');
-				$('.blog-nav-item[href="'+curPathName+'"]').addClass('active');
+				$('.blog-nav-item[href="'+curPath+'"]').addClass('active');
 			}
 			
 			var time = moment().locale('ko').calendar();

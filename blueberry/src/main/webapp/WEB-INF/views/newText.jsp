@@ -112,12 +112,13 @@
 		$(function() {
 			var curPath = window.location.pathname;
 			var splittedcurPathName = curPath.split("/");
-			var curPathName = splittedcurPathName[2];
-			var curNavPathName = $('.blog-nav-item').attr('href');
+			var curPathName = splittedcurPathName[splittedcurPathName.length - 1];
+			var splittedNavPathName = $('.blog-nav-item').attr('href').split("/");
+			var curNavPathName = splittedNavPathName[splittedNavPathName.length - 1];
 			var navLength = $('.blog-nav').children().length;
 			if(curNavPathName !== curPathName){
 				$('.blog-nav-item.active').removeClass('active');
-				$('.blog-nav-item[href="'+curPathName+'"]').addClass('active');
+				$('.blog-nav-item[href="'+curPath+'"]').addClass('active');
 			}
 			
 			$('#summernote').summernote(
