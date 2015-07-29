@@ -10,7 +10,7 @@ public class BoardDto {
 	private String title;
 
 	private String content;
-	private Timestamp date;
+	private Timestamp Timestamp;
 
 	public String getTitle() {
 		return title;
@@ -52,17 +52,17 @@ public class BoardDto {
 		this.userid = userid;
 	}
 
-	public Timestamp getDate() {
-		return date;
+	public Timestamp getTimestamp() {
+		return Timestamp;
 	}
 
-	public void setDate(Timestamp date) {
-		this.date = date;
+	public void setTimestamp(Timestamp Timestamp) {
+		this.Timestamp = Timestamp;
 	}
 
 	@Override
 	public String toString() {
 		return "BoardDto [id=" + id + ", userid=" + userid + ", name=" + name + ", title=" + title + ", content="
-				+ content + ", date=" + date + "]";
+				+ content + ", Timestamp=" + Timestamp + "]";
 	}
 }

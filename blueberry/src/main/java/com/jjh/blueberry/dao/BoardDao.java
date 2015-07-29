@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.util.ArrayList;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -42,7 +42,7 @@ public class BoardDao {
 			preparedStatement.setString(3, dto.getTitle());
 			preparedStatement.setString(4, dto.getContent());
 			result = preparedStatement.executeUpdate();
-			System.out.println("in try: "+result);
+	
 		} catch(Exception e){
 			e.printStackTrace();
 		} finally {
@@ -53,7 +53,6 @@ public class BoardDao {
 					e.printStackTrace();
 				}
 		}
-		System.out.println("out of try: "+result);
 		return result;
 	}
 
@@ -75,7 +74,7 @@ public class BoardDao {
 				dto.setName(rs.getString(2));
 				dto.setTitle(rs.getString(3));
 				dto.setContent(rs.getString(4));
-				dto.setDate(rs.getTimestamp(5));
+				dto.setTimestamp(rs.getTimestamp(5));
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -89,5 +88,42 @@ public class BoardDao {
 				}
 		}
 		return dto;
+	}
+
+	public ArrayList<BoardDto> getList() {
+		ArrayList<BoardDto> list = new ArrayList<>();
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "SELECT id, userid, name, title, content, reg_date FROM board ORDER BY id DESC";
+		ResultSet resultSet = null;
+		
+		try{
+			conn = dataSource.getConnection();
+			preparedStatement = conn.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				BoardDto dto = new BoardDto();
+				dto.setId(resultSet.getInt("id"));
+				dto.setUserid(resultSet.getString("userid"));
+				dto.setName(resultSet.getString("name"));
+				dto.setTitle(resultSet.getString("title"));
+				dto.setContent(resultSet.getString("content"));
+				dto.setTimestamp(resultSet.getTimestamp("reg_date"));
+				
+				list.add(dto);
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultSet != null)resultSet.close();
+				if(preparedStatement != null)preparedStatement.close();
+				if(conn != null)conn.close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		}		
+		return list;
 	}
 }

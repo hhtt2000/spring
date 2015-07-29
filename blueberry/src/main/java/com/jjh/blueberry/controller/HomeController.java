@@ -1,6 +1,8 @@
 package com.jjh.blueberry.controller;
 
+import java.sql.Timestamp;
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -13,6 +15,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.jjh.blueberry.dao.BoardDao;
+import com.jjh.blueberry.dto.BoardDto;
 
 /**
  * Handles requests for the application home page.
@@ -58,6 +63,9 @@ public class HomeController {
 	
 	@RequestMapping("/main")
 	public String main(Model model){
+		BoardDao dao = new BoardDao();
+		ArrayList<BoardDto> list = dao.getList();
+		model.addAttribute("list", list);
 		return "main";
 	}
 	

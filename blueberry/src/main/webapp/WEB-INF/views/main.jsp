@@ -1,14 +1,6 @@
-<%@page import="com.nhncorp.lucy.security.xss.XssFilter"%>
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<jsp:useBean id="board" class="com.jjh.blueberry.dto.BoardDto" />
-<jsp:setProperty name="board" property="*" />
-<%
-	XssFilter filter = XssFilter.getInstance("lucy-xss-superset.xml");
-	String clean = filter.doFilter(board.getContent());
-	board.setContent(clean);
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,8 +16,8 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
 <!-- Custom styles for this template -->
-<link href="resources/bootstrap/theme/blog.css" rel="stylesheet">
-<script src="resources/momentjs/moment-with-locales.js"></script>
+<link href="${pageContext.servletContext.contextPath}/resources/bootstrap/theme/blog.css" rel="stylesheet">
+<script src="${pageContext.servletContext.contextPath}/resources/momentjs/moment-with-locales.js"></script>
 
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -73,27 +65,29 @@
 						<th>제목</th>
 						<th>날짜</th>
 					</tr>
+					<c:forEach items="${list}" var="dto">
 					<tr>
-						<td>1</td>
-						<td><a href="#">그냥 넣는 글</a></td>
-						<td>2015-07-25</td>
+						<td>${dto.id}</td>
+						<td><a href="#">${dto.title}</a></td>
+						<td>${dto.date}</td>
 					</tr>
+					</c:forEach>
 				</table>
-				<c:forEach begin="1" end="1">
+				<c:forEach items="${list}" var="dto">
 					<div class="blog-post">
-						<h2 class="blog-post-title">${board.title}</h2>							
+						<h2 class="blog-post-title">${dto.title}</h2>							
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-8">
 								<p class="blog-post-meta" id="relative-time">
-									 &nbsp;by <a href="#">${board.name}</a>
+									 <a href="#" class="time">${dto.date}</a>&nbsp;by <a href="#">${dto.name}</a>
 								</p>
 							</div>
 							<div class="col-xs-6 col-md-4" id="buttons-delete-update">
-								<a class="btn btn-default btn-sm" href="updateText/${board.id}" role="button">수정</a>
-								<a class="btn btn-warning btn-sm" href="deleteText/${board.id}" role="button">삭제</a>
+								<a class="btn btn-default btn-sm" href="updateText/${dto.id}" role="button">수정</a>
+								<a class="btn btn-warning btn-sm" href="deleteText/${dto.id}" role="button">삭제</a>
 							</div>
 						</div>
-						<div class="blog-post-content">${board.content}</div>
+						<div class="blog-post-content">${dto.content}</div>
 					</div>
 				</c:forEach>
 				<nav>
@@ -192,9 +186,12 @@
 				$('.blog-nav-item.active').removeClass('active');
 				$('.blog-nav-item[href="'+curPath+'"]').addClass('active');
 			}
-			
-			var time = moment().locale('ko').calendar();
-			$('#relative-time').prepend(time);				
+			var timeLength = $('a.time').length;
+			for(var i=0; i<timeLength; i++){
+				var boardTime = $('.time').eq(i).text();
+				var time = moment().locale('ko').calendar(boardTime);
+				$('.time').eq(i).text(time);								
+			}
 		});
 	</script>
 </body>

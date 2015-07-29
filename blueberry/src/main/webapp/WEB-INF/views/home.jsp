@@ -3,8 +3,8 @@
 <html lang="en" data-framework="angularjs">
 <head>
 <title>AngularJS • TodoMVC</title>
-<link rel="stylesheet" href="angularjs/node_modules/todomvc-common/base.css">
-<link rel="stylesheet" href="angularjs/node_modules/todomvc-app-css/index.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/angularjs/node_modules/todomvc-common/base.css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/angularjs/node_modules/todomvc-app-css/index.css">
 <style>
 [ng-cloak] {
 	display: none;
@@ -90,14 +90,14 @@
 				<p>Part of <a href="http://todomvc.com">TodoMVC</a></p>
 			</footer>
 		</script>
-	<script src="angularjs/node_modules/todomvc-common/base.js"></script>
-	<script src="angularjs/node_modules/angular/angular.js"></script>
-	<script src="angularjs/node_modules/angular-route/angular-route.js"></script>
-	<script src="angularjs/js/app.js"></script>
-	<script src="angularjs/js/controllers/todoCtrl.js"></script>
-	<script src="angularjs/js/services/todoStorage.js"></script>
-	<script src="angularjs/js/directives/todoFocus.js"></script>
-	<script src="angularjs/js/directives/todoEscape.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/node_modules/todomvc-common/base.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/node_modules/angular/angular.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/node_modules/angular-route/angular-route.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/js/app.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/js/controllers/todoCtrl.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/js/services/todoStorage.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/js/directives/todoFocus.js"></script>
+	<script src="${pageContext.servletContext.contextPath}/resources/angularjs/js/directives/todoEscape.js"></script>
 	<script src="//code.jquery.com/jquery-1.11.3.min.js"></script>
 </body>
 </html>
