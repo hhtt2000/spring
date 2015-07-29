@@ -68,13 +68,13 @@
 					<c:forEach items="${list}" var="dto">
 					<tr>
 						<td>${dto.id}</td>
-						<td><a href="#">${dto.title}</a></td>
+						<td><a class="list-title" href="#post-position-${dto.id}">${dto.title}</a></td>
 						<td>${dto.date}</td>
 					</tr>
 					</c:forEach>
 				</table>
 				<c:forEach items="${list}" var="dto">
-					<div class="blog-post">
+					<div class="blog-post" id="post-position-${dto.id}">
 						<h2 class="blog-post-title">${dto.title}</h2>							
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-8">
@@ -176,22 +176,44 @@
 	<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
 	<script>
 		$(function() {
+			//네비게이션바 표시 따라가도록 설정
 			var curPath = window.location.pathname;
-			var splittedcurPathName = curPath.split("/");
-			var curPathName = splittedcurPathName[splittedcurPathName.length - 1];
-			var splittedNavPathName = $('.blog-nav-item').attr('href').split("/");
-			var curNavPathName = splittedNavPathName[splittedNavPathName.length - 1];
+			var splitCurPathName = curPath.split("/");
+			var curPathName = splitCurPathName[splitCurPathName.length - 1];
+			var splitNavPathName = $('.blog-nav-item').attr('href').split("/");
+			var curNavPathName = splitNavPathName[splitNavPathName.length - 1];
 			var navLength = $('.blog-nav').children().length;
 			if(curNavPathName !== curPathName){
 				$('.blog-nav-item.active').removeClass('active');
 				$('.blog-nav-item[href="'+curPath+'"]').addClass('active');
 			}
+			//게시물 날짜 표시 관련
 			var timeLength = $('a.time').length;
 			for(var i=0; i<timeLength; i++){
 				var boardTime = $('.time').eq(i).text();
-				var time = moment().locale('ko').calendar(boardTime);
-				$('.time').eq(i).text(time);								
+				var splitBoardTime = boardTime.split('-');
+				var now = moment().format("YYYY-MM-DD");
+				var splitNow = now.split('-');
+				//오늘과의 날짜 차이
+				var diff = moment(splitNow).diff(moment(splitBoardTime), 'years');
+				//날짜 차이가 1년 이상이면
+				if(diff >= 1){
+					var time = moment(boardTime).locale('ko').format('LL');
+					$('.time').eq(i).text(time);
+				} else {
+					var time = moment(boardTime).locale('ko').format('MMMM Do dddd');
+					$('.time').eq(i).text(time);																		
+				}	
 			}
+			
+			$('.list-title').on('click', function(e){
+				e.preventDefault();
+				
+				var postId = $(this).attr('href');
+				$('body, html').animate({
+					scrollTop: $(postId).offset().top 
+				}, 500);
+			});
 		});
 	</script>
 </body>

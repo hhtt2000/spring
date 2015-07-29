@@ -1,6 +1,6 @@
 package com.jjh.blueberry.dto;
 
-import java.sql.Timestamp;
+import java.sql.Date;
 
 public class BoardDto {
 
@@ -10,7 +10,7 @@ public class BoardDto {
 	private String title;
 
 	private String content;
-	private Timestamp Timestamp;
+	private Date date;
 
 	public String getTitle() {
 		return title;
@@ -52,17 +52,17 @@ public class BoardDto {
 		this.userid = userid;
 	}
 
-	public Timestamp getTimestamp() {
-		return Timestamp;
+	public Date getDate() {
+		return date;
 	}
 
-	public void setTimestamp(Timestamp Timestamp) {
-		this.Timestamp = Timestamp;
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	@Override
 	public String toString() {
 		return "BoardDto [id=" + id + ", userid=" + userid + ", name=" + name + ", title=" + title + ", content="
-				+ content + ", Timestamp=" + Timestamp + "]";
+				+ content + ", date=" + date + "]";
 	}
 }

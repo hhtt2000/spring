@@ -74,7 +74,7 @@ public class BoardDao {
 				dto.setName(rs.getString(2));
 				dto.setTitle(rs.getString(3));
 				dto.setContent(rs.getString(4));
-				dto.setTimestamp(rs.getTimestamp(5));
+				dto.setDate(rs.getDate(5));
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -109,7 +109,7 @@ public class BoardDao {
 				dto.setName(resultSet.getString("name"));
 				dto.setTitle(resultSet.getString("title"));
 				dto.setContent(resultSet.getString("content"));
-				dto.setTimestamp(resultSet.getTimestamp("reg_date"));
+				dto.setDate(resultSet.getDate("reg_date"));
 				
 				list.add(dto);
 			}
