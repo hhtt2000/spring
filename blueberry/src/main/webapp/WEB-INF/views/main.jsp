@@ -211,7 +211,7 @@
 				
 				var postId = $(this).attr('href');
 				$('body, html').animate({
-					scrollTop: $(postId).offset().top 
+					scrollTop: $(postId).offset().top - 20
 				}, 500);
 			});
 		});
