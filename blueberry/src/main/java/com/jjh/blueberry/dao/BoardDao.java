@@ -91,7 +91,7 @@ public class BoardDao {
 	}
 
 	public ArrayList<BoardDto> getList() {
-		ArrayList<BoardDto> list = new ArrayList<>();
+		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
 		String sql = "SELECT id, userid, name, title, content, reg_date FROM board ORDER BY id DESC";
