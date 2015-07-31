@@ -152,4 +152,31 @@ public class BoardDao {
 		}	
 		return result;
 	}
+
+	public int deleteText(int id) {
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		int result = 0;
+		try{
+			conn = dataSource.getConnection();
+			String sql = "DELETE FROM board WHERE id = ?";
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setInt(1, id);
+			result = preparedStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{
+				if(preparedStatement != null)preparedStatement.close();
+				if(conn != null)conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
 }
+
+
+
+

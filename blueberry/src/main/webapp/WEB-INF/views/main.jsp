@@ -39,7 +39,7 @@
 							</div>
 							<div class="col-xs-6 col-md-4" id="buttons-delete-update">
 								<a class="btn btn-default btn-sm" href="updateText/${dto.id}" role="button">수정</a>
-								<a class="btn btn-warning btn-sm" href="deleteText/${dto.id}" role="button">삭제</a>
+								<a class="btn btn-warning btn-sm" id="delete-button" href="deleteText/${dto.id}" role="button">삭제</a>
 							</div>
 						</div>
 						<div class="blog-post-content">${dto.content}</div>
@@ -86,6 +86,12 @@
 						$('body, html').animate({
 							scrollTop: $(postId).offset().top - 20
 						}, 500);
+					});
+					$('#delete-button').on('click', function(e){
+						if(!confirm('삭제하시겠습니까?')){
+							e.preventDefault();
+							return false;
+						}
 					});
 				});
 			</script>	

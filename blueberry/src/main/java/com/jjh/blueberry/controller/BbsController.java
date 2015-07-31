@@ -46,7 +46,6 @@ public class BbsController {
 	
 	@RequestMapping(value="/updateProcess", method=RequestMethod.POST)
 	public String updateProcess(@ModelAttribute BoardDto boardDto) {
-		System.out.println(boardDto);
 		BoardDao boardDao = new BoardDao();
 		int result = boardDao.updateText(boardDto);
 		if(result == 1) {
@@ -57,8 +56,10 @@ public class BbsController {
 		}
 	}
 	
-	@RequestMapping("/deleteText")
-	public String deleteText(){
-		return "main";
+	@RequestMapping("/deleteText/{id}")
+	public String deleteText(@PathVariable("id") int id){
+		BoardDao boardDao = new BoardDao();
+		boardDao.deleteText(id);
+		return "redirect:/main";
 	}
 }
