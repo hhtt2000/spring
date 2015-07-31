@@ -2,6 +2,7 @@ package com.jjh.blueberry.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,8 +25,8 @@ public class BbsController {
 		return "newText";
 	}
 	
-	@RequestMapping(value="/insertProcessing", method=RequestMethod.POST)
-	public String newTextProcessing(Model model, BoardDto boardDto) {
+	@RequestMapping(value="/insertProcess", method=RequestMethod.POST)
+	public String newTextProcess(Model model, BoardDto boardDto) {
 		BoardDao boardDao = new BoardDao();
 		int result = boardDao.insertText(boardDto);
 		if(result == 1){
@@ -42,6 +43,20 @@ public class BbsController {
 		model.addAttribute("boardDto", dto);
 		return "updateText";
 	}
+	
+	@RequestMapping(value="/updateProcess", method=RequestMethod.POST)
+	public String updateProcess(@ModelAttribute BoardDto boardDto) {
+		System.out.println(boardDto);
+		BoardDao boardDao = new BoardDao();
+		int result = boardDao.updateText(boardDto);
+		if(result == 1) {
+			return "redirect:main";
+		} else {
+			int id = boardDto.getId();
+			return "forward:updateText/"+id;			
+		}
+	}
+	
 	@RequestMapping("/deleteText")
 	public String deleteText(){
 		return "main";

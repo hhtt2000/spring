@@ -126,4 +126,30 @@ public class BoardDao {
 		}		
 		return list;
 	}
+
+	public int updateText(BoardDto boardDto) {
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		int result = 0;
+		try{
+			conn = dataSource.getConnection();
+			String sql = "UPDATE board SET title = ?, content = ?, reg_date = ? WHERE id = ?";
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, boardDto.getTitle());
+			preparedStatement.setString(2, boardDto.getContent());
+			preparedStatement.setDate(3, boardDto.getDate());
+			preparedStatement.setInt(4, boardDto.getId());
+			result = preparedStatement.executeUpdate();
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try{
+				if(preparedStatement != null)preparedStatement.close();	
+				if(conn != null)conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}	
+		return result;
+	}
 }
