@@ -8,7 +8,10 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="">
 <meta name="author" content="">
-
+<!-- Google Web Fonts -->
+<link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/earlyaccess/jejuhallasan.css" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css" rel="stylesheet" type="text/css">
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css" />
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"> -->

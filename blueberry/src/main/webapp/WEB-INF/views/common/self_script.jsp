@@ -2,6 +2,11 @@
 	pageEncoding="utf-8"%>
 	
 	<script>
+		WebFont.load({
+		    google: {
+		      families: ['Nanum Gothic', 'Jeju Hallasan', 'Jeju Myeongjo']
+		    }
+		});
 		$(function() {
 			//네비게이션바 표시 따라가도록 설정
 			var curPath = window.location.pathname;

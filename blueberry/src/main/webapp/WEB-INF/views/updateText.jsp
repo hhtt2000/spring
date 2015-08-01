@@ -32,27 +32,5 @@
 		
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<%@ include file="/WEB-INF/views/common/self_script.jsp" %>
-	<script>
-		$(function() {
-			$('#summernote').summernote(
-					{
-						lang : [ 'en-US', 'ko-KR' ],
-						toolbar : [
-								[
-										'small',
-										[ 'bold', 'italic', 'underline',
-												'clear', 'color',
-												'strikethrough', 'superscript',
-												'subscript', 'ul', 'ol',
-												'picture', 'link', 'video' ] ],
-								[
-										'big',
-										[ 'fontsize', 'paragraph', 'height',
-												'table' ] ], ],
-						focus : true,
-						height : 250
-					});
-		});
-	</script>
 </body>
 </html>
