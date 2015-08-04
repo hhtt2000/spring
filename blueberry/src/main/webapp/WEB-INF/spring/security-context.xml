@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security-3.1.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<security:http auto-config="true">
+		<security:intercept-url pattern="/newText"
+			access="ROLE_USER" />
+		<security:intercept-url pattern="/updateText/*"
+			access="ROLE_USER" />
+		<security:intercept-url pattern="/deleteText/*"
+			access="ROLE_USER" />
+		<security:form-login login-page="/login"
+			default-target-url="/main" authentication-failure-url="/loginFail" />
+		<security:logout logout-success-url="/main" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider
+			user-service-ref="userService" />
+	</security:authentication-manager>
+
+	<bean id="userService" class="com.jjh.blueberry.service.UserService">
+		<property name="userDao">
+			<bean class="com.jjh.blueberry.dao.UserDao" />
+		</property>
+	</bean>
+</beans>

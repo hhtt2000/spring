@@ -1,25 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
-				<div class="sidebar-module sidebar-module-inset">
-					<form class="form-horizontal form-login">
-					  <div class="form-group">
-					    <div class="col-sm-offset-1 col-sm-10">
-					      <input type="text" class="form-control" name="id" placeholder="Id">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <div class="col-sm-offset-1 col-sm-10">
-					      <input type="password" class="form-control" name="password" placeholder="Password">
-					    </div>
-					  </div>
-					  <div class="form-group">
-					    <div class="col-sm-offset-6 col-sm-10">
-					      <button type="submit" class="btn btn-default">Sign in</button>
-					    </div>
-					  </div>
-					</form>
-				</div>
+				<!-- Blog Search Well -->
+                <div class="well">
+                    <h4>Blog Search</h4>
+                    <div class="input-group">
+                        <input type="text" class="form-control">
+                        <span class="input-group-btn">
+                            <button class="btn btn-default" type="button">
+                                <span class="glyphicon glyphicon-search"></span>
+                        </button>
+                        </span>
+                    </div>
+                    <!-- /.input-group -->
+                </div>
 				<div class="sidebar-module">
 					<h4>Archives</h4>
 					<ol class="list-unstyled">

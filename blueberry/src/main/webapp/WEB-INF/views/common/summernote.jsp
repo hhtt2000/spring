@@ -19,7 +19,7 @@
 						    'Serif', 'Sans', 'Courier', 'Courier New', 'Comic Sans MS'
 						],
 						toolbar : [
-								['small', [ 'bold', 'italic', 'underline',
+								['small', [ 'style', 'bold', 'italic', 'underline',
 												'clear', 'color',
 												'strikethrough', 'superscript',
 												'subscript', 'ul', 'ol',
@@ -31,7 +31,6 @@
 										]
 								]
 						],
-						focus : true,
 						height : 250
 					});
 		});

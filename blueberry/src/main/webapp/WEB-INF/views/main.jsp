@@ -3,7 +3,9 @@
 <%@ include file="/WEB-INF/views/common/config.jsp" %>
 <title>Grape</title>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-
+	<c:if test="${!empty userId}">
+		${userId}님 반갑습니다. <a href="j_spring_security_logout">로그아웃</a>
+	</c:if>
 	<div class="container">
 
 		<div class="blog-header">

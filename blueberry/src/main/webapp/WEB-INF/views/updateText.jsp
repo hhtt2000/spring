@@ -14,7 +14,7 @@
 					<form:input class="form-control" type="hidden" path="id"/>
 				</div>
 				<div class="form-group">
-					<form:input class="form-control" type="text" path="title" placeholder="제목"/>
+					<form:input class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus"/>
 				</div>
 				<div class="form-group">
 					<form:input class="form-control" type="text" path="name" placeholder="작성자" readonly="true"/>
