@@ -26,6 +26,7 @@ public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
+	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HomeController.class);
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
@@ -62,6 +63,7 @@ public class HomeController {
 	
 	@RequestMapping("/main")
 	public String main(Model model){
+		log.debug("main");
 		BoardDao dao = new BoardDao();
 		ArrayList<BoardDto> list = dao.getList();
 		model.addAttribute("list", list);
