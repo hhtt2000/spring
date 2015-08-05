@@ -7,10 +7,10 @@
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
 
-	<!-- <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<property name="url" value="jdbc:mysql://localhost:3306/javatest?characterEncoding=utf8" />
 		<property name="username" value="javauser" />
 		<property name="password" value="javadude" />
-	</bean> -->
+	</bean>
 </beans>

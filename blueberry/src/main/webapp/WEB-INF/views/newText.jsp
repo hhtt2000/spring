@@ -9,11 +9,12 @@
 	<div class="row">
 		<div class="col-sm-8 blog-main">
 			<form action="insertProcess" method="post">
+				<input type="hidden" name="userid" value="${pageContext.request.userPrincipal.name}" />
 				<div class="form-group">
-					<input type="text" class="form-control" name="title" placeholder="제목" autofocus>
+					<input type="text" class="form-control" name="title" placeholder="제목" autofocus />
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" name="name" placeholder="작성자">
+					<input type="text" class="form-control" name="name" value="${name}" placeholder="작성자" readonly />
 				</div>
 				<div class="form-group">
 					<textarea id="summernote" name="content"></textarea>

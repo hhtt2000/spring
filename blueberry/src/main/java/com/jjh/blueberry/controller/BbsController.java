@@ -1,11 +1,18 @@
 package com.jjh.blueberry.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
@@ -21,7 +28,14 @@ public class BbsController {
 	
 	@RequestMapping("/newText")
 	public String newText(Model model){
+		//session id값을 얻는 과정
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		UserDetails userDetail = (UserDetails) auth.getPrincipal();
+		String userId = userDetail.getUsername();
 		
+		BoardDao boardDao = new BoardDao();
+		String name = boardDao.getBoardUserName(userId);
+		model.addAttribute("name", name);
 		return "newText";
 	}
 	

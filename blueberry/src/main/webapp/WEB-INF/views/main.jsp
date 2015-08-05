@@ -3,9 +3,7 @@
 <%@ include file="/WEB-INF/views/common/config.jsp" %>
 <title>Grape</title>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
-	<c:if test="${!empty userId}">
-		${userId}님 반갑습니다. <a href="j_spring_security_logout">로그아웃</a>
-	</c:if>
+
 	<div class="container">
 
 		<div class="blog-header">
@@ -39,10 +37,14 @@
 									 <a href="#" class="time">${dto.date}</a>&nbsp;by <a href="#">${dto.name}</a>
 								</p>
 							</div>
-							<div class="col-xs-6 col-md-4" id="buttons-delete-update">
-								<a class="btn btn-default btn-sm" href="updateText/${dto.id}" role="button">수정</a>
-								<a class="btn btn-warning btn-sm delete-btn" id="delete-btn-${dto.id}" href="deleteText/${dto.id}" role="button">삭제</a>
-							</div>
+							<c:set var="sessionId" value="${pageContext.request.userPrincipal.name}"/>
+							<c:set var="curId" value="${dto.userid}"/>
+							<c:if test="${sessionId eq curId}">
+								<div class="col-xs-6 col-md-4" id="buttons-delete-update">
+									<a class="btn btn-default btn-sm" href="updateText/${dto.id}" role="button">수정</a>
+									<a class="btn btn-warning btn-sm delete-btn" id="delete-btn-${dto.id}" href="deleteText/${dto.id}" role="button">삭제</a>
+								</div>
+							</c:if>
 						</div>
 						<div class="blog-post-content">${dto.content}</div>
 					</div>

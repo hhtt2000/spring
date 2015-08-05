@@ -20,4 +20,8 @@
 				$('.blog-nav-item[href="'+curPath+'"]').addClass('active');
 			}
 		});
+		//사용자 인증시
+		function formSubmit() {
+			document.getElementById("logoutForm").submit();
+		}
 	</script>

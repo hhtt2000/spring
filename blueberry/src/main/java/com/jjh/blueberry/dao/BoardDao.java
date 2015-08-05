@@ -38,7 +38,7 @@ public class BoardDao {
 			conn = dataSource.getConnection();
 			String sql = "INSERT INTO board (userid, name, title, content, reg_date)VALUES (?, ?, ?, ? ,now())";
 			preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, "spring");
+			preparedStatement.setString(1, dto.getUserid());
 			preparedStatement.setString(2, dto.getName());
 			preparedStatement.setString(3, dto.getTitle());
 			preparedStatement.setString(4, dto.getContent());
@@ -175,6 +175,27 @@ public class BoardDao {
 			}
 		}
 		return result;
+	}
+
+	public String getBoardUserName(String userId) {
+		String name = "";
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT name FROM users WHERE userid = ?";
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, userId);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				name = resultSet.getString("name");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return name;
 	}
 }
 
