@@ -3,6 +3,28 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <style>
+i.tiny {font-size: 1em;}
+i.small {font-size: 2em;}
+i.medium {font-size: 4em;}
+i.large {font-size: 6em;}
+.fa-github-square {
+	color: #191919;
+}
+.fa-github-square:hover {
+	color: #595959;
+}
+.fa-twitter-square {
+	color: DogerBlue;
+}
+.fa-twitter-square:hover {
+	color: #78BCFF;
+}
+.fa-facebook-official {
+	color: MidnightBlue;
+}
+.fa-facebook-official:hover {
+	color: #47478D;
+}
 .form-login {
 	padding-top: 20px;
 }

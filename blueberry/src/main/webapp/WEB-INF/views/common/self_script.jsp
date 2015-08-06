@@ -1,27 +1,25 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
 	
-	<script>
+	<script>		
 		WebFont.load({
 		    google: {
-		      families: ['Nanum Gothic', 'Jeju Hallasan', 'Jeju Myeongjo']
-		    }
+		      families: ['Nanum Gothic', 'Jeju Hallasan', 'Jeju Myeongjo']			    }
 		});
 		$(function() {
-			//네비게이션바 표시 따라가도록 설정
-			var curPath = window.location.pathname;
-			var splitCurPathName = curPath.split("/");
-			var curPathName = splitCurPathName[splitCurPathName.length - 1];
-			var splitNavPathName = $('.blog-nav-item').attr('href').split("/");
-			var curNavPathName = splitNavPathName[splitNavPathName.length - 1];
-			var navLength = $('.blog-nav').children().length;
-			if(curNavPathName !== curPathName){
-				$('.blog-nav-item.active').removeClass('active');
-				$('.blog-nav-item[href="'+curPath+'"]').addClass('active');
-			}
+			getCategoryList();
 		});
 		//사용자 인증시
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();
+		}
+		//카테고리 리스트
+		function getCategoryList() {
+			$.get("${pageContext.servletContext.contextPath}/categoryList", function(data){
+				$(data.categories).each(function(index, list){
+					$('.side-category').append('<li><a href="${pageContext.servletContext.contextPath}/main/'+list.categoryName+'">'+list.categoryName+'</a>('+list.numCategoryList+')</li>');
+					//console.log(list.categoryName+", "+list.numCategoryList);
+				});
+			});
 		}
 	</script>

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -27,9 +28,7 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HomeController.class);
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
+	
 	@RequestMapping(value = "/todo", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -64,8 +63,16 @@ public class HomeController {
 	@RequestMapping("/main")
 	public String main(Model model){
 		log.debug("main");
-		BoardDao dao = new BoardDao();
+		BoardDao dao = new BoardDao();		
 		ArrayList<BoardDto> list = dao.getList();
+		model.addAttribute("list", list);
+		return "main";
+	}
+	
+	@RequestMapping("/main/{category}")
+	public String categorizedMain(@PathVariable("category") String category, Model model){
+		BoardDao dao = new BoardDao();		
+		ArrayList<BoardDto> list = dao.getCategorizedList(category);
 		model.addAttribute("list", list);
 		return "main";
 	}

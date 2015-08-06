@@ -11,10 +11,10 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.jjh.blueberry.dto.BoardDto;
+import com.jjh.blueberry.dto.CategoryDto;
 
 @Repository
 public class BoardDao {
@@ -36,12 +36,13 @@ public class BoardDao {
 		int result = 0;
 		try{
 			conn = dataSource.getConnection();
-			String sql = "INSERT INTO board (userid, name, title, content, reg_date)VALUES (?, ?, ?, ? ,now())";
+			String sql = "INSERT INTO board (userid, name, title, content, reg_date, category)VALUES (?, ?, ?, ? ,now(), ?)";
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, dto.getUserid());
 			preparedStatement.setString(2, dto.getName());
 			preparedStatement.setString(3, dto.getTitle());
 			preparedStatement.setString(4, dto.getContent());
+			preparedStatement.setString(5, dto.getCategory());
 			result = preparedStatement.executeUpdate();
 	
 		} catch(Exception e){
@@ -64,18 +65,19 @@ public class BoardDao {
 		ResultSet rs = null;
 		try{
 			conn = dataSource.getConnection();
-			String sql = "SELECT userid, name, title, content, reg_date FROM board WHERE id = ?";
+			String sql = "SELECT userid, name, title, content, reg_date, category FROM board WHERE id = ?";
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setInt(1, id);
 			rs = preparedStatement.executeQuery();
 			
 			while(rs.next()){
 				dto.setId(id);
-				dto.setUserid(rs.getString(1));
-				dto.setName(rs.getString(2));
-				dto.setTitle(rs.getString(3));
-				dto.setContent(rs.getString(4));
-				dto.setDate(rs.getDate(5));
+				dto.setUserid(rs.getString("userid"));
+				dto.setName(rs.getString("name"));
+				dto.setTitle(rs.getString("title"));
+				dto.setContent(rs.getString("content"));
+				dto.setDate(rs.getDate("reg_date"));
+				dto.setCategory(rs.getString("category"));
 			}
 		} catch(Exception e){
 			e.printStackTrace();
@@ -95,7 +97,7 @@ public class BoardDao {
 		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "SELECT id, userid, name, title, content, reg_date FROM board ORDER BY id DESC";
+		String sql = "SELECT id, userid, name, title, content, reg_date, category FROM board ORDER BY id DESC";
 		ResultSet resultSet = null;
 		
 		try{
@@ -111,6 +113,46 @@ public class BoardDao {
 				dto.setTitle(resultSet.getString("title"));
 				dto.setContent(resultSet.getString("content"));
 				dto.setDate(resultSet.getDate("reg_date"));
+				dto.setCategory(resultSet.getString("category"));
+				
+				list.add(dto);
+			}
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultSet != null)resultSet.close();
+				if(preparedStatement != null)preparedStatement.close();
+				if(conn != null)conn.close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		}		
+		return list;
+	}
+	
+	public ArrayList<BoardDto> getCategorizedList(String category) {
+		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		String sql = "SELECT id, userid, name, title, content, reg_date, category FROM board WHERE category = ? ORDER BY id DESC";
+		ResultSet resultSet = null;
+		
+		try{
+			conn = dataSource.getConnection();
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, category);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				BoardDto dto = new BoardDto();
+				dto.setId(resultSet.getInt("id"));
+				dto.setUserid(resultSet.getString("userid"));
+				dto.setName(resultSet.getString("name"));
+				dto.setTitle(resultSet.getString("title"));
+				dto.setContent(resultSet.getString("content"));
+				dto.setDate(resultSet.getDate("reg_date"));
+				dto.setCategory(resultSet.getString("category"));
 				
 				list.add(dto);
 			}
@@ -134,12 +176,13 @@ public class BoardDao {
 		int result = 0;
 		try{
 			conn = dataSource.getConnection();
-			String sql = "UPDATE board SET title = ?, content = ?, reg_date = ? WHERE id = ?";
+			String sql = "UPDATE board SET title = ?, content = ?, reg_date = ?, category = ? WHERE id = ?";
 			preparedStatement = conn.prepareStatement(sql);
 			preparedStatement.setString(1, boardDto.getTitle());
 			preparedStatement.setString(2, boardDto.getContent());
 			preparedStatement.setDate(3, boardDto.getDate());
-			preparedStatement.setInt(4, boardDto.getId());
+			preparedStatement.setString(4, boardDto.getCategory());
+			preparedStatement.setInt(5, boardDto.getId());
 			result = preparedStatement.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -197,6 +240,41 @@ public class BoardDao {
 		}
 		return name;
 	}
+	
+	public ArrayList<CategoryDto> getCategories() {
+		ArrayList<CategoryDto> categoryList = new ArrayList<CategoryDto>();
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT category, count(category) AS num FROM board GROUP BY category";
+			preparedStatement = conn.prepareStatement(sql);
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()) {
+				CategoryDto dto = new CategoryDto();
+				dto.setCategoryName(resultSet.getString("category"));
+				dto.setNumCategoryList(resultSet.getInt("num"));
+				
+				categoryList.add(dto);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultSet != null)resultSet.close();
+				if(preparedStatement != null)preparedStatement.close();
+				if(conn != null)conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}		
+		}
+		
+		return categoryList;
+	}
+
 }
 
 

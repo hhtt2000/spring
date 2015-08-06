@@ -1,7 +1,7 @@
 package com.jjh.blueberry.controller;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,19 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
+import com.jjh.blueberry.dto.CategoryDto;
 
 @Controller
 public class BbsController {
-	
-	@RequestMapping("/list")
-	public String list(Model model){
-		
-		return "list";
-	}
 	
 	@RequestMapping("/newText")
 	public String newText(Model model){
@@ -75,5 +70,15 @@ public class BbsController {
 		BoardDao boardDao = new BoardDao();
 		boardDao.deleteText(id);
 		return "redirect:/main";
+	}
+	
+	@RequestMapping("/categoryList")
+	public @ResponseBody HashMap<String, ArrayList<CategoryDto>> getCategoryList() {
+		HashMap<String, ArrayList<CategoryDto>> map = new HashMap<String, ArrayList<CategoryDto>>();
+		BoardDao boardDao = new BoardDao();
+		ArrayList<CategoryDto> categories = boardDao.getCategories();
+		map.put("categories", categories);
+		
+		return map;	
 	}
 }

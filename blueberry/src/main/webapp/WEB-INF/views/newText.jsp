@@ -10,11 +10,20 @@
 		<div class="col-sm-8 blog-main">
 			<form action="insertProcess" method="post">
 				<input type="hidden" name="userid" value="${pageContext.request.userPrincipal.name}" />
-				<div class="form-group">
-					<input type="text" class="form-control" name="title" placeholder="제목" autofocus />
+				<div class="form-group row category-title-gap">
+					<div class="category col-xs-4">
+						<select class="form-control" name="category" autofocus>
+						  <option value="1">1</option>
+						  <option>2</option>
+						  <option>3</option>
+						</select>
+					</div>
+					<div class="name col-xs-8">
+						<input type="text" class="form-control" name="name" value="${name}" placeholder="작성자" readonly />
+					</div>
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" name="name" value="${name}" placeholder="작성자" readonly />
+					<input type="text" class="form-control" name="title" placeholder="제목" />
 				</div>
 				<div class="form-group">
 					<textarea id="summernote" name="content"></textarea>

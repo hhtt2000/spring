@@ -8,9 +8,9 @@ public class BoardDto {
 	private String userid;
 	private String name;
 	private String title;
-
 	private String content;
 	private Date date;
+	private String category;
 
 	public String getTitle() {
 		return title;
@@ -60,9 +60,19 @@ public class BoardDto {
 		this.date = date;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDto [id=" + id + ", userid=" + userid + ", name=" + name + ", title=" + title + ", content="
-				+ content + ", date=" + date + "]";
+				+ content + ", date=" + date + ", category=" + category + "]";
 	}
+
+	
 }
