@@ -5,12 +5,14 @@
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 	<security:http auto-config="true" use-expressions="true">
-		<security:intercept-url pattern="/newText"
+		<security:intercept-url pattern="/board/newText"
 			access="hasRole('ROLE_USER')" />
-		<security:intercept-url pattern="/updateText/*"
+		<security:intercept-url pattern="/board/updateText/*"
 			access="hasRole('ROLE_USER')" />
-		<security:intercept-url pattern="/deleteText/*"
+		<security:intercept-url pattern="/board/deleteText/*"
 			access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/main/addCategory"
+			access="hasRole('ROLE_USER')" method="POST" />
 		<security:form-login login-page="/login"
 			default-target-url="/main" authentication-failure-url="/login?error"
 			username-parameter="userId"

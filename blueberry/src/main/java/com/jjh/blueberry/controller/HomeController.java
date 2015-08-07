@@ -15,19 +15,57 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
+import com.jjh.blueberry.dto.CategoryDto;
 
 /**
  * Handles requests for the application home page.
  */
+@RequestMapping("/main")
 @Controller
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HomeController.class);
+	
+	@RequestMapping
+	public String main(Model model){
+		log.debug("main");
+		BoardDao dao = new BoardDao();		
+		ArrayList<BoardDto> list = dao.getList();
+		model.addAttribute("list", list);
+		return "main";
+	}
+	
+	@RequestMapping("/category/{category}")
+	public String categorizedMain(@PathVariable("category") String category, Model model){
+		BoardDao dao = new BoardDao();		
+		ArrayList<BoardDto> list = dao.getCategorizedList(category);
+		model.addAttribute("list", list);
+		return "main";
+	}
+	
+	@RequestMapping("/categoryList")
+	public @ResponseBody HashMap<String, ArrayList<CategoryDto>> getCategoryList() {
+		HashMap<String, ArrayList<CategoryDto>> map = new HashMap<String, ArrayList<CategoryDto>>();
+		BoardDao boardDao = new BoardDao();
+		ArrayList<CategoryDto> categories = boardDao.getCategories();
+		map.put("categories", categories);
+		
+		return map;	
+	}
+	
+	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
+	public String addCategory(CategoryDto categoryDto) {
+		ModelAndView model = new ModelAndView();
+		BoardDao boardDao = new BoardDao();
+		boardDao.insertCategory(categoryDto);
+		return "redirect:/main";			
+	}
 	
 	@RequestMapping(value = "/todo", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -58,23 +96,6 @@ public class HomeController {
 		map.put("serverTime", formattedDate);
 		
 		return map;
-	}
-	
-	@RequestMapping("/main")
-	public String main(Model model){
-		log.debug("main");
-		BoardDao dao = new BoardDao();		
-		ArrayList<BoardDto> list = dao.getList();
-		model.addAttribute("list", list);
-		return "main";
-	}
-	
-	@RequestMapping("/main/{category}")
-	public String categorizedMain(@PathVariable("category") String category, Model model){
-		BoardDao dao = new BoardDao();		
-		ArrayList<BoardDto> list = dao.getCategorizedList(category);
-		model.addAttribute("list", list);
-		return "main";
 	}
 	
 	@RequestMapping("/testsql")

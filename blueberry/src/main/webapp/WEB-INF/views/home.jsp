@@ -12,7 +12,7 @@
 </style>
 </head>
 <body ng-app="todomvc">
-	<a href="main">HOME</a><span>현재 시간은 &nbsp;<strong id="time"></strong></span>
+	<a href="${pageContext.servletContext.contextPath}/main">HOME</a><span>현재 시간은 &nbsp;<strong id="time"></strong></span>
 	<ng-view />
 	<script>
 		window.onload = function(){
@@ -21,7 +21,7 @@
 			
 		function repeatLoop(){
 			$.ajax({
-				url: "getTime",
+				url: "${pageContext.servletContext.contextPath}/main/getTime",
 				type: "post",
 				dataType: "json",
 				success: function(e){

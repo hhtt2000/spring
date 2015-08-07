@@ -8,6 +8,12 @@
 		});
 		$(function() {
 			getCategoryList();
+			
+			//카테고리 추가 폼 보여주기
+			document.getElementById('toggle-add-category-form').addEventListener('click', function(e) {
+				e.preventDefault();
+				$('#add-category-form').toggleClass('active');
+			});
 		});
 		//사용자 인증시
 		function formSubmit() {
@@ -15,9 +21,9 @@
 		}
 		//카테고리 리스트
 		function getCategoryList() {
-			$.get("${pageContext.servletContext.contextPath}/categoryList", function(data){
+			$.get("${pageContext.servletContext.contextPath}/main/categoryList", function(data){
 				$(data.categories).each(function(index, list){
-					$('.side-category').append('<li><a href="${pageContext.servletContext.contextPath}/main/'+list.categoryName+'">'+list.categoryName+'</a>('+list.numCategoryList+')</li>');
+					$('.side-category').append('<li><a href="${pageContext.servletContext.contextPath}/main/category/'+list.categoryName+'">'+list.categoryName+'</a></li>');
 					//console.log(list.categoryName+", "+list.numCategoryList);
 				});
 			});

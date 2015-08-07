@@ -3,6 +3,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <style>
+/* For category toggle */
+#add-category-form {
+	display: none;
+}
+#add-category-form.active{
+	display: block;
+}
+
+/* footer icons */
 i.tiny {font-size: 1em;}
 i.small {font-size: 2em;}
 i.medium {font-size: 4em;}
@@ -36,9 +45,9 @@ i.large {font-size: 6em;}
 			<nav class="blog-nav">
 				<a class="blog-nav-item active" href="<c:url value="/main" />">홈</a> 
 				<a class="blog-nav-item" href="#">New features</a> 
-				<a class="blog-nav-item" href="<c:url value="/newText" />">글쓰기</a> 
-				<a class="blog-nav-item" href="<c:url value="/testsql" />">Test SQL</a> 
-				<a class="blog-nav-item" href="<c:url value="/todo" />">할일</a>
+				<a class="blog-nav-item" href="<c:url value="/board/newText" />">글쓰기</a> 
+				<a class="blog-nav-item" href="<c:url value="/main/testsql" />">Test SQL</a> 
+				<a class="blog-nav-item" href="<c:url value="/main/todo" />">할일</a>
 			</nav>
 		</div>
 	</div>

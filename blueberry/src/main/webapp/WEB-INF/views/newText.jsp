@@ -8,14 +8,14 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form action="insertProcess" method="post">
+			<form action="newText" method="post">
 				<input type="hidden" name="userid" value="${pageContext.request.userPrincipal.name}" />
 				<div class="form-group row category-title-gap">
 					<div class="category col-xs-4">
 						<select class="form-control" name="category" autofocus>
-						  <option value="1">1</option>
-						  <option>2</option>
-						  <option>3</option>
+							<c:forEach items="${categories}" var="category">
+						  		<option value="${category.categoryName}">${category.categoryName}</option>
+						  	</c:forEach>
 						</select>
 					</div>
 					<div class="name col-xs-8">

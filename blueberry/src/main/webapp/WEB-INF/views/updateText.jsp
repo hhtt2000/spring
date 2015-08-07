@@ -8,15 +8,24 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form:form action="${pageContext.servletContext.contextPath}/updateProcess" commandName="boardDto" method="post">
+			<form:form action="${pageContext.servletContext.contextPath}/board/updateText" commandName="boardDto" method="post">
 				<div class="form-group">
 					<form:input class="form-control" type="hidden" path="id"/>
 				</div>
-				<div class="form-group">
-					<form:input class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus"/>
+				<div class="form-group row category-title-gap">
+					<div class="category col-xs-4">
+						<form:select class="form-control" path="category">
+							<c:forEach items="${categories}" var="category">
+						  		<form:option value="${category.categoryName}">${category.categoryName}</form:option>
+						  	</c:forEach>
+						</form:select>
+					</div>
+					<div class="name col-xs-8">
+						<form:input class="form-control" type="text" path="name" placeholder="작성자" readonly="readonly" />
+					</div>
 				</div>
 				<div class="form-group">
-					<form:input class="form-control" type="text" path="name" placeholder="작성자" readonly="true"/>
+					<form:input class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus"/>
 				</div>
 				<div class="form-group">
 					<form:input class="form-control" type="hidden" path="date" />

@@ -249,14 +249,14 @@ public class BoardDao {
 		
 		try {
 			conn = dataSource.getConnection();
-			String sql = "SELECT category, count(category) AS num FROM board GROUP BY category";
+			String sql = "SELECT name FROM category";
 			preparedStatement = conn.prepareStatement(sql);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()) {
 				CategoryDto dto = new CategoryDto();
-				dto.setCategoryName(resultSet.getString("category"));
-				dto.setNumCategoryList(resultSet.getInt("num"));
+				dto.setCategoryName(resultSet.getString("name"));
+//				dto.setNumCategoryList(resultSet.getInt("num"));
 				
 				categoryList.add(dto);
 			}
@@ -273,6 +273,31 @@ public class BoardDao {
 		}
 		
 		return categoryList;
+	}
+
+	public int insertCategory(CategoryDto categoryDto) {
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		int result = 0;
+		
+		try {
+			conn = dataSource.getConnection();
+			String sql = "INSERT INTO category (name) VALUES (?)";
+			preparedStatement = conn.prepareStatement(sql);
+			preparedStatement.setString(1, categoryDto.getCategoryName());
+			result = preparedStatement.executeUpdate();
+			
+		} catch(Exception e){
+			e.printStackTrace();
+		} finally {
+			try {
+				if(preparedStatement != null)preparedStatement.close();
+				if(conn != null)conn.close();
+			} catch(Exception e){
+				e.printStackTrace();
+			}
+		}
+		return result;
 	}
 
 }

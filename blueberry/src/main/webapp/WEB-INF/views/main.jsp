@@ -28,21 +28,23 @@
 					</tr>
 					</c:forEach>
 				</table>
+				<br/>
 				<c:forEach items="${list}" var="dto">
 					<div class="blog-post" id="post-position-${dto.id}">
-						<h2 class="blog-post-title">${dto.title}</h2>							
+						<h2 class="blog-post-title">${dto.title}</h2>
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-8">
 								<p class="blog-post-meta" id="relative-time">
-									 <a href="#" class="time">${dto.date}</a>&nbsp;by <a href="#">${dto.name}</a>
+									<c:url value="/main/category/${dto.category}" var="categoryUrl" />
+									 <small><a href="${categoryUrl}">${dto.category}</a> | <a href="#" class="time">${dto.date}</a>&nbsp;by <a href="#">${dto.name}</a></small>
 								</p>
 							</div>
 							<c:set var="sessionId" value="${pageContext.request.userPrincipal.name}"/>
 							<c:set var="curId" value="${dto.userid}"/>
 							<c:if test="${sessionId eq curId}">
 								<div class="col-xs-6 col-md-4" id="buttons-delete-update">
-									<a class="btn btn-default btn-sm" href="updateText/${dto.id}" role="button">수정</a>
-									<a class="btn btn-warning btn-sm delete-btn" id="delete-btn-${dto.id}" href="deleteText/${dto.id}" role="button">삭제</a>
+									<a class="btn btn-default btn-sm" href="<c:url value="/board/updateText/id/${dto.id}" />" role="button">수정</a>
+									<a class="btn btn-warning btn-sm delete-btn" id="delete-btn-${dto.id}" href="<c:url value="/board/deleteText/id/${dto.id}" />" role="button">삭제</a>
 								</div>
 							</c:if>
 						</div>
@@ -99,6 +101,7 @@
 						
 					});
 				});
+				//글삭제 확인 함수
 				$.fn.checkDelete = function(e) {
 					if(!confirm('삭제하시겠습니까?')){
 						e.preventDefault();

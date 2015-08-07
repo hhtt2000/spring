@@ -1,6 +1,13 @@
 /*
  * Globals
  */
+a:hover {
+  color: #8EB9DF;
+  text-decoration: none;
+}
+a:focus {
+	text-decoration: none;
+}
 
 body {
   font-family: "Nanum Gothic", Georgia, "Times New Roman", Times, serif;

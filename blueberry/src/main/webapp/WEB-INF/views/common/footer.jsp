@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 				<!-- Blog Search Well -->
                 <div class="well">
@@ -17,7 +18,14 @@
 				<div class="sidebar-module">
 					<h4>분류</h4>
 					<div style="text-align:right;">
-						<a href="#">추가<i class="fa fa-plus-square-o tiny"></i></a>							
+						<a href="#" id="toggle-add-category-form">추가<i class="fa fa-plus-square-o tiny"></i></a>							
+						<c:url value="/main/addCategory" var="addCategoryUrl" />
+						<form id="add-category-form" class="form-inline" action="${addCategoryUrl}" method="post">
+								<div class="form-group">
+									<input type="text" class="form-control input-sm" name="categoryName" autofocus />							
+								</div>
+								<input type="submit" class="btn btn-default btn-sm" value="확인" />
+						</form>
 					</div>
 					<ul class="side-category" style="padding-left:20px">
 					</ul>
