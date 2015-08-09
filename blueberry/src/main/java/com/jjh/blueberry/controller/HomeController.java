@@ -34,7 +34,6 @@ public class HomeController {
 	
 	@RequestMapping
 	public String main(Model model){
-		log.debug("main");
 		BoardDao dao = new BoardDao();		
 		ArrayList<BoardDto> list = dao.getList();
 		model.addAttribute("list", list);
@@ -43,7 +42,7 @@ public class HomeController {
 	
 	@RequestMapping("/category/{category}")
 	public String categorizedMain(@PathVariable("category") String category, Model model){
-		BoardDao dao = new BoardDao();		
+		BoardDao dao = new BoardDao();
 		ArrayList<BoardDto> list = dao.getCategorizedList(category);
 		model.addAttribute("list", list);
 		return "main";
