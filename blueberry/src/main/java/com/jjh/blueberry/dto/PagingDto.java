@@ -8,8 +8,8 @@ public class PagingDto {
 	private int countPage = 5;// 화면에 보여질 페이지 수
 	private int curPage;// 현재 페이지
 
-	private int startPage;// 시작 페이지
-	private int endPage;// 끝 페이지
+	private int startPage;// 페이징 시작 페이지 ex)'1' 2 3 4 5
+	private int endPage;// 페이징 끝 페이지 ex) 1 2 3 4 '5'
 	
 	private int prevPage;//'이전'클릭시 페이지
 	private int nextPage;//'다음'클릭시 페이지
@@ -52,13 +52,21 @@ public class PagingDto {
 		endPage = getStartPage() + countPage -1;
 		return endPage > getTotalPage() ? getTotalPage() : endPage;
 	}
-	//처음 페이지, 마지막 페이지 고려X
+
 	public int getPrevPage() {
-		return getStartPage() - 1;
+		if(getStartPage() == 1){
+			return getStartPage();
+		} else {
+			return getStartPage() - 1;			
+		}
 	}
 
 	public int getNextPage() {
-		return getEndPage() + 1;
+		if(getEndPage() < getTotalPage()){
+			return getEndPage() + 1;			
+		} else{
+			return getEndPage();
+		}
 	}
 
 	public void setTotalCount(int totalCount) {

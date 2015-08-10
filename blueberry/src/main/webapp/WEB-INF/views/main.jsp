@@ -1,5 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%
+	String pagingUrl = (String)request.getAttribute( "javax.servlet.forward.request_uri" );
+	int splitIndex = pagingUrl.lastIndexOf('/');
+	pagingUrl = pagingUrl.substring(0, splitIndex);
+%>
 <%@ include file="/WEB-INF/views/common/config.jsp" %>
 <title>Grape</title>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
@@ -28,14 +33,40 @@
 					</tr>
 					</c:forEach>
 				</table>
+				<nav>
+				  <ul class="pagination">
+				  	<c:set value="<%=pagingUrl %>" var="pagingUrl" />
+				    <li>
+				      <a href="${pagingUrl}/${paging.prevPage}" aria-label="Previous">
+				        <span aria-hidden="true">&laquo;</span>
+				      </a>
+				    </li>
+				    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
+				    	<c:choose>
+					    	<c:when test="${paging.curPage == i}">
+					    		<li class="disabled"><a href="${pagingUrl}/${i}">${i}</a></li>
+					    	</c:when>
+					    	<c:otherwise>
+					    		<li><a href="${pagingUrl}/${i}">${i}</a></li>
+					    	</c:otherwise>
+				    	</c:choose>
+				    </c:forEach>
+				    <li>
+				      <a href="${pagingUrl}/${paging.nextPage}" aria-label="Next">
+				        <span aria-hidden="true">&raquo;</span>
+				      </a>
+				    </li>
+				  </ul>
+				</nav>
 				<br/>
+				
 				<c:forEach items="${list}" var="dto">
 					<div class="blog-post" id="post-position-${dto.id}">
 						<h2 class="blog-post-title">${dto.title}</h2>
 						<div class="row">
 							<div class="col-xs-12 col-sm-6 col-md-8">
 								<p class="blog-post-meta" id="relative-time">
-									<c:url value="/main/category/${dto.category}" var="categoryUrl" />
+									<c:url value="/main/category/${dto.category}/1" var="categoryUrl" />
 									 <small><a href="${categoryUrl}">${dto.category}</a> | <a href="#" class="time">${dto.date}</a>&nbsp;by <a href="#">${dto.name}</a></small>
 								</p>
 							</div>
@@ -100,7 +131,11 @@
 						deleteId.checkDelete(e);
 						
 					});
-				});
+					//페이징 관련
+					$('.pagination .disabled').on('click', function(e){
+						e.preventDefault();
+					});
+				});/* end of $(function) */
 				//글삭제 확인 함수
 				$.fn.checkDelete = function(e) {
 					if(!confirm('삭제하시겠습니까?')){

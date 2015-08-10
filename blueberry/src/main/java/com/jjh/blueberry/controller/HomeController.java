@@ -20,6 +20,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
 import com.jjh.blueberry.dto.CategoryDto;
+import com.jjh.blueberry.dto.PagingDto;
 
 /**
  * Handles requests for the application home page.
@@ -34,16 +35,35 @@ public class HomeController {
 	
 	@RequestMapping
 	public String main(Model model){
-		BoardDao dao = new BoardDao();		
-		ArrayList<BoardDto> list = dao.getList();
+
+		return "redirect:/main/1";
+	}
+	
+	@RequestMapping("/{page}")
+	public String mainPerPage(@PathVariable("page") int page, Model model){
+		PagingDto paging = new PagingDto(page);
+		BoardDao dao = new BoardDao();	
+		paging.setTotalCount(dao.getTotalCount(null));
+		//limit 어디서부터, 몇개
+		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
+		int countList = paging.getCountList();
+		ArrayList<BoardDto> list = dao.getList(null, fromRowNum, countList);
+		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
 		return "main";
 	}
 	
-	@RequestMapping("/category/{category}")
-	public String categorizedMain(@PathVariable("category") String category, Model model){
+	@RequestMapping("/category/{category}/{page}")
+	public String categorizedMain(@PathVariable("category") String category, 
+			@PathVariable("page") int page, Model model){
+		PagingDto paging = new PagingDto(page);
 		BoardDao dao = new BoardDao();
-		ArrayList<BoardDto> list = dao.getCategorizedList(category);
+		paging.setTotalCount(dao.getTotalCount(category));
+		//limit 어디서부터, 몇개
+		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
+		int countList = paging.getCountList();
+		ArrayList<BoardDto> list = dao.getList(category, fromRowNum, countList);
+		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
 		return "main";
 	}

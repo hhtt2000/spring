@@ -93,55 +93,28 @@ public class BoardDao {
 		return dto;
 	}
 
-	public ArrayList<BoardDto> getList() {
+	public ArrayList<BoardDto> getList(String category, int fromRowNum, int countList) {
 		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
 		Connection conn = null;
 		PreparedStatement preparedStatement = null;
-		String sql = "SELECT id, userid, name, title, content, reg_date, category FROM board ORDER BY id DESC";
+		String sql = "SELECT id, userid, name, title, content, reg_date, category FROM board";
+		if(category != null){
+			sql += " WHERE category = ?";
+		}
+		sql += " ORDER BY id DESC LIMIT ?, ?";
 		ResultSet resultSet = null;
 		
 		try{
 			conn = dataSource.getConnection();
 			preparedStatement = conn.prepareStatement(sql);
-			resultSet = preparedStatement.executeQuery();
-			
-			while(resultSet.next()){
-				BoardDto dto = new BoardDto();
-				dto.setId(resultSet.getInt("id"));
-				dto.setUserid(resultSet.getString("userid"));
-				dto.setName(resultSet.getString("name"));
-				dto.setTitle(resultSet.getString("title"));
-				dto.setContent(resultSet.getString("content"));
-				dto.setDate(resultSet.getDate("reg_date"));
-				dto.setCategory(resultSet.getString("category"));
-				
-				list.add(dto);
+			if(category != null){
+				preparedStatement.setString(1, category);
+				preparedStatement.setInt(2, fromRowNum);
+				preparedStatement.setInt(3, countList);				
+			} else{
+				preparedStatement.setInt(1, fromRowNum);
+				preparedStatement.setInt(2, countList);
 			}
-		} catch(Exception e){
-			e.printStackTrace();
-		} finally {
-			try {
-				if(resultSet != null)resultSet.close();
-				if(preparedStatement != null)preparedStatement.close();
-				if(conn != null)conn.close();
-			} catch(Exception e){
-				e.printStackTrace();
-			}
-		}		
-		return list;
-	}
-	
-	public ArrayList<BoardDto> getCategorizedList(String category) {
-		ArrayList<BoardDto> list = new ArrayList<BoardDto>();
-		Connection conn = null;
-		PreparedStatement preparedStatement = null;
-		String sql = "SELECT id, userid, name, title, content, reg_date, category FROM board WHERE category = ? ORDER BY id DESC";
-		ResultSet resultSet = null;
-		
-		try{
-			conn = dataSource.getConnection();
-			preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setString(1, category);
 			resultSet = preparedStatement.executeQuery();
 			
 			while(resultSet.next()){
@@ -298,6 +271,40 @@ public class BoardDao {
 			}
 		}
 		return result;
+	}
+
+	public int getTotalCount(String category) {
+		int totalCount = 0;
+		Connection conn = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			conn = dataSource.getConnection();
+			String sql = "SELECT count(*) AS totalCount FROM board";
+			if(category != null){
+				sql += " WHERE category = ?";
+			}
+			preparedStatement = conn.prepareStatement(sql);
+			if(category != null){
+				preparedStatement.setString(1, category);
+			}
+			resultSet = preparedStatement.executeQuery();
+			
+			while(resultSet.next()){
+				totalCount = resultSet.getInt("totalCount");
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(resultSet != null)resultSet.close();
+				if(preparedStatement != null)preparedStatement.close();
+				if(conn != null)conn.close();
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return totalCount;
 	}
 
 }
