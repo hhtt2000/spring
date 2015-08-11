@@ -21,7 +21,7 @@
 						</form:select>
 					</div>
 					<div class="name col-xs-8">
-						<form:input class="form-control" type="text" path="name" placeholder="작성자" readonly="readonly" />
+						<form:input class="form-control" type="text" path="name" placeholder="작성자" readonly="true" />
 					</div>
 				</div>
 				<div class="form-group">

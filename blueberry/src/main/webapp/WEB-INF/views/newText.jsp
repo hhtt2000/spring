@@ -14,19 +14,33 @@
 					<div class="category col-xs-4">
 						<select class="form-control" name="category" autofocus>
 							<c:forEach items="${categories}" var="category">
-						  		<option value="${category.categoryName}">${category.categoryName}</option>
+						  		<c:choose>
+									<c:when test="${category.categoryName == boardDto.category}">
+										<option value="${category.categoryName}" selected="selected">${category.categoryName}</option>						
+									</c:when>
+									<c:otherwise>
+										<option value="${category.categoryName}">${category.categoryName}</option>
+									</c:otherwise>
+								</c:choose>
 						  	</c:forEach>
 						</select>
 					</div>
 					<div class="name col-xs-8">
-						<input type="text" class="form-control" name="name" value="${name}" placeholder="작성자" readonly />
+						<c:choose>
+							<c:when test="${not empty name}">
+								<input type="text" class="form-control" name="name" value="${name}" placeholder="작성자" readonly />							
+							</c:when>
+							<c:otherwise>
+								<input type="text" class="form-control" name="name" value="${boardDto.name}" placeholder="작성자" readonly />
+							</c:otherwise>
+						</c:choose>
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" name="title" placeholder="제목" />
+					<input type="text" class="form-control" name="title" value="${boardDto.title}" placeholder="제목" />
 				</div>
 				<div class="form-group">
-					<textarea id="summernote" name="content"></textarea>
+					<textarea id="summernote" name="content">${boardDto.content}</textarea>
 				</div>
 				<button type="submit" class="btn btn-default">확인</button>
 			</form>

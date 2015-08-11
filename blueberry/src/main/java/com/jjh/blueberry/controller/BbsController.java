@@ -2,16 +2,20 @@ package com.jjh.blueberry.controller;
 
 import java.util.ArrayList;
 
+import javax.validation.Valid;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.jjh.blueberry.common.validator.BoardValidator;
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
 import com.jjh.blueberry.dto.CategoryDto;
@@ -39,14 +43,24 @@ public class BbsController {
 	}
 	
 	@RequestMapping(value="/newText", method=RequestMethod.POST)
-	public String newTextProcess(Model model, BoardDto boardDto) {
+	public String newTextProcess(Model model, BoardDto boardDto,
+			BindingResult bindingResult) {
 		BoardDao boardDao = new BoardDao();
-		int result = boardDao.insertText(boardDto);
-		if(result == 1){
-			return "redirect:/main";			
-		} else {
-			model.addAttribute("msg", "글작성이 완료되지 않았습니다.");
+		model.addAttribute("boardDto", boardDto);
+		
+		ArrayList<CategoryDto> categories = boardDao.getCategories();
+		model.addAttribute("categories", categories);
+		
+		new BoardValidator().validate(boardDto, bindingResult);
+		if(bindingResult.hasErrors()){
 			return "newText";
+		} else {
+			int result = boardDao.insertText(boardDto);
+			if(result == 1){
+				return "redirect:/main";			
+			} else {
+				return "newText";			
+			}
 		}
 	}
 	
@@ -64,13 +78,18 @@ public class BbsController {
 	}
 	
 	@RequestMapping(value="/updateText", method=RequestMethod.POST)
-	public String updateProcess(@ModelAttribute BoardDto boardDto) {
+	public String updateProcess(@ModelAttribute BoardDto boardDto, BindingResult bindingResult) {
 		BoardDao boardDao = new BoardDao();
 		int result = boardDao.updateText(boardDto);
+		
+		int id = boardDto.getId();
+		new BoardValidator().validate(boardDto, bindingResult);
+		if(bindingResult.hasErrors()){
+			return "forward:updateText/id/"+id;
+		}
 		if(result == 1) {
 			return "redirect:/main";
 		} else {
-			int id = boardDto.getId();
 			return "forward:updateText/id/"+id;			
 		}
 	}
