@@ -20,6 +20,9 @@
 		<security:logout logout-success-url="/main" />
 	</security:http>
 
+	<!-- Define PasswordEncrypt bean -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
 	<!-- Select users and user_roles from database -->
 	<security:authentication-manager>
 	  <security:authentication-provider>
@@ -28,6 +31,7 @@
 		    "SELECT userid, password, enabled FROM users WHERE userid = ?"
 		  authorities-by-username-query=
 		    "SELECT userid, role FROM user_roles WHERE userid = ?" />
+		<security:password-encoder ref="bcryptPasswordEncoder"/>
 	  </security:authentication-provider>
 	</security:authentication-manager>
 </beans>
