@@ -22,7 +22,7 @@
 						<c:url value="/main/addCategory" var="addCategoryUrl" />
 						<form id="add-category-form" class="form-inline" action="${addCategoryUrl}" method="post">
 								<div class="form-group">
-									<input type="text" class="form-control input-sm" name="categoryName" autofocus />							
+									<input type="text" class="form-control input-sm" name="name" autofocus />							
 								</div>
 								<input type="submit" class="btn btn-default btn-sm" value="확인" />
 						</form>

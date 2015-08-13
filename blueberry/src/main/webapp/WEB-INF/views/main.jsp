@@ -29,7 +29,7 @@
 					<tr>
 						<td>${dto.id}</td>
 						<td><a class="list-title" href="#post-position-${dto.id}">${dto.title}</a></td>
-						<td>${dto.date}</td>
+						<td>${dto.regdate}</td>
 					</tr>
 					</c:forEach>
 				</table>
@@ -67,7 +67,7 @@
 							<div class="col-xs-12 col-sm-6 col-md-8">
 								<p class="blog-post-meta" id="relative-time">
 									<c:url value="/main/category/${dto.category}/1" var="categoryUrl" />
-									 <small><a href="${categoryUrl}">${dto.category}</a> | <a href="#" class="time">${dto.date}</a>&nbsp;by <a href="#">${dto.name}</a></small>
+									 <small><a href="${categoryUrl}">${dto.category}</a> | <a href="#" class="time">${dto.regdate}</a>&nbsp;by <a href="#">${dto.name}</a></small>
 								</p>
 							</div>
 							<c:set var="sessionId" value="${pageContext.request.userPrincipal.name}"/>

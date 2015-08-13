@@ -19,38 +19,38 @@ public class PagingDto {
 	}
 
 	public int getTotalCount() {
-		return totalCount;
+		return this.totalCount;
 	}
 	//글:23개일때 -> 23/5+1=5페이지
 	//글:20개일때 -> 20/5=4페이지
 	public int getTotalPage() {
-		totalPage = totalCount / countList;
-		if((totalCount % countList) != 0){
-			totalPage++;
+		this.totalPage = this.totalCount / this.countList;
+		if((this.totalCount % this.countList) != 0){
+			this.totalPage++;
 		}
-		return totalPage;
+		return this.totalPage;
 	}
 
 	public int getCountList() {
-		return countList;
+		return this.countList;
 	}
 
 	public int getCountPage() {
-		return countPage;
+		return this.countPage;
 	}
 
 	public int getCurPage() {
-		return curPage;
+		return this.curPage;
 	}
 	//((7-1)/5)*5+1=6
 	//((5-1)/5)*5+1=1
 	public int getStartPage() {
-		return ((curPage - 1) / countPage) * countPage + 1;
+		return ((this.curPage - 1) / this.countPage) * this.countPage + 1;
 	}
 	//6+5-1=10
 	public int getEndPage() {
-		endPage = getStartPage() + countPage -1;
-		return endPage > getTotalPage() ? getTotalPage() : endPage;
+		this.endPage = getStartPage() + this.countPage -1;
+		return this.endPage > getTotalPage() ? getTotalPage() : this.endPage;
 	}
 
 	public int getPrevPage() {

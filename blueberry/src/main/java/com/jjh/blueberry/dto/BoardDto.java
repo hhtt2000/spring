@@ -9,7 +9,7 @@ public class BoardDto {
 	private String name;
 	private String title;
 	private String content;
-	private Date date;
+	private Date regdate;
 	private String category;
 
 	public String getTitle() {
@@ -52,13 +52,6 @@ public class BoardDto {
 		this.userid = userid;
 	}
 
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
-	}
 
 	public String getCategory() {
 		return category;
@@ -68,10 +61,18 @@ public class BoardDto {
 		this.category = category;
 	}
 
+	public Date getRegdate() {
+		return regdate;
+	}
+
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
+	}
+
 	@Override
 	public String toString() {
 		return "BoardDto [id=" + id + ", userid=" + userid + ", name=" + name + ", title=" + title + ", content="
-				+ content + ", date=" + date + ", category=" + category + "]";
+				+ content + ", regdate=" + regdate + ", category=" + category + "]";
 	}
 
 	

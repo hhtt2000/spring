@@ -2,14 +2,14 @@ package com.jjh.blueberry.dto;
 
 public class CategoryDto {
 
-	private String categoryName;
+	private String name;
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getName() {
+		return name;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 }

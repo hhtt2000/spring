@@ -27,7 +27,7 @@ public class BoardValidator implements Validator {
 		}
 	}
 
-	public boolean isEmptyOrWhitespace(String content) {
+	private boolean isEmptyOrWhitespace(String content) {
 		if(content == null || content.replaceAll("&nbsp;", " ").trim().length() == 0){
 			return true;
 		} else{

@@ -9,6 +9,7 @@ import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +34,9 @@ public class HomeController {
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HomeController.class);
 	
+	@Autowired
+	private BoardDao boardDao;
+	
 	@RequestMapping
 	public String main(Model model){
 
@@ -42,12 +46,11 @@ public class HomeController {
 	@RequestMapping("/{page}")
 	public String mainPerPage(@PathVariable("page") int page, Model model){
 		PagingDto paging = new PagingDto(page);
-		BoardDao dao = new BoardDao();	
-		paging.setTotalCount(dao.getTotalCount(null));
+		paging.setTotalCount(boardDao.getTotalCount(null));
 		//limit 어디서부터, 몇개
 		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
 		int countList = paging.getCountList();
-		ArrayList<BoardDto> list = dao.getList(null, fromRowNum, countList);
+		ArrayList<BoardDto> list = boardDao.getList(null, fromRowNum, countList);
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
 		return "main";
@@ -57,12 +60,11 @@ public class HomeController {
 	public String categorizedMain(@PathVariable("category") String category, 
 			@PathVariable("page") int page, Model model){
 		PagingDto paging = new PagingDto(page);
-		BoardDao dao = new BoardDao();
-		paging.setTotalCount(dao.getTotalCount(category));
+		paging.setTotalCount(boardDao.getTotalCount(category));
 		//limit 어디서부터, 몇개
 		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
 		int countList = paging.getCountList();
-		ArrayList<BoardDto> list = dao.getList(category, fromRowNum, countList);
+		ArrayList<BoardDto> list = boardDao.getList(category, fromRowNum, countList);
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
 		return "main";
@@ -71,7 +73,6 @@ public class HomeController {
 	@RequestMapping("/categoryList")
 	public @ResponseBody HashMap<String, ArrayList<CategoryDto>> getCategoryList() {
 		HashMap<String, ArrayList<CategoryDto>> map = new HashMap<String, ArrayList<CategoryDto>>();
-		BoardDao boardDao = new BoardDao();
 		ArrayList<CategoryDto> categories = boardDao.getCategories();
 		map.put("categories", categories);
 		
@@ -80,8 +81,6 @@ public class HomeController {
 	
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
 	public String addCategory(CategoryDto categoryDto) {
-		ModelAndView model = new ModelAndView();
-		BoardDao boardDao = new BoardDao();
 		boardDao.insertCategory(categoryDto);
 		return "redirect:/main";			
 	}
@@ -104,7 +103,6 @@ public class HomeController {
 	
 	@RequestMapping(value="/getTime", method=RequestMethod.POST)
 	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
-//		locale = new Locale("ko", "KOREA");
 		HashMap<String, String> map = new HashMap<String, String>();
 		Date date = new Date();
 		TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");

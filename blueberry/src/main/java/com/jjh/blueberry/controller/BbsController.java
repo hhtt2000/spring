@@ -2,8 +2,7 @@ package com.jjh.blueberry.controller;
 
 import java.util.ArrayList;
 
-import javax.validation.Valid;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -26,6 +25,9 @@ public class BbsController {
 	
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BbsController.class);
 	
+	@Autowired
+	private BoardDao boardDao;
+	
 	@RequestMapping("/newText")
 	public String newText(Model model){
 		//session id값을 얻는 과정
@@ -33,7 +35,6 @@ public class BbsController {
 		UserDetails userDetail = (UserDetails) auth.getPrincipal();
 		String userId = userDetail.getUsername();
 		
-		BoardDao boardDao = new BoardDao();
 		String name = boardDao.getBoardUserName(userId);
 		model.addAttribute("name", name);
 		
@@ -45,7 +46,6 @@ public class BbsController {
 	@RequestMapping(value="/newText", method=RequestMethod.POST)
 	public String newTextProcess(Model model, BoardDto boardDto,
 			BindingResult bindingResult) {
-		BoardDao boardDao = new BoardDao();
 		model.addAttribute("boardDto", boardDto);
 		
 		ArrayList<CategoryDto> categories = boardDao.getCategories();
@@ -66,12 +66,10 @@ public class BbsController {
 	
 	@RequestMapping("/updateText/id/{id}")
 	public String updateText(@PathVariable("id") int id, Model model){
-		BoardDao boardDao = new BoardDao();
 		BoardDto dto = boardDao.selectOne(id);
 		model.addAttribute("boardDto", dto);
 		
 		ArrayList<CategoryDto> categories = boardDao.getCategories();
-		log.debug(categories);
 		model.addAttribute("categories", categories);
 		
 		return "updateText";
@@ -79,11 +77,10 @@ public class BbsController {
 	
 	@RequestMapping(value="/updateText", method=RequestMethod.POST)
 	public String updateProcess(@ModelAttribute BoardDto boardDto, BindingResult bindingResult) {
-		BoardDao boardDao = new BoardDao();
 		int result = boardDao.updateText(boardDto);
 		
-		int id = boardDto.getId();
 		new BoardValidator().validate(boardDto, bindingResult);
+		int id = boardDto.getId();
 		if(bindingResult.hasErrors()){
 			return "forward:updateText/id/"+id;
 		}
@@ -96,7 +93,6 @@ public class BbsController {
 	
 	@RequestMapping("/deleteText/id/{id}")
 	public String deleteText(@PathVariable("id") int id){
-		BoardDao boardDao = new BoardDao();
 		boardDao.deleteText(id);
 		return "redirect:/main";
 	}

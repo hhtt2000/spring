@@ -23,7 +23,7 @@
 		function getCategoryList() {
 			$.get("${pageContext.servletContext.contextPath}/main/categoryList", function(data){
 				$(data.categories).each(function(index, list){
-					$('.side-category').append('<li><a href="${pageContext.servletContext.contextPath}/main/category/'+list.categoryName+'/1">'+list.categoryName+'</a></li>');
+					$('.side-category').append('<li><a href="${pageContext.servletContext.contextPath}/main/category/'+list.name+'/1">'+list.name+'</a></li>');
 					//console.log(list.categoryName+", "+list.numCategoryList);
 				});
 			});

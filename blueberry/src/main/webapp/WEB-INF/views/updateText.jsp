@@ -16,7 +16,7 @@
 					<div class="category col-xs-4">
 						<form:select class="form-control" path="category">
 							<c:forEach items="${categories}" var="category">
-						  		<form:option value="${category.categoryName}">${category.categoryName}</form:option>
+						  		<form:option value="${category.name}">${category.name}</form:option>
 						  	</c:forEach>
 						</form:select>
 					</div>
@@ -28,7 +28,7 @@
 					<form:input class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus"/>
 				</div>
 				<div class="form-group">
-					<form:input class="form-control" type="hidden" path="date" />
+					<form:input class="form-control" type="hidden" path="regdate" />
 				</div>
 				<div class="form-group">
 					<form:textarea id="summernote" path="content"/>
