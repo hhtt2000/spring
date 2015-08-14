@@ -18,3 +18,4 @@
 * WYSIWYG : https://github.com/summernote/summernote.git
 * Date showing on articles : https://github.com/moment/moment.git
 * XSS filtering : https://github.com/naver/lucy-xss-filter.git (Unsolved)
+* Database Connection Pool : https://github.com/brettwooldridge/HikariCP
