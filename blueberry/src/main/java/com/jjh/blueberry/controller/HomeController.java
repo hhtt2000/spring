@@ -25,7 +25,7 @@ import com.jjh.blueberry.dto.PagingDto;
 /**
  * Handles requests for the application home page.
  */
-@RequestMapping("/main")
+@RequestMapping(value={"/", "/main"})
 @Controller
 public class HomeController {
 	

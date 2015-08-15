@@ -1,6 +1,7 @@
 /*
  * Globals
  */
+
 a:hover {
   color: #8EB9DF;
   text-decoration: none;
@@ -26,40 +27,57 @@ h6, .h6 {
   color: #333;
 }
 
-
 /*
  * Override Bootstrap's default container.
  */
 
 @media (min-width: 1200px) {
   .container {
-    width: 970px;
+    width: 1000px;
   }
 }
-
 
 /*
  * Masthead for nav
  */
 
-.blog-masthead {
+.navbar.navbar-default {
   background-color: #428bca;
   -webkit-box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
           box-shadow: inset 0 -2px 5px rgba(0,0,0,.1);
-} 
+}
 
 /* Nav links */
-.blog-nav-item {
-  position: relative;
-  display: inline-block;
-  padding: 10px;
-  font-weight: bold;
-  color: #cdddeb;
+.navbar.navbar-default .nav-font,
+.navbar.navbar-default .navbar-right .dropdown .dropdown-menu .nav-font {
+  color: #D9E8F4;
 }
-.blog-nav-item:hover,
-.blog-nav-item:focus {
+
+.navbar.navbar-default .nav-font:hover,
+.navbar.navbar-default .nav-font:focus,
+.navbar.navbar-default .navbar-right .dropdown .dropdown-menu .nav-font:hover,
+.navbar.navbar-default .navbar-right .dropdown .dropdown-menu .nav-font:focus {
   color: #fff;
   text-decoration: none;
+}
+.nav .dropdown a:hover,
+.nav .dropdown a:focus {
+	background-color: #428bca;
+}
+.navbar-default .navbar-toggle .icon-bar {
+	background-color: #D9E8F4;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle.collapsed:hover {
+	background-color: #D9E8F4;
+}
+.navbar-default .navbar-toggle:focus {
+	background-color: #428bca;
+}
+
+.navbar-default .navbar-nav .open .dropdown-toggle:focus {
+	background-color: #428bca;
+	color: #D9E8F4;
 }
 
 /* Active state gets a caret at the bottom */
@@ -149,7 +167,6 @@ h6, .h6 {
 }
 .blog-post-title {
   margin-bottom: 5px;
-  font-size: 40px;
 }
 .blog-post-meta {
   margin-bottom: 20px;

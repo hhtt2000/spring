@@ -40,24 +40,50 @@ i.large {font-size: 6em;}
 </style>
 </head>
 <body>
-	<div class="blog-masthead">
-		<div class="container row">
-			<nav class="blog-nav">
-				<a class="blog-nav-item active" href="<c:url value="/main" />">홈</a> 
-				<a class="blog-nav-item" href="#">New features</a> 
-				<a class="blog-nav-item" href="<c:url value="/board/newText" />">글쓰기</a> 
-				<a class="blog-nav-item" href="<c:url value="/main/testsql" />">Test SQL</a> 
-				<a class="blog-nav-item" href="<c:url value="/main/todo" />">할일</a>
+		<div class="container-fluid">
+			<nav class="navbar navbar-default">
+				<div class="navbar-header">
+			      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#blog-navbar-collapse" aria-expanded="false">
+			        <span class="sr-only">Toggle navigation</span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			        <span class="icon-bar"></span>
+			      </button>
+			      <a class="navbar-brand nav-font" href="<c:url value="/main" />"><strong>Grape</strong></a>
+			    </div>
+			    <div class="collapse navbar-collapse" id="blog-navbar-collapse">
+				<ul class="nav navbar-nav">
+					<li><a class="nav-font" href="#">New feat</a></li>
+					<li><a class="nav-font" href="<c:url value="/board/newText" />">글쓰기</a></li> 
+					<li><a class="nav-font" href="<c:url value="/main/testsql" />">Test SQL</a></li>
+					<li><a class="nav-font" href="<c:url value="/main/todo" />">할일</a></li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<c:choose>
+						<c:when test="${pageContext.request.userPrincipal.name == null}">
+							<li><a class="nav-font" href="<c:url value="/login" />"><span class="glyphicon glyphicon-log-in" aria-hidden="true"></span> 로그인</a></li>
+						</c:when>
+						<c:otherwise>
+							<security:authorize access="hasRole('ROLE_USER')">
+							<!-- For login user -->
+								<c:url value="/j_spring_security_logout" var="logoutUrl" />
+								<form action="${logoutUrl}" method="post" id="logoutForm">
+									<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+								</form>
+								<c:if test="${pageContext.request.userPrincipal.name != null}">
+								   <li class="dropdown">
+								     <a href="#" class="dropdown-toggle nav-font" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fa fa-user"></i> ${pageContext.request.userPrincipal.name} <span class="caret"></span></a>
+								     <ul class="dropdown-menu">
+								       <li><a class="nav-font" href="#">Action</a></li>
+								       <li role="separator" class="divider"></li>
+								       <li><a class="nav-font" href="javascript:formSubmit()"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> 로그아웃</a></li>
+								     </ul>
+								   </li>
+								</c:if>
+							</security:authorize>
+						</c:otherwise>
+					</c:choose>
+				</ul>
+				</div>
 			</nav>
 		</div>
-	</div>
-	<security:authorize access="hasRole('ROLE_USER')">
-		<!-- For login user -->
-		<c:url value="/j_spring_security_logout" var="logoutUrl" />
-		<form action="${logoutUrl}" method="post" id="logoutForm">
-			<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-		</form>
-		<c:if test="${pageContext.request.userPrincipal.name != null}">
-			사용자: ${pageContext.request.userPrincipal.name} | <a href="javascript:formSubmit()">로그아웃</a>
-		</c:if>
-	</security:authorize>
