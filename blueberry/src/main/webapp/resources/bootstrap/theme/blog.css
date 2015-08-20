@@ -127,6 +127,19 @@ h6, .h6 {
   font-size: 18px;
   line-height: 1.5;
 }
+.blog-post .badge {
+	background-color: #428bca;
+}
+.blog-post-comments .btn:focus {
+	background-color: #fff;
+	outline: none !important;
+}
+.blog-post-comments .btn:hover {
+	background-color: #ddd;
+}
+.comment-list {
+	display: none;
+}
 
 /* Sidebar modules for boxing content */
 .sidebar-module {

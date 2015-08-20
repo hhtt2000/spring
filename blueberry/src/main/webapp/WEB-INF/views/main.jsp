@@ -44,7 +44,7 @@
 				    <c:forEach var="i" begin="${paging.startPage}" end="${paging.endPage}">
 				    	<c:choose>
 					    	<c:when test="${paging.curPage == i}">
-					    		<li class="disabled"><a href="${pagingUrl}/${i}">${i}</a></li>
+					    		<li class="active"><a href="${pagingUrl}/${i}">${i}<span class="sr-only">(current)</span></a></li>
 					    	</c:when>
 					    	<c:otherwise>
 					    		<li><a href="${pagingUrl}/${i}">${i}</a></li>
@@ -80,6 +80,34 @@
 							</c:if>
 						</div>
 						<div class="blog-post-content">${dto.content}</div>
+						<br/>
+						<div class="blog-post-comments">
+							<button class="btn btn-default post-comment-${dto.id}" type="button">
+							  댓글 <span class="badge">4</span>
+							</button>
+							<div class="comment-list-${dto.id} comment-list">
+								<form id="comment-form" action="${pageContext.servletContext.contextPath}/comment" method="post">
+								  <input type="hidden" name="postid" value="${dto.id}">
+								  <div class="form-group">
+								    <label for="name">작성자</label>
+								    <input type="text" class="form-control" id="name" name="name">
+								  </div>
+								  <div class="form-group">
+								    <label for="password">비밀번호</label>
+								    <input type="password" class="form-control" id="password" name="password">
+								  </div>
+								  <div class="form-group">
+								    <label for="content">내용</label>
+								    <textarea id="content" class="form-control" name="content" rows="3" placeholder="200자 이내로 작성해주세요."></textarea>
+								  </div>  
+								  <button type="button" id="comment-submit-button" class="btn btn-default">확인</button>
+								</form>
+								<div class="comment">
+								
+								</div>
+							</div>
+						</div>
+						<hr/>
 					</div>
 				</c:forEach>
 				<nav>
@@ -132,16 +160,61 @@
 						
 					});
 					//페이징 관련
-					$('.pagination .disabled').on('click', function(e){
+					$('.pagination .active').on('click', function(e){
 						e.preventDefault();
 					});
+					//댓글 관련
+					$('.blog-post-comments button').click(function(e){
+						var div = $(this).siblings('div');
+						if(div.css('display') === 'block'){
+							div.css('display', 'none');
+						} else {
+							var commentClassValue = $(this).attr('class');
+							var commentId = commentClassValue.substring(commentClassValue.lastIndexOf('-')+1);
+							getComment(commentId);
+							div.css('display', 'block');
+						}
+					});
+					//댓글 작성 처리(post)
+					$('#comment-submit-button').on('click', function(){
+						var url = $('#comment-form').attr('action');
+						var data = $('#comment-form').serialize();
+						var postid = $('#comment-form input[name=postid]').val();
+						$.post(url,
+							data,
+							function(result){
+								if(result === '1'){
+									getComment(postid);									
+								} else{
+									alert('댓글이 등록되지 않았습니다.');
+								}
+						});
+					});
 				});/* end of $(function) */
-				//글삭제 확인 함수
+				//글삭제 확인 함수//jQuery 메소드처럼 사용(prototype)
 				$.fn.checkDelete = function(e) {
 					if(!confirm('삭제하시겠습니까?')){
 						e.preventDefault();
 						return false;
 					}
+				}
+				//댓글 받아오기(get)
+				function getComment(id){
+					$.ajax({
+						url: "${pageContext.servletContext.contextPath}/comment/"+id,
+						type: 'get',
+						success: function(data){
+							//--------데이터 처리하기--------------
+							$('.comment-list-'+id+' .comment').empty();
+							$(data.comments).each(function(index, comment){
+								$('.comment-list-'+id+' .comment').append('<div class="media">')
+															.append('<div class="media-body">')
+															.append('<h5 class="media-heading"><strong>'+comment.name+'</strong> <small>'+comment.regdate+'</small></h5>')
+															.append(comment.content)
+															.append('</div></div>');
+							});
+						}
+					});
 				}
 			</script>	
 	</body>
