@@ -140,6 +140,12 @@ h6, .h6 {
 .comment-list {
 	display: none;
 }
+.comment-form-gap .password {
+	padding-left: 0px;
+}
+.comment-form-gap .name {
+	padding-right: 10px;
+}
 
 /* Sidebar modules for boxing content */
 .sidebar-module {
@@ -206,5 +212,5 @@ h6, .h6 {
 	padding-left: 0px;
 }
 .category-title-gap .category {
-	padding-right: 5px;
+	padding-right: 10px;
 }

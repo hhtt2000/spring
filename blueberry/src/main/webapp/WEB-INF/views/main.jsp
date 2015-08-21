@@ -86,25 +86,26 @@
 							  댓글 <span class="badge">4</span>
 							</button>
 							<div class="comment-list-${dto.id} comment-list">
-								<form id="comment-form" action="${pageContext.servletContext.contextPath}/comment" method="post">
-								  <input type="hidden" name="postid" value="${dto.id}">
-								  <div class="form-group">
-								    <label for="name">작성자</label>
-								    <input type="text" class="form-control" id="name" name="name">
-								  </div>
-								  <div class="form-group">
-								    <label for="password">비밀번호</label>
-								    <input type="password" class="form-control" id="password" name="password">
-								  </div>
-								  <div class="form-group">
-								    <label for="content">내용</label>
-								    <textarea id="content" class="form-control" name="content" rows="3" placeholder="200자 이내로 작성해주세요."></textarea>
-								  </div>  
-								  <button type="button" id="comment-submit-button" class="btn btn-default">확인</button>
-								</form>
+								<br/>
 								<div class="comment">
 								
 								</div>
+								<br/>
+								<form id="comment-form-${dto.id}" class="comment-form" action="${pageContext.servletContext.contextPath}/comment" method="post">
+								  <input type="hidden" name="postid" value="${dto.id}">
+								  <div class="form-group row comment-form-gap">
+								  	<div class="col-xs-6 name">
+								    	<input type="text" class="form-control" id="name" name="name" placeholder="작성자">								  	
+								  	</div>
+								  	<div class="col-xs-6 password">
+								    	<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">								  	
+								  	</div>
+								  </div>
+								  <div class="form-group">
+								    <textarea id="content" class="form-control" name="content" rows="3" placeholder="200자 이내로 작성해주세요."></textarea>
+								  </div>  
+								  <button type="submit" id="comment-submit-button-${dto.id}" class="btn btn-default">확인</button>
+								</form>
 							</div>
 						</div>
 						<hr/>
@@ -157,7 +158,6 @@
 						var deleteId = $(this).attr('id');
 						deleteId = $('.'+deleteId);
 						deleteId.checkDelete(e);
-						
 					});
 					//페이징 관련
 					$('.pagination .active').on('click', function(e){
@@ -175,21 +175,82 @@
 							div.css('display', 'block');
 						}
 					});
+					/* //댓글 유효성 확인
+					$('.blog-post-comments .comment-list .comment-form').validate({
+						rules: {
+							name: {
+								required: true,
+								rangelength: [1, 10]
+							},
+							password: {
+								required: true,
+								rangelength: [4, 20]
+							},
+							content: {
+								required: true,
+								rangelength: [1, 200]
+							}
+						},
+						messages: {
+							name: {
+								required: "이름을 입력해주세요.",
+								rangelength: "{0}이상, {1}이하로 입력해주세요."
+							},
+							password: {
+								required: "비밀번호를 입력해주세요.",
+								reangelength: "{0}이상, {1}이하로 입력해주세요."
+							},
+							content: {
+								required: "내용을 입력해주세요.",
+								rangelength: "{0}이상, {1}이하로 입력해주세요."
+							}
+						}
+					}); */
+					
 					//댓글 작성 처리(post)
-					$('#comment-submit-button').on('click', function(){
-						var url = $('#comment-form').attr('action');
-						var data = $('#comment-form').serialize();
-						var postid = $('#comment-form input[name=postid]').val();
-						$.post(url,
-							data,
-							function(result){
-								if(result === '1'){
-									getComment(postid);									
-								} else{
-									alert('댓글이 등록되지 않았습니다.');
+					$('.comment-form button').on('click', function(e){
+						e.preventDefault();
+						var commentButtonIdValue = $(this).attr('id');
+						var postid = commentButtonIdValue.substring(commentButtonIdValue.lastIndexOf('-')+1);
+						var url = $('#comment-form-'+postid).attr('action');
+						var data = $('#comment-form-'+postid).serialize();
+						var nameLen = $('#comment-form-'+postid+' input[name=name]').val().length;
+						var passwdLen = $('#comment-form-'+postid+' input[name=password]').val().length;
+						var contentLen = $('#comment-form-'+postid+' textarea[name=content]').val().length;
+						if(nameLen === null || nameLen === 0 || nameLen > 10){
+							$('#comment-form-'+postid+' div').css('display', 'block');
+							$('#comment-form-'+postid+' input[name=name]').focus();
+							alert('이름은 1 ~ 10자 이내로 입력해주세요.');
+						} else if(passwdLen === null || passwdLen < 4 || passwdLen > 20){
+							$('#comment-form-'+postid+' div').css('display', 'block');
+							$('#comment-form-'+postid+' input[name=password]').focus();
+							alert('비밀번호는 4 ~ 20자 이내로 입력해주세요.');
+						} else if(contentLen === null || contentLen === 0 || contentLen > 200){
+							$('#comment-form-'+postid+' div').css('display', 'block');
+							$('#comment-form-'+postid+' textarea[name=content]').focus();
+							alert('내용은 200자 이내로 입력해주세요.');
+						} else{
+							$.ajax({
+								url: url,
+								type: 'post',
+								data: data,
+								success: function(result){
+									if(result === '1'){
+										$('#comment-form-'+postid+' div').css('display', 'block');
+										$('#comment-form-'+postid)[0].reset();
+										getComment(postid);									
+									} else{
+										alert('댓글이 등록되지 않았습니다.');
+									}
+								},
+								error: function(exception){
+									alert(exception);
 								}
-						});
+							});
+						}
+					
 					});
+					
 				});/* end of $(function) */
 				//글삭제 확인 함수//jQuery 메소드처럼 사용(prototype)
 				$.fn.checkDelete = function(e) {
@@ -200,21 +261,27 @@
 				}
 				//댓글 받아오기(get)
 				function getComment(id){
-					$.ajax({
-						url: "${pageContext.servletContext.contextPath}/comment/"+id,
-						type: 'get',
-						success: function(data){
-							//--------데이터 처리하기--------------
-							$('.comment-list-'+id+' .comment').empty();
-							$(data.comments).each(function(index, comment){
-								$('.comment-list-'+id+' .comment').append('<div class="media">')
-															.append('<div class="media-body">')
-															.append('<h5 class="media-heading"><strong>'+comment.name+'</strong> <small>'+comment.regdate+'</small></h5>')
-															.append(comment.content)
-															.append('</div></div>');
-							});
-						}
-					});
+					if(id !== 'default'){
+						$.ajax({
+							url: "${pageContext.servletContext.contextPath}/comment/"+id,
+							type: 'get',
+							success: function(data){
+								$('.comment-list-'+id+' .comment').empty();
+								$(data.comments).each(function(index, comment){
+									$('.comment-list-'+id+' .comment').append('<div class="media">')
+																.append('<div class="media-body">')
+																.append('<h5 class="media-heading"><strong>'+comment.name+'</strong> <small>'+comment.regdate+'</small></h5>')
+																.append(comment.content)
+																.append('</div></div>');
+								});
+							},
+							error: function(exception){
+								alert(exception);
+							}
+						});
+					} else{
+						return false;
+					}
 				}
 			</script>	
 	</body>
