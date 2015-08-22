@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
@@ -53,6 +54,26 @@ public class HomeController {
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
 		return "main";
+	}
+	
+	@RequestMapping("/search/{searchText}/{page}")
+	public ModelAndView searchText(@PathVariable("searchText") String searchText, @PathVariable("page") int page){
+		ModelAndView model = new ModelAndView();
+		
+		int countSearchList = boardDao.getSearchListCount(searchText);
+		PagingDto paging = new PagingDto(page);
+		paging.setTotalCount(countSearchList);
+		//limit 어디서부터, 몇개
+		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
+		int countList = paging.getCountList();
+		
+		ArrayList<BoardDto> searchList = boardDao.getSearchList(searchText, fromRowNum, countList);
+		
+		model.addObject("paging", paging);
+		model.addObject("list", searchList);
+		model.setViewName("main");
+		
+		return model;
 	}
 	
 	@RequestMapping("/category/{category}/{page}")

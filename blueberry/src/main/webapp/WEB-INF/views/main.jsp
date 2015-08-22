@@ -175,37 +175,6 @@
 							div.css('display', 'block');
 						}
 					});
-					/* //댓글 유효성 확인
-					$('.blog-post-comments .comment-list .comment-form').validate({
-						rules: {
-							name: {
-								required: true,
-								rangelength: [1, 10]
-							},
-							password: {
-								required: true,
-								rangelength: [4, 20]
-							},
-							content: {
-								required: true,
-								rangelength: [1, 200]
-							}
-						},
-						messages: {
-							name: {
-								required: "이름을 입력해주세요.",
-								rangelength: "{0}이상, {1}이하로 입력해주세요."
-							},
-							password: {
-								required: "비밀번호를 입력해주세요.",
-								reangelength: "{0}이상, {1}이하로 입력해주세요."
-							},
-							content: {
-								required: "내용을 입력해주세요.",
-								rangelength: "{0}이상, {1}이하로 입력해주세요."
-							}
-						}
-					}); */
 					
 					//댓글 작성 처리(post)
 					$('.comment-form button').on('click', function(e){
@@ -217,6 +186,7 @@
 						var nameLen = $('#comment-form-'+postid+' input[name=name]').val().length;
 						var passwdLen = $('#comment-form-'+postid+' input[name=password]').val().length;
 						var contentLen = $('#comment-form-'+postid+' textarea[name=content]').val().length;
+						
 						if(nameLen === null || nameLen === 0 || nameLen > 10){
 							$('#comment-form-'+postid+' div').css('display', 'block');
 							$('#comment-form-'+postid+' input[name=name]').focus();
@@ -248,7 +218,6 @@
 								}
 							});
 						}
-					
 					});
 					
 				});/* end of $(function) */

@@ -126,6 +126,17 @@ public class BoardDao {
 			return this.jdbcTemplate.queryForObject(sql, Integer.class);			
 		}
 	}
+
+	public int getSearchListCount(String searchText) {
+		String sql = "SELECT count(*) AS countSearchList FROM board WHERE title LIKE ? OR content LIKE ?";
+		return this.jdbcTemplate.queryForObject(sql, new String[]{"%"+searchText+"%", "%"+searchText+"%"}, Integer.class);
+	}
+	
+	public ArrayList<BoardDto> getSearchList(String searchText, int fromRowNum, int countList) {
+		String sql = "SELECT id, userid, name, title, content, regdate, category FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY id DESC LIMIT ?, ?";
+		return (ArrayList<BoardDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<BoardDto>(BoardDto.class), "%"+searchText+"%", "%"+searchText+"%", fromRowNum, countList);
+	}
+
 }
 
 

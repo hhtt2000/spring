@@ -4,15 +4,17 @@
 			<div class="col-sm-3 col-sm-offset-1 blog-sidebar">
 				<!-- Blog Search Well -->
                 <div class="well">
-                    <h4>Blog Search</h4>
-                    <div class="input-group">
-                        <input type="text" class="form-control">
-                        <span class="input-group-btn">
-                            <button class="btn btn-default" type="button">
-                                <span class="glyphicon glyphicon-search"></span>
-                        </button>
-                        </span>
-                    </div>
+                    <h4>블로그 검색</h4>
+                    	<form id="search-form" action="" method="get" onsubmit="setUrl(this)">
+	                    	<div class="input-group">
+		                        <input type="text" class="form-control" id="searchText" name="searchText" placeholder="검색">
+		                        <span class="input-group-btn">
+		                            <button class="btn btn-default" type="submit">
+		                                <span class="glyphicon glyphicon-search"></span>
+		                        </button>
+		                        </span>
+		                    </div>    
+                        </form>
                     <!-- /.input-group -->
                 </div>
 				<div class="sidebar-module">
