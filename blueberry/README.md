@@ -1,5 +1,7 @@
 # Spring MVC 연습 프로젝트
 
+![alt tag](https://github.com/hhtt2000/spring/blob/master/blueberry/blog2015-08-24%2015%3B04%3B46.PNG)
+
 ### 개발환경
 * Windows 7
 * Java 8
@@ -11,9 +13,6 @@
 * MariaDB
 * Chrome browser
 * GitHub
-
-![alt tag](https://github.com/hhtt2000/spring/blob/master/blueberry/blog2015-08-24%2015%3B04%3B46.PNG)
-
 
 ### 참고
 * To-do list : https://github.com/tastejs/todomvc
