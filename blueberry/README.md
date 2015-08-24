@@ -1,6 +1,6 @@
 # Spring MVC 연습 프로젝트
 
-![alt tag](https://github.com/hhtt2000/spring/blob/master/blueberry/blog2015-08-24%2015%3B04%3B46.PNG)
+![alt tag](https://github.com/hhtt2000/spring/blob/master/blueberry/blog2015-08-24%2015%3B04%3B46.PNG =250x)
 
 ### 개발환경
 * Windows 7
