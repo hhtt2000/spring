@@ -2,7 +2,6 @@ package com.jjh.blueberry.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -38,7 +37,6 @@ public class CommentController {
 	@RequestMapping(value="/comment", method=RequestMethod.POST)
 	public @ResponseBody String newComment(CommentDto commentDto) {
 		log.debug(commentDto);
-		HashMap<String, String> map = new HashMap<String, String>();
 		String encodedPasswd = bcryptPasswordEncoder.encode(commentDto.getPassword());
 		commentDto.setPassword(encodedPasswd);
 		int result = commentDao.insertComment(commentDto);

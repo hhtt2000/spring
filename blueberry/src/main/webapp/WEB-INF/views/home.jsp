@@ -34,7 +34,7 @@
 					console.log('error');
 				}
 			});
-			setTimeout("repeatLoop()", 1000 * 60);
+			setTimeout("repeatLoop()", 1000 * 30);
 		}
 	</script>
 	<script type="text/ng-template" id="todomvc-index.html">

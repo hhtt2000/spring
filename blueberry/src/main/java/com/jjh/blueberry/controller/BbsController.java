@@ -18,6 +18,8 @@ import com.jjh.blueberry.common.validator.BoardValidator;
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
 import com.jjh.blueberry.dto.CategoryDto;
+import com.jjh.blueberry.service.BbsService;
+import com.jjh.blueberry.service.HomeService;
 
 @RequestMapping("/board")
 @Controller
@@ -26,36 +28,35 @@ public class BbsController {
 	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BbsController.class);
 	
 	@Autowired
+	private BbsService bbsService;
+	
+	@Autowired
+	private HomeService homeService;
+	
+	@Autowired
 	private BoardDao boardDao;
 	
 	@RequestMapping("/newText")
 	public String newText(Model model){
-		//session id값을 얻는 과정
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		UserDetails userDetail = (UserDetails) auth.getPrincipal();
-		String userId = userDetail.getUsername();
+		model = bbsService.getInfo4NewText(model);
 		
-		String name = boardDao.getBoardUserName(userId);
-		model.addAttribute("name", name);
-		
-		ArrayList<CategoryDto> categories = boardDao.getCategories();
-		model.addAttribute("categories", categories);
 		return "newText";
 	}
 	
 	@RequestMapping(value="/newText", method=RequestMethod.POST)
 	public String newTextProcess(Model model, BoardDto boardDto,
-			BindingResult bindingResult) {
+			BindingResult bindingResult) {	
 		model.addAttribute("boardDto", boardDto);
 		
-		ArrayList<CategoryDto> categories = boardDao.getCategories();
+		ArrayList<CategoryDto> categories = homeService.getCategoryList();
 		model.addAttribute("categories", categories);
 		
 		new BoardValidator().validate(boardDto, bindingResult);
 		if(bindingResult.hasErrors()){
 			return "newText";
-		} else {
-			int result = boardDao.insertText(boardDto);
+		} else {	
+			int result = bbsService.insertText(boardDto);
+			
 			if(result == 1){
 				return "redirect:/main";			
 			} else {
@@ -66,10 +67,10 @@ public class BbsController {
 	
 	@RequestMapping("/updateText/id/{id}")
 	public String updateText(@PathVariable("id") int id, Model model){
-		BoardDto dto = boardDao.selectOne(id);
+		BoardDto dto = bbsService.getInfo4UpdateText(id);
 		model.addAttribute("boardDto", dto);
 		
-		ArrayList<CategoryDto> categories = boardDao.getCategories();
+		ArrayList<CategoryDto> categories = homeService.getCategoryList();
 		model.addAttribute("categories", categories);
 		
 		return "updateText";
@@ -77,13 +78,13 @@ public class BbsController {
 	
 	@RequestMapping(value="/updateText", method=RequestMethod.POST)
 	public String updateProcess(@ModelAttribute BoardDto boardDto, BindingResult bindingResult) {
-		int result = boardDao.updateText(boardDto);
-		
 		new BoardValidator().validate(boardDto, bindingResult);
 		int id = boardDto.getId();
 		if(bindingResult.hasErrors()){
 			return "forward:updateText/id/"+id;
 		}
+		
+		int result = bbsService.updateText(boardDto);
 		if(result == 1) {
 			return "redirect:/main";
 		} else {
@@ -93,7 +94,8 @@ public class BbsController {
 	
 	@RequestMapping("/deleteText/id/{id}")
 	public String deleteText(@PathVariable("id") int id){
-		boardDao.deleteText(id);
+		int result = bbsService.deleteText(id);
+		
 		return "redirect:/main";
 	}
 	

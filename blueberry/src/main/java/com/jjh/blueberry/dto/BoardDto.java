@@ -11,6 +11,7 @@ public class BoardDto {
 	private String content;
 	private Date regdate;
 	private String category;
+	private int commentno;
 
 	public String getTitle() {
 		return title;
@@ -67,6 +68,14 @@ public class BoardDto {
 
 	public void setRegdate(Date regdate) {
 		this.regdate = regdate;
+	}
+
+	public int getCommentno() {
+		return commentno;
+	}
+
+	public void setCommentno(int commentno) {
+		this.commentno = commentno;
 	}
 
 	@Override

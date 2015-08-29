@@ -32,7 +32,7 @@ public class BoardDao {
 			
 			@Override
 			public PreparedStatement createPreparedStatement(Connection conn) throws SQLException {
-				String sql = "INSERT INTO board (userid, name, title, content, regdate, category)VALUES (?, ?, ?, ? ,now(), ?)";
+				String sql = "INSERT INTO board (userid, name, title, content, regdate, category, commentno)VALUES (?, ?, ?, ? ,now(), ?, 0)";
 				PreparedStatement preparedStatement = conn.prepareStatement(sql);
 				preparedStatement.setString(1, dto.getUserid());
 				preparedStatement.setString(2, dto.getName());

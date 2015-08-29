@@ -82,7 +82,7 @@
 						<div class="blog-post-content">${dto.content}</div>
 						<br/>
 						<div class="blog-post-comments">
-							<button class="btn btn-default post-comment-${dto.id}" type="button">
+							<button class="btn btn-default btn-sm post-comment-${dto.id}" type="button">
 							  댓글 <span class="badge">4</span>
 							</button>
 							<div class="comment-list-${dto.id} comment-list">
@@ -126,6 +126,7 @@
 			<%@ include file="/WEB-INF/views/common/self_script.jsp" %>	
 			<script>
 				$(function(){
+					
 					//게시물 날짜 표시 관련
 					var timeLength = $('a.time').length;
 					for(var i=0; i<timeLength; i++){
@@ -189,16 +190,16 @@
 						
 						if(nameLen === null || nameLen === 0 || nameLen > 10){
 							$('#comment-form-'+postid+' div').css('display', 'block');
-							$('#comment-form-'+postid+' input[name=name]').focus();
 							alert('이름은 1 ~ 10자 이내로 입력해주세요.');
+							$('#comment-form-'+postid+' input[name=name]').focus();
 						} else if(passwdLen === null || passwdLen < 4 || passwdLen > 20){
 							$('#comment-form-'+postid+' div').css('display', 'block');
-							$('#comment-form-'+postid+' input[name=password]').focus();
 							alert('비밀번호는 4 ~ 20자 이내로 입력해주세요.');
+							$('#comment-form-'+postid+' input[name=password]').focus();
 						} else if(contentLen === null || contentLen === 0 || contentLen > 200){
 							$('#comment-form-'+postid+' div').css('display', 'block');
-							$('#comment-form-'+postid+' textarea[name=content]').focus();
 							alert('내용은 200자 이내로 입력해주세요.');
+							$('#comment-form-'+postid+' textarea[name=content]').focus();
 						} else{
 							$.ajax({
 								url: url,

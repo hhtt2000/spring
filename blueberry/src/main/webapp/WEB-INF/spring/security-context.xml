@@ -11,6 +11,8 @@
 			access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/board/deleteText/*"
 			access="hasRole('ROLE_USER')" />
+		<security:intercept-url pattern="/main/todo"
+			access="hasRole('ROLE_USER')" />
 		<security:intercept-url pattern="/main/addCategory"
 			access="hasRole('ROLE_USER')" method="POST" />
 		<security:form-login login-page="/login"

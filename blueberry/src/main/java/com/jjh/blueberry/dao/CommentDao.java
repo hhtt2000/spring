@@ -32,6 +32,8 @@ public class CommentDao {
 
 	public int insertComment(final CommentDto commentDto) {
 		String sql = "INSERT INTO comment (name, password, content, regdate, postid) VALUES (?, ?, ?, now(), ?)";
+		int postId = commentDto.getPostid();
+		String sql2 = "UPDATE board B INNER JOIN comment C ON B.id = C.postid SET B.commentno = B.commentno + 1 WHERE B.id = ?";
 		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
 			
 			@Override

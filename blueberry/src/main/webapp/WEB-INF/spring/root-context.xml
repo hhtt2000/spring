@@ -6,6 +6,7 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
 	<!-- Root Context: defines shared resources visible to all other web components -->
+	<context:annotation-config />
 	
 	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
 		<property name="maximumPoolSize" value="10" />
@@ -22,6 +23,10 @@
 	<bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
 		<constructor-arg ref="hikariConfig"/>		
 	</bean>
+	
+	<bean id="homeService" class="com.jjh.blueberry.service.HomeService" />
+	
+	<bean id="bbsService" class="com.jjh.blueberry.service.BbsService" />
 	
 	<bean id="boardDao" class="com.jjh.blueberry.dao.BoardDao">
 		<property name="dataSource" ref="dataSource" />
