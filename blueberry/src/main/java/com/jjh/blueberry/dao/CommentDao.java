@@ -29,13 +29,11 @@ public class CommentDao {
 		String sql = "SELECT name, password, content, regdate, postid FROM comment WHERE postid = ?";
 		return (ArrayList<CommentDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<CommentDto>(CommentDto.class), id);
 	}
-
+	//transactional with updateCommentNo
 	public int insertComment(final CommentDto commentDto) {
 		String sql = "INSERT INTO comment (name, password, content, regdate, postid) VALUES (?, ?, ?, now(), ?)";
-		int postId = commentDto.getPostid();
-		String sql2 = "UPDATE board B INNER JOIN comment C ON B.id = C.postid SET B.commentno = B.commentno + 1 WHERE B.id = ?";
+
 		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
-			
 			@Override
 			public void setValues(PreparedStatement preparedStatement) throws SQLException {
 				preparedStatement.setString(1, commentDto.getName());
@@ -44,5 +42,16 @@ public class CommentDao {
 				preparedStatement.setInt(4, commentDto.getPostid());
 			}
 		});
+	}
+	//transactional with insertComment
+	public int updateCommentNo(int id){
+		String sql = "UPDATE board B INNER JOIN comment C ON B.id = C.postid SET B.commentno = B.commentno + 1 WHERE B.id = ?";
+		return this.jdbcTemplate.update(sql, id);
+	}
+	
+	public int getCommentNo(int id){
+		String sql = "SELECT B.commentno FROM board B INNER JOIN comment C ON B.id = C.postid WHERE B.id = ? GROUP BY B.commentno";
+		int commentNo = this.jdbcTemplate.queryForObject(sql, Integer.class, id);
+		return commentNo;
 	}
 }

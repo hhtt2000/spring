@@ -25,9 +25,15 @@ public class CommentService {
 	public int insertComment(CommentDto commentDto) {
 		String encodedPasswd = bcryptPasswordEncoder.encode(commentDto.getPassword());
 		commentDto.setPassword(encodedPasswd);
+		//Need transaction
 		int result = commentDao.insertComment(commentDto);
-		
+		int postId = commentDto.getPostid();
+		commentDao.updateCommentNo(postId);
 		return result;
+	}
+
+	public int getCommentNo(int postId) {
+		return commentDao.getCommentNo(postId);
 	}
 
 }

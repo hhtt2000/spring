@@ -83,7 +83,7 @@
 						<br/>
 						<div class="blog-post-comments">
 							<button class="btn btn-default btn-sm post-comment-${dto.id}" type="button">
-							  댓글 <span class="badge">4</span>
+							  댓글 <span class="badge">${dto.commentno}</span>
 							</button>
 							<div class="comment-list-${dto.id} comment-list">
 								<br/>
@@ -205,11 +205,12 @@
 								url: url,
 								type: 'post',
 								data: data,
-								success: function(result){
-									if(result === '1'){
+								success: function(resultData){
+									if(resultData.result === 1){
+										$('.post-comment-'+postid+' .badge').text(resultData.commentNo);
 										$('#comment-form-'+postid+' div').css('display', 'block');
 										$('#comment-form-'+postid)[0].reset();
-										getComment(postid);									
+										getComment(postid);
 									} else{
 										alert('댓글이 등록되지 않았습니다.');
 									}

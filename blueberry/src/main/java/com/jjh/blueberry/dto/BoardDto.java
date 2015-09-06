@@ -11,7 +11,7 @@ public class BoardDto {
 	private String content;
 	private Date regdate;
 	private String category;
-	private int commentno;
+	private int commentno;//댓글 개수
 
 	public String getTitle() {
 		return title;

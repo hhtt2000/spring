@@ -45,14 +45,14 @@ public class BoardDao {
 	}
 
 	public BoardDto selectOne(int id) {
-		String sql = "SELECT id, userid, name, title, content, regdate, category FROM board WHERE id = ?";
+		String sql = "SELECT id, userid, name, title, content, regdate, category, commentno FROM board WHERE id = ?";
 		return this.jdbcTemplate.queryForObject(sql, new Object[] {id},
 				new BeanPropertyRowMapper<BoardDto>(BoardDto.class));
 		
 	}
 
 	public ArrayList<BoardDto> getList(final String category, final int fromRowNum, final int countList) {
-		String sql = "SELECT id, userid, name, title, content, regdate, category FROM board";
+		String sql = "SELECT id, userid, name, title, content, regdate, category, commentno FROM board";
 		if(category != null){
 			sql += " WHERE category = ?";
 		}
@@ -119,8 +119,6 @@ public class BoardDao {
 		String sql = "SELECT count(*) AS totalCount FROM board";
 		if(category != null){
 			sql += " WHERE category = ?";
-		}
-		if(category != null){
 			return this.jdbcTemplate.queryForObject(sql, Integer.class, category);
 		} else{
 			return this.jdbcTemplate.queryForObject(sql, Integer.class);			
@@ -133,7 +131,7 @@ public class BoardDao {
 	}
 	
 	public ArrayList<BoardDto> getSearchList(String searchText, int fromRowNum, int countList) {
-		String sql = "SELECT id, userid, name, title, content, regdate, category FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY id DESC LIMIT ?, ?";
+		String sql = "SELECT id, userid, name, title, content, regdate, category, commentno FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY id DESC LIMIT ?, ?";
 		return (ArrayList<BoardDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<BoardDto>(BoardDto.class), "%"+searchText+"%", "%"+searchText+"%", fromRowNum, countList);
 	}
 
