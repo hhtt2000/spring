@@ -20,3 +20,4 @@
 * WYSIWYG : https://github.com/summernote/summernote.git
 * Date showing on articles : https://github.com/moment/moment.git
 * Database Connection Pool : https://github.com/brettwooldridge/HikariCP
+* URL Regular Expression : https://gist.github.com/dperini/729294
