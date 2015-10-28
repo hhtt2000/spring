@@ -42,6 +42,7 @@
 				<div class="form-group">
 					<textarea id="summernote" name="content">${boardDto.content}</textarea>
 				</div>
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 				<button type="submit" class="btn btn-default">확인</button>
 			</form>
 		</div>

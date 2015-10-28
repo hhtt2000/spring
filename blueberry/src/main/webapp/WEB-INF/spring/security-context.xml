@@ -20,7 +20,10 @@
 			username-parameter="userId"
 			password-parameter="password" />
 		<security:logout logout-success-url="/main" />
+		
+		<security:csrf/>
 	</security:http>
+	
 
 	<!-- Define PasswordEncrypt bean -->
 	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
