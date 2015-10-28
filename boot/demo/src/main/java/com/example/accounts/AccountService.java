@@ -23,6 +23,10 @@ public class AccountService {
 //		Account account = new Account();
 //		account.setUsername(dto.getUsername());
 //		account.setPassword(dto.getPassword());
+		String username = dto.getUsername();
+		if(repository.findByUsername(username) != null) {
+			throw new UserDuplicatedException(username);
+		}
 		Account account = modelMapper.map(dto, Account.class);
 		
 		Date now = new Date();

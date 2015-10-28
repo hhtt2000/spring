@@ -72,6 +72,7 @@
 						height : 250,
 						onKeyup : function(e) {
 							var textValue = $('#summernote').code();
+							console.log(textValue);
 							var keyCode = e.which || keyCode;
 							if(urlRegEx.test(textValue) && keyCode == 32){
 								var urlArr = urlRegEx.exec(textValue);

@@ -58,9 +58,9 @@ public class BbsService {
 
 	public Map<String, String> getUrlInfo(String url) throws IOException {
 		Map<String, String> map = new HashMap<>();
-		if(url.contains("&nbsp;") || url.contains("\"")){
-			url = url.replaceAll("&nbsp;", "");
-			url = url.replaceAll("\"", "");
+		if(url.contains("&nbsp;")){
+			int lastIndexOfSpace = url.lastIndexOf("&nbsp;");
+			url = url.substring(0, lastIndexOfSpace);
 		}
 		System.out.println("--------------->"+url);
 //		Connection conn = Jsoup.connect(url).userAgent("Mozilla/5.0").ignoreHttpErrors(true).timeout(100000);

@@ -1,7 +1,7 @@
 package com.example.accounts;
 
-import static org.junit.Assert.*;
-
+import org.hamcrest.core.Is;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,11 +32,16 @@ public class AccountControllerTest {
 	@Autowired
 	ObjectMapper objectMapper;
 	
+	MockMvc mockMvc;
+	
+	@Before
+	public void setUp() {
+		mockMvc = new MockMvcBuilders().webAppContextSetup(wac)
+				                               .build();
+	}
+	
 	@Test
 	public void createAccount() throws JsonProcessingException, Exception {
-		MockMvc mockMvc = new MockMvcBuilders().webAppContextSetup(wac)
-											.build();
-		
 		AccountDto.Create create = new AccountDto.Create();
 		create.setUsername("jaehyuk");
 		create.setPassword("springboot");
@@ -44,9 +49,31 @@ public class AccountControllerTest {
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
 				.contentType(MediaType.APPLICATION_JSON)
 				.content(objectMapper.writeValueAsString(create)));
-		
 		result.andDo(MockMvcResultHandlers.print());
 		result.andExpect(MockMvcResultMatchers.status().isCreated());
+		result.andExpect(MockMvcResultMatchers.jsonPath("$.username", Is.is("jaehyuk")));
+		
+		//for dup check
+		result = mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(create)));
+		result.andDo(MockMvcResultHandlers.print());
+		result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+		result.andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is("username.duplicated.exception")));
+	}
+	
+	@Test
+	public void createAccount_BadRequest() throws JsonProcessingException, Exception {
+		AccountDto.Create create = new AccountDto.Create();
+		create.setUsername("  ");
+		create.setPassword("123");
+		
+		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
+				                              .contentType(MediaType.APPLICATION_JSON)
+				                              .content(objectMapper.writeValueAsString(create)));
+		result.andDo(MockMvcResultHandlers.print());
+		result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+		result.andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is("bad.request")));
 	}
 
 }
