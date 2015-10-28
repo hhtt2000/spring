@@ -1,7 +1,16 @@
 package com.jjh.blueberry.service;
 
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,6 +56,61 @@ public class BbsService {
 
 	public int deleteText(int id) {
 		return boardDao.deleteText(id);
+	}
+
+	public Map<String, String> getUrlInfo(String url) throws IOException {
+		Map<String, String> map = new HashMap<>();
+		if(url.contains("&nbsp;") || url.contains("\"")){
+			url = url.replaceAll("&nbsp;", "");
+			url = url.replaceAll("\"", "");
+		}
+		System.out.println("--------------->"+url);
+//		Connection conn = Jsoup.connect(url).userAgent("Mozilla/5.0").ignoreHttpErrors(true).timeout(100000);
+//		Response response = conn.execute();
+	
+		Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
+		map.put("url", url);
+		
+		String title = "";
+		Elements parsedTitle = doc.select("meta[property=\"og:title\"]");
+		if(!parsedTitle.isEmpty()){
+			title = parsedTitle.attr("content");
+		} else{
+			title = doc.title();
+		}
+		map.put("title", title);
+		
+		//  <meta content="/images/branding/googleg/1x/googleg_standard_color_128dp.png" itemprop="image">
+		Elements parsedImageByProperty = doc.select("meta[property=\"og:image\"]");
+		StringBuilder sb = new StringBuilder();
+		String image = "";
+		if(!parsedImageByProperty.isEmpty()){
+			image = parsedImageByProperty.attr("content");
+		}
+		if(image.isEmpty()){
+			image = "/blueberry/resources/img/grape.png";
+		}
+		sb.append("<img src='");
+		sb.append(image);
+		sb.append("' align='left' width='100px' height='100px'>");
+		map.put("image", sb.toString());			
+		
+		Elements parsedDescriptionByProperty = doc.select("meta[property=\"og:description\"]");
+		String description = "";
+		if(!parsedDescriptionByProperty.isEmpty()){
+			description = parsedDescriptionByProperty.attr("content");
+		} else{
+			Elements parsedDescriptionByName = doc.select("meta[name=\"description\"]");
+			if(!parsedDescriptionByName.isEmpty()){
+				description = parsedDescriptionByName.attr("content");
+			}
+		}
+		if(description.length() > 150){
+			description = description.substring(0, 150);
+		}
+		map.put("description", description);			
+		
+		return map;
 	}
 	
 	

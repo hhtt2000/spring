@@ -1,21 +1,23 @@
 package com.jjh.blueberry.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.jjh.blueberry.common.validator.BoardValidator;
-import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
 import com.jjh.blueberry.dto.CategoryDto;
 import com.jjh.blueberry.service.BbsService;
@@ -32,9 +34,6 @@ public class BbsController {
 	
 	@Autowired
 	private HomeService homeService;
-	
-	@Autowired
-	private BoardDao boardDao;
 	
 	@RequestMapping("/newText")
 	public String newText(Model model){
@@ -98,5 +97,27 @@ public class BbsController {
 		
 		return "redirect:/main";
 	}
+	
+	//1. @requestparam 사용(summernote.jsp ajax)
+	@RequestMapping(value="/getUrlInfo")
+	@ResponseBody
+	public Map<String, Map<String, String>> getUrlInfo(@RequestParam("url") String url) throws IOException {
+		//url = "http://www.daum.net"
+		Map<String, Map<String, String>> map = new HashMap<>();
+		Map<String, String> info = bbsService.getUrlInfo(url);
+		map.put("info", info);
+		return map;
+	}
+	
+	//2. @requestbody 사용(summernote.jsp ajax)
+//	@RequestMapping(value="/getUrlInfo", method=RequestMethod.POST)
+//	@ResponseBody
+//	public Map<String, String> getUrlInfo(@RequestBody String url) {
+//		//url = {"url":"http://www.daum.net"}
+//		Map<String, String> map = new HashMap<>();
+//		String info = bbsService.getUrlInfo(url);
+//		map.put("info", info);
+//		return map;
+//	}
 	
 }
