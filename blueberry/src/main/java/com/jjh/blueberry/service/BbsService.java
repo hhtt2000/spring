@@ -62,12 +62,13 @@ public class BbsService {
 			int lastIndexOfSpace = url.lastIndexOf("&nbsp;");
 			url = url.substring(0, lastIndexOfSpace);
 		}
+		map.put("url", url);
 		System.out.println("--------------->"+url);
 //		Connection conn = Jsoup.connect(url).userAgent("Mozilla/5.0").ignoreHttpErrors(true).timeout(100000);
 //		Response response = conn.execute();
 	
-		Document doc = Jsoup.parse(new URL(url).openStream(), "UTF-8", url);
-		map.put("url", url);
+		Document doc = Jsoup.parse(new URL(url).openStream(), null, url);
+		
 		
 		String title = "";
 		Elements parsedTitle = doc.select("meta[property=\"og:title\"]");
@@ -110,6 +111,4 @@ public class BbsService {
 		
 		return map;
 	}
-	
-	
 }
