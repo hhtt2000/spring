@@ -9,6 +9,8 @@ import java.util.Map;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -23,6 +25,8 @@ import com.jjh.blueberry.dto.CategoryDto;
 @Service
 public class BbsService {
 
+	Logger log = LoggerFactory.getLogger(BbsService.class);
+	
 	@Autowired
 	private BoardDao boardDao;
 
@@ -63,7 +67,7 @@ public class BbsService {
 			url = url.substring(0, lastIndexOfSpace);
 		}
 		map.put("url", url);
-		System.out.println("--------------->"+url);
+		log.debug("URL is {}", url);
 //		Connection conn = Jsoup.connect(url).userAgent("Mozilla/5.0").ignoreHttpErrors(true).timeout(100000);
 //		Response response = conn.execute();
 	

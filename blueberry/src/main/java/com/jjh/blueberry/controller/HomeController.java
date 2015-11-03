@@ -23,8 +23,6 @@ import com.jjh.blueberry.service.HomeService;
 @Controller
 public class HomeController {
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(HomeController.class);
-	
 	@Autowired
 	private HomeService homeService;
 	

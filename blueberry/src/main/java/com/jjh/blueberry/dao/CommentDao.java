@@ -11,14 +11,11 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
-import com.jjh.blueberry.controller.CommentController;
 import com.jjh.blueberry.dto.CommentDto;
 
 @Repository
 public class CommentDao {
 
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommentController.class);
-	
 	private JdbcTemplate jdbcTemplate;
 	
 	public void setDataSource(DataSource dataSource) {

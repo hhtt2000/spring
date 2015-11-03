@@ -19,8 +19,6 @@ import com.jjh.blueberry.dto.CategoryDto;
 @Repository
 public class BoardDao {
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(BoardDao.class);
-	
 	private JdbcTemplate jdbcTemplate;
 
 	public void setDataSource(DataSource dataSource) {

@@ -19,8 +19,6 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	
-	static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(CommentController.class);
-	
 	@RequestMapping(value="/comment/{id}", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, ArrayList<CommentDto>> getComment(@PathVariable("id") int id) {
 		ArrayList<CommentDto> comments = commentService.getComment(id);
