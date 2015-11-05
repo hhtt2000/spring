@@ -3,18 +3,26 @@ package com.jjh.blueberry.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.MultipartRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.jjh.blueberry.common.validator.BoardValidator;
 import com.jjh.blueberry.dto.BoardDto;
@@ -25,6 +33,8 @@ import com.jjh.blueberry.service.HomeService;
 @RequestMapping("/board")
 @Controller
 public class BbsController {
+	
+	Logger log = LoggerFactory.getLogger(BbsController.class);
 	
 	@Autowired
 	private BbsService bbsService;
@@ -116,5 +126,15 @@ public class BbsController {
 //		map.put("info", info);
 //		return map;
 //	}
+	
+	@RequestMapping(value="/saveImage", method=RequestMethod.POST)
+	@ResponseBody
+	public Map<String, String> saveImage(@RequestBody MultipartFile file) {
+		log.info("----------------->file is {}", file.getOriginalFilename());
+		//TODO 파일 DB에 저장하고, 그 경로 반환하기
+		Map<String, String> map = new HashMap<>();
+		
+		return map;
+	}
 	
 }

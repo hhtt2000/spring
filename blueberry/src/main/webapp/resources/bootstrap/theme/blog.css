@@ -11,6 +11,7 @@ a:focus {
 }
 
 body {
+  padding-top: 50px;
   font-family: "Nanum Gothic", Georgia, "Times New Roman", Times, serif;
   color: #555;
 }

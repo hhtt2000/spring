@@ -72,7 +72,6 @@
 						height : 250,
 						onKeyup : function(e) {
 							var textValue = $('#summernote').code();
-							console.log(textValue);
 							var keyCode = e.which || keyCode;
 							if(urlRegEx.test(textValue) && keyCode == 32){
 								var urlArr = urlRegEx.exec(textValue);
@@ -111,7 +110,31 @@
 								});	
 								
 							}
+						},
+						onImageUpload : function(files) {
+							console.log('image upload: ', files);
+							for(var i = 0; i < files.length; i++) {
+								sendFile(files[i], this);
+							}
 						}
 					});
+			function sendFile(file, tagName) {
+				var data = new FormData();
+				data.append('file', file);
+				$.ajax({
+					data: data,
+					type: "post",
+					url: "${pageContext.servletContext.contextPath}/board/saveImage",
+					contentType: false,
+					processData: false,
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+					},
+					success: function(url) {
+						// TODO url 받아서 에디터 img 태그안에 적절히 배치되는지 확인
+						$(tagName).summernote('editor.insertImage', url);
+					}
+				});
+			}
 		});
 	</script>

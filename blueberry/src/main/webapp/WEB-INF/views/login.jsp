@@ -24,7 +24,7 @@
 	                    Sign in</button>
 	                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	                <label class="checkbox pull-left">
-	                    <input type="checkbox" value="remember-me">
+	                    <input type="checkbox" name="remember-me">
 	                    Remember me
 	                </label>
 	                <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
