@@ -5,12 +5,12 @@
 ### 개발환경
 * Windows 7
 * Java 7 -> 8
-* Spring framework 3.2 -> 4.0.3
-* Maven 4.0.0
-* Apache-tomcat 7
+* Spring framework 3.2 -> 4.1.8
+* Maven 3.3.3
+* Apache-tomcat 7.0.59
 * Jenkins
 * Ubuntu 14.04.2 (Remote server)
-* MariaDB
+* MariaDB 10.0
 * Chrome browser
 * GitHub
 
