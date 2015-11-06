@@ -1,7 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ page session="false" pageEncoding="utf-8"%>
 <html lang="en" data-framework="angularjs">
 <head>
+<security:csrfMetaTags/>
 <title>AngularJS • TodoMVC</title>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/angularjs/node_modules/todomvc-common/base.css">
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/angularjs/node_modules/todomvc-app-css/index.css">
@@ -15,27 +17,30 @@
 	<a href="${pageContext.servletContext.contextPath}/main">HOME</a><span>현재 시간은 &nbsp;<strong id="time"></strong></span>
 	<ng-view />
 	<script>
-		window.onload = function(){
-			repeatLoop();
-		}
+		/* window.onload = function(){
+			var header = $("meta[name='_csrf_header']").attr("content");
+			var token = $("meta[name='_csrf']").attr("content");
+			function repeatLoop(){
+				$.ajax({
+					url: "${pageContext.servletContext.contextPath}/main/getTime",
+					type: "get",
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token);
+					},
+					success: function(e){
+						var data = e.serverTime;
+						var strLength = data.length - 3;
+						var modifiedData = data.substring(0, strLength);
+						$('strong#time').text(modifiedData);
+					},
+					error: function(){
+						console.log('error');
+					}
+				});
+				setTimeout("repeatLoop()", 1000 * 30);
+			}
+		} */
 			
-		function repeatLoop(){
-			$.ajax({
-				url: "${pageContext.servletContext.contextPath}/main/getTime",
-				type: "post",
-				dataType: "json",
-				success: function(e){
-					var data = e.serverTime;
-					var strLength = data.length - 3;
-					var modifiedData = data.substring(0, strLength);
-					$('strong#time').text(modifiedData);
-				},
-				error: function(){
-					console.log('error');
-				}
-			});
-			setTimeout("repeatLoop()", 1000 * 30);
-		}
 	</script>
 	<script type="text/ng-template" id="todomvc-index.html">
 			<section id="todoapp">
