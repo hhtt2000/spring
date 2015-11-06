@@ -1,11 +1,17 @@
 package com.jjh.blueberry.service;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jsoup.Connection;
+import org.jsoup.Connection.Response;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
@@ -17,6 +23,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.jjh.blueberry.dao.BoardDao;
 import com.jjh.blueberry.dto.BoardDto;
@@ -114,5 +121,42 @@ public class BbsService {
 		map.put("description", description);			
 		
 		return map;
+	}
+
+	public String saveImage(MultipartFile file) throws IOException {
+		//TODO 이미지 해당 경로에 저장
+		Timestamp now = new Timestamp(new Date().getTime());
+		long timeToLong = now.getTime();
+		String originalFileName = file.getOriginalFilename();
+		String[] oriFileNameSplitByDot = originalFileName.split("\\.");
+		String fileExtension = oriFileNameSplitByDot[oriFileNameSplitByDot.length-1];
+		String fileName = timeToLong+"."+fileExtension;
+		//for linux
+		String savePath = "/home/dev/local/apache-tomcat-7.0.63/webapps/blueberry/resources/img/"+fileName;
+		//for local in windows
+//		String savePath = "C:\\Users\\Administrator\\git\\spring\\blueberry\\src\\main\\webapp\\resources\\img\\"+fileName;
+		String connectPath = "/blueberry/resources/img/"+fileName;
+		InputStream is = file.getInputStream();
+		FileOutputStream os = new FileOutputStream(savePath);
+		
+		int count = -1;
+		byte[] buffer = new byte[2048];
+		while((count = is.read(buffer)) != -1) {
+			os.write(buffer, 0, count);
+		}
+		os.close();
+		is.close();
+		//TODO 충분한 여유 시간이 있으면 404 에러 나지 않음
+		//for linux
+		Connection urlCon = Jsoup.connect("http://127.0.0.1:8080"+connectPath);
+		//for windows
+//		Connection urlCon = Jsoup.connect("http://127.0.0.1:8181"+connectPath);
+		Response response = urlCon.ignoreHttpErrors(true).ignoreContentType(true).execute();
+		int status = response.statusCode();
+		while(status == 404) {
+			response = urlCon.ignoreHttpErrors(true).ignoreContentType(true).execute();
+			status = response.statusCode();
+		}
+		return connectPath;
 	}
 }

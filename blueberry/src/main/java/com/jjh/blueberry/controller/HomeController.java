@@ -81,20 +81,14 @@ public class HomeController {
 		
 		return "home";
 	}
-	
-	@RequestMapping(value="/getTime", method=RequestMethod.POST)
-	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
-		HashMap<String, String> map = new HashMap<String, String>();
-		
-		String formattedDate = homeService.getServerTime(locale);	
-		map.put("serverTime", formattedDate);
-		
-		return map;
-	}
-	
-	@RequestMapping("/testsql")
-	public String testsql(Model model){
-		return "testsql";
-	}
-	
+//	
+//	@RequestMapping(value="/getTime", method=RequestMethod.GET)
+//	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
+//		HashMap<String, String> map = new HashMap<String, String>();
+//		
+//		String formattedDate = homeService.getServerTime(locale);	
+//		map.put("serverTime", formattedDate);
+//		
+//		return map;
+//	}
 }

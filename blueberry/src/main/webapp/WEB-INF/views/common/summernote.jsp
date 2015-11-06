@@ -112,7 +112,6 @@
 							}
 						},
 						onImageUpload : function(files) {
-							console.log('image upload: ', files);
 							for(var i = 0; i < files.length; i++) {
 								sendFile(files[i], this);
 							}
@@ -125,14 +124,15 @@
 					data: data,
 					type: "post",
 					url: "${pageContext.servletContext.contextPath}/board/saveImage",
+					cache: false,
 					contentType: false,
 					processData: false,
 					beforeSend : function(xhr){
 						xhr.setRequestHeader(header, token);
 					},
-					success: function(url) {
+					success: function(data) {
 						// TODO url 받아서 에디터 img 태그안에 적절히 배치되는지 확인
-						$(tagName).summernote('editor.insertImage', url);
+						$(tagName).summernote('editor.insertImage', data.path);
 					}
 				});
 			}

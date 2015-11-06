@@ -3,7 +3,6 @@ package com.jjh.blueberry.controller;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -20,9 +19,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
-import org.springframework.web.multipart.MultipartRequest;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import com.jjh.blueberry.common.validator.BoardValidator;
 import com.jjh.blueberry.dto.BoardDto;
@@ -127,13 +123,12 @@ public class BbsController {
 //		return map;
 //	}
 	
-	@RequestMapping(value="/saveImage", method=RequestMethod.POST)
+	@RequestMapping(value="/saveImage", method=RequestMethod.POST, produces="application/json;charset=utf-8")
 	@ResponseBody
-	public Map<String, String> saveImage(@RequestBody MultipartFile file) {
-		log.info("----------------->file is {}", file.getOriginalFilename());
-		//TODO 파일 DB에 저장하고, 그 경로 반환하기
+	public Map<String, String> saveImage(@RequestBody MultipartFile file) throws IOException {
+		String filePath = bbsService.saveImage(file);
 		Map<String, String> map = new HashMap<>();
-		
+		map.put("path", filePath);
 		return map;
 	}
 	
