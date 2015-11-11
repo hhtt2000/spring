@@ -164,6 +164,14 @@ h6, .h6 {
   margin-bottom: 0;
 }
 
+/* For category toggle */
+#add-category-form {
+	display: none;
+}
+#add-category-form.active{
+	display: block;
+}
+
 
 /* Pagination */
 .pager {
@@ -214,4 +222,30 @@ h6, .h6 {
 }
 .category-title-gap .category {
 	padding-right: 10px;
+}
+/* footer icons */
+i.tiny {font-size: 1em;}
+i.small {font-size: 2em;}
+i.medium {font-size: 4em;}
+i.large {font-size: 6em;}
+.fa-github-square {
+	color: #191919;
+}
+.fa-github-square:hover {
+	color: #595959;
+}
+.fa-twitter-square {
+	color: DogerBlue;
+}
+.fa-twitter-square:hover {
+	color: #78BCFF;
+}
+.fa-facebook-official {
+	color: MidnightBlue;
+}
+.fa-facebook-official:hover {
+	color: #47478D;
+}
+.form-login {
+	padding-top: 20px;
 }

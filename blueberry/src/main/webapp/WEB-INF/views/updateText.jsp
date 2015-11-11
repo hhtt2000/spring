@@ -8,7 +8,7 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form:form action="${pageContext.servletContext.contextPath}/board/updateText" commandName="boardDto" method="post">
+			<form:form id="text-frm" action="${pageContext.servletContext.contextPath}/board/updateText" commandName="boardDto" method="post">
 				<div class="form-group">
 					<form:input class="form-control" type="hidden" path="id"/>
 				</div>
@@ -33,12 +33,20 @@
 				<div class="form-group">
 					<form:textarea id="summernote" path="content"/>
 				</div>
-				<form:button type="submit" class="btn btn-default">확인</form:button>
+				<form:button type="submit" class="btn btn-default" id="text-frm-btn">확인</form:button>
 			</form:form>
 		</div>
 		<!-- End newText -->
 		
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
 		<%@ include file="/WEB-INF/views/common/self_script.jsp" %>
+		<script>
+			$(function() {
+				//url-info-box가 있는 경우 'x'버튼 활성화
+				if($('#url-info-box').length > 0) {
+					$('#url-info-box-del').show();
+				}
+			});
+		</script>
 </body>
 </html>

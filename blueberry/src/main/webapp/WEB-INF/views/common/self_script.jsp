@@ -7,6 +7,18 @@
 		      families: ['Nanum Gothic', 'Jeju Hallasan', 'Jeju Myeongjo']			    }
 		});
 		$(function() {
+			//네비바 투명 관련
+			$(window).scroll(function() {
+				var curPosition = $(document).scrollTop();
+				if(curPosition > 0) {
+					$('.navbar').css({"opacity": "0.4", "filter": "alpha(opacity=40)"});
+				} else {
+					$('.navbar').css({"opacity": "1.0", "filter": "alpha(opacity=100)"});
+				}
+			});
+			$('.navbar').hover(function() {
+				$('.navbar').css({"opacity": "1.0", "filter": "alpha(opacity=100)"});
+			});
 			//검색 관련
 			$('#search-form button').on('click', function(e){
 				var searchTextLen = $('#search-form input[name=searchText]').val().length;
@@ -24,7 +36,15 @@
 				e.preventDefault();
 				$('#add-category-form').toggleClass('active');
 			});
-		});
+			//글 저장 전에 url-info-box의 'x'버튼 숨김
+			$('#text-frm-btn').click(function(e) {
+				e.preventDefault();
+				if($('#url-info-box').length > 0) {
+					$('#url-info-box-del').hide();
+				}
+				$('#text-frm').submit();
+			});
+		});//End of $(function())
 		//사용자 인증시
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();

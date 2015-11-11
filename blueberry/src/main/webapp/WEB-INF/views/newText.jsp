@@ -8,7 +8,7 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form action="newText" method="post">
+			<form id="text-frm" action="newText" method="post">
 				<input type="hidden" name="userid" value="${pageContext.request.userPrincipal.name}" />
 				<div class="form-group row category-title-gap">
 					<div class="category col-xs-4">
@@ -43,7 +43,7 @@
 					<textarea id="summernote" name="content">${boardDto.content}</textarea>
 				</div>
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-				<button type="submit" class="btn btn-default">확인</button>
+				<button type="submit" class="btn btn-default" id="text-frm-btn">확인</button>
 			</form>
 		</div>
 		<!-- End newText -->

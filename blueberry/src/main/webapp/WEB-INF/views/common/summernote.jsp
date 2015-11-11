@@ -93,14 +93,22 @@
 										xhr.setRequestHeader(header, token);
 									},
 									success : function(data){
-										//관련 div가 active하면 아래의 내용을 수행하지 않는다.
+										//url-info-box가 존재하면 박스를 추가하지 않는다.
+										if($('#url-info-box').length > 0) {
+											return;
+										}
 										var editedBox = "<br/>"
 														+ "<a href='"+data.info.url+"'>"
-														+ "<div class='url-info-box active' style='height: 110px;padding: 5px;border:1px solid #999966;'>"
-														+ "<div>"+data.info.image+"</div>"
-														+ "<div style='font-size:13px;color:#999966'><b>"+data.info.title+"</b></div>"
-														+ "<div style='font-size:13px;color:#999966'>"+data.info.description+"</div>"
-														+"</div>"
+															+ "<div id='url-info-box' class='row' style='padding-top:5px;padding-bottom:8px;margin-left:5px;margin-right:10px;border:1px solid #999966;'>"
+																+ "<div class='col-xs-2'>"+data.info.image+"</div>"
+																+ "<div class='col-xs-10'>"
+																	+ "<div class='row'>"
+																		+ "<div class='col-xs-11' style='font-size:13px;color:#999966'><b>"+data.info.title+"</b></div>"
+																		+ "<div class='col-xs-1 glyphicon glyphicon-remove' id='url-info-box-del' style='color:#999966' aria-hidden='true' onclick='delUrlInfoBox()'></div>"
+																	+ "</div>"
+																	+ "<div style='font-size:13px;color:#999966'>"+data.info.description+"</div>"
+																+ "</div>"
+															+"</div>"
 														+"</a>";
 										$('#summernote').code(textValue + editedBox);
 									},
@@ -131,10 +139,12 @@
 						xhr.setRequestHeader(header, token);
 					},
 					success: function(data) {
-						// TODO url 받아서 에디터 img 태그안에 적절히 배치되는지 확인
 						$(tagName).summernote('editor.insertImage', data.path);
 					}
 				});
 			}
 		});
+		function delUrlInfoBox(elem) {
+			$('#url-info-box').remove();
+		}
 	</script>

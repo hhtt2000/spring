@@ -102,7 +102,7 @@ public class BbsService {
 		}
 		sb.append("<img src='");
 		sb.append(image);
-		sb.append("' align='left' width='100px' height='100px'>");
+		sb.append("' class='img-responsive' style='height:auto'>");
 		map.put("image", sb.toString());			
 		
 		Elements parsedDescriptionByProperty = doc.select("meta[property=\"og:description\"]");
@@ -124,17 +124,16 @@ public class BbsService {
 	}
 
 	public String saveImage(MultipartFile file) throws IOException {
-		//TODO 이미지 해당 경로에 저장
+		//이미지 해당 경로에 저장
 		Timestamp now = new Timestamp(new Date().getTime());
 		long timeToLong = now.getTime();
 		String originalFileName = file.getOriginalFilename();
-		String[] oriFileNameSplitByDot = originalFileName.split("\\.");
-		String fileExtension = oriFileNameSplitByDot[oriFileNameSplitByDot.length-1];
-		String fileName = timeToLong+"."+fileExtension;
+		String fileName = timeToLong+originalFileName;
 		//for linux
-		String savePath = "/home/dev/local/apache-tomcat-7.0.63/webapps/blueberry/resources/img/"+fileName;
+//		String savePath = "/home/dev/local/apache-tomcat-7.0.63/webapps/blueberry/resources/img/"+fileName;
 		//for local in windows
-//		String savePath = "C:\\Users\\Administrator\\git\\spring\\blueberry\\src\\main\\webapp\\resources\\img\\"+fileName;
+		String savePath = "C:\\Users\\Administrator\\git\\spring\\blueberry\\src\\main\\webapp\\resources\\img\\"+fileName;
+		
 		String connectPath = "/blueberry/resources/img/"+fileName;
 		InputStream is = file.getInputStream();
 		FileOutputStream os = new FileOutputStream(savePath);
@@ -146,11 +145,12 @@ public class BbsService {
 		}
 		os.close();
 		is.close();
-		//TODO 충분한 여유 시간이 있으면 404 에러 나지 않음
+		//충분한 여유 시간이 있으면 404 에러 나지 않음
 		//for linux
-		Connection urlCon = Jsoup.connect("http://127.0.0.1:8080"+connectPath);
+//		Connection urlCon = Jsoup.connect("http://127.0.0.1:8080"+connectPath);
 		//for windows
-//		Connection urlCon = Jsoup.connect("http://127.0.0.1:8181"+connectPath);
+		Connection urlCon = Jsoup.connect("http://127.0.0.1:8181"+connectPath);
+		
 		Response response = urlCon.ignoreHttpErrors(true).ignoreContentType(true).execute();
 		int status = response.statusCode();
 		while(status == 404) {
