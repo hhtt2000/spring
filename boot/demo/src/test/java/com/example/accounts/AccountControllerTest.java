@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 
 import com.example.DemoApplication;
@@ -24,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = DemoApplication.class)
 @WebAppConfiguration
+@Transactional
 public class AccountControllerTest {
 	
 	@Autowired
@@ -31,6 +33,9 @@ public class AccountControllerTest {
 
 	@Autowired
 	ObjectMapper objectMapper;
+	
+	@Autowired
+	AccountService service;
 	
 	MockMvc mockMvc;
 	
@@ -74,6 +79,30 @@ public class AccountControllerTest {
 		result.andDo(MockMvcResultHandlers.print());
 		result.andExpect(MockMvcResultMatchers.status().isBadRequest());
 		result.andExpect(MockMvcResultMatchers.jsonPath("$.code", Is.is("bad.request")));
+	}
+	
+	@Test
+	public void getAccounts() throws Exception {
+		AccountDto.Create createDto = new AccountDto.Create();
+		createDto.setUsername("jaehyuk");
+		createDto.setPassword("springboot");
+		service.createAccount(createDto);
+		
+		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/accounts"));
+		
+		//AccountDto.Response의 값과 pagable을 이용한 반환 값
+		//{"content":
+		//[{"id":1,"username":"jaehyuk","fullName":null,"joined":1447339279230,"updated":1447339279230}],
+		//"totalPages":1,
+		//"last":true,
+		//"totalElements":1,
+		//"size":20,
+		//"number":0,
+		//"sort":null,
+		//"numberOfElements":1,
+		//"first":true}
+		result.andDo(MockMvcResultHandlers.print());
+		result.andExpect(MockMvcResultMatchers.status().isOk());
 	}
 
 }
