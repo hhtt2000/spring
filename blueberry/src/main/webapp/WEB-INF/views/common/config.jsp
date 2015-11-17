@@ -6,8 +6,9 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta name="description" content="">
-<meta name="author" content="">
+<meta name="description" content="A blog for my study.">
+<meta name="author" content="jaehyuk">
+<link rel="icon" href="${pageContext.servletContext.contextPath}/resources/img/grape.png" type="image/png" sizes="16x16">
 <!-- Google Web Fonts -->
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
 <link href="http://fonts.googleapis.com/earlyaccess/nanumgothic.css" rel="stylesheet" type="text/css">
