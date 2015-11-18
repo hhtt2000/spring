@@ -7,6 +7,9 @@ import java.util.ArrayList;
 
 import javax.sql.DataSource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
@@ -18,6 +21,8 @@ import com.jjh.blueberry.dto.CategoryDto;
 
 @Repository
 public class BoardDao {
+	
+	Logger log = LoggerFactory.getLogger(BoardDao.class);
 	
 	private JdbcTemplate jdbcTemplate;
 
@@ -87,9 +92,11 @@ public class BoardDao {
 		return result;
 	}
 
-	public int deleteText(int id) {		
+	public int deleteText(int id) throws DataIntegrityViolationException {		
 		String sql = "DELETE FROM board WHERE id = ?";
-		return this.jdbcTemplate.update(sql, id);
+		int result = 0;
+		this.jdbcTemplate.update(sql, id);
+		return result;
 	}
 
 	public String getBoardUserName(String userId) {

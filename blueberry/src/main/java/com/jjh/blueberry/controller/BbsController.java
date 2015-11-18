@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -96,9 +97,15 @@ public class BbsController {
 	
 	@RequestMapping("/deleteText/id/{id}")
 	public String deleteText(@PathVariable("id") int id){
-		int result = bbsService.deleteText(id);
-		
-		return "redirect:/main";
+		try {
+			bbsService.deleteText(id);
+		} catch (DataIntegrityViolationException e) {
+			//TODO 작성된 글을 삭제 할 수 없을 때 처리 방법
+			//message 넘겨서 메인 화면에서 alert?
+			log.info("-----------------------> Cannot delete the row: {}", e.getMessage());
+			return "redirect:/main";
+		}
+		return "redirect:/main";			
 	}
 	
 	//1. @requestparam 사용(summernote.jsp ajax)

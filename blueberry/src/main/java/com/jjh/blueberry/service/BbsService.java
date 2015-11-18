@@ -18,6 +18,7 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -63,7 +64,7 @@ public class BbsService {
 		return boardDao.updateText(boardDto);
 	}
 
-	public int deleteText(int id) {
+	public int deleteText(int id) throws DataIntegrityViolationException {
 		return boardDao.deleteText(id);
 	}
 
@@ -130,9 +131,9 @@ public class BbsService {
 		String originalFileName = file.getOriginalFilename();
 		String fileName = timeToLong+originalFileName;
 		//for linux
-//		String savePath = "/home/dev/local/apache-tomcat-7.0.63/webapps/blueberry/resources/img/"+fileName;
+		String savePath = "/home/dev/local/apache-tomcat-7.0.63/webapps/blueberry/resources/img/"+fileName;
 		//for local in windows
-		String savePath = "C:\\Users\\Administrator\\git\\spring\\blueberry\\src\\main\\webapp\\resources\\img\\"+fileName;
+//		String savePath = "C:\\Users\\Administrator\\git\\spring\\blueberry\\src\\main\\webapp\\resources\\img\\"+fileName;
 		
 		String connectPath = "/blueberry/resources/img/"+fileName;
 		InputStream is = file.getInputStream();
@@ -147,9 +148,9 @@ public class BbsService {
 		is.close();
 		//충분한 여유 시간이 있으면 404 에러 나지 않음
 		//for linux
-//		Connection urlCon = Jsoup.connect("http://127.0.0.1:8080"+connectPath);
+		Connection urlCon = Jsoup.connect("http://127.0.0.1:8080"+connectPath);
 		//for windows
-		Connection urlCon = Jsoup.connect("http://127.0.0.1:8181"+connectPath);
+//		Connection urlCon = Jsoup.connect("http://127.0.0.1:8181"+connectPath);
 		
 		Response response = urlCon.ignoreHttpErrors(true).ignoreContentType(true).execute();
 		int status = response.statusCode();

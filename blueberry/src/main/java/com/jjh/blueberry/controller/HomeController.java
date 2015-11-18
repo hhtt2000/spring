@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Locale;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +39,23 @@ public class HomeController {
 	public String mainPerPage(@PathVariable("page") int page, Model model){
 		model = homeService.getBoardList(page, model);
 		return "main";
+	}
+	
+	//TODO 계정 생성 관련(뷰에서는 계정 생성 페이지로 직접 링크하는 페이지는 없게)
+	//로그인 상태인 경우 접근 가능 여부?
+	@RequestMapping(value="/accounts", method=RequestMethod.GET)
+	public String getCreateAccountView(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		if(session != null) {
+			System.out.println("============>Logged in users cannot access.");
+			return "redirect:/main";
+		}
+		return "account";
+	}
+	
+	@RequestMapping(value="/accounts", method=RequestMethod.POST)
+	public void createAccount() {
+		
 	}
 	
 	@RequestMapping("/search/{searchText}/{page}")
