@@ -8,7 +8,7 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form:form id="text-frm" action="${pageContext.servletContext.contextPath}/board/updateText" commandName="boardDto" method="post">
+			<form:form id="text-frm" action="${pageContext.servletContext.contextPath}/board/updateText" commandName="boardDto" method="post" onsubmit="doFiltering(this)">
 				<div class="form-group">
 					<form:input class="form-control" type="hidden" path="id"/>
 				</div>
@@ -25,7 +25,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<form:input class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus"/>
+					<form:input class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus" />
 				</div>
 				<div class="form-group">
 					<form:input class="form-control" type="hidden" path="regdate" />

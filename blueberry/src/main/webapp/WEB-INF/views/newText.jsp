@@ -8,7 +8,7 @@
 	<!-- newText -->
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<form id="text-frm" action="newText" method="post">
+			<form id="text-frm" action="newText" method="post" onsubmit="doFiltering(this)">
 				<input type="hidden" name="userid" value="${pageContext.request.userPrincipal.name}" />
 				<div class="form-group row category-title-gap">
 					<div class="category col-xs-4">

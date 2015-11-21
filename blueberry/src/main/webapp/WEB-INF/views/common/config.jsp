@@ -8,6 +8,7 @@
 <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 <meta name="description" content="A blog for my study.">
 <meta name="author" content="jaehyuk">
+<meta property="og:image" content="${pageContext.servletContext.contextPath}/resources/img/grape.png" />
 <link rel="icon" href="${pageContext.servletContext.contextPath}/resources/img/grape.png" type="image/png" sizes="16x16">
 <!-- Google Web Fonts -->
 <script src="https://ajax.googleapis.com/ajax/libs/webfont/1.5.18/webfont.js"></script>
@@ -22,4 +23,4 @@
 <!-- Custom styles for this template -->
 <link href="${pageContext.servletContext.contextPath}/resources/bootstrap/theme/blog.css" rel="stylesheet">
 <script src="${pageContext.servletContext.contextPath}/resources/momentjs/moment-with-locales.js"></script>
-
+<script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/dompurify/src/purify.js"></script>

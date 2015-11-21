@@ -92,17 +92,18 @@
 								</div>
 								<br/>
 								<form id="comment-form-${dto.id}" class="comment-form" action="${pageContext.servletContext.contextPath}/comment" method="post">
-								  <input type="hidden" name="postid" value="${dto.id}">
+								  <input type="hidden" name="postid" value="${dto.id}" />
+								  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								  <div class="form-group row comment-form-gap">
 								  	<div class="col-xs-6 name">
-								    	<input type="text" class="form-control" id="name" name="name" placeholder="작성자">								  	
+								    	<input type="text" class="form-control" id="name" name="name" placeholder="작성자" />								  	
 								  	</div>
 								  	<div class="col-xs-6 password">
-								    	<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">								  	
+								    	<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" />								  	
 								  	</div>
 								  </div>
 								  <div class="form-group">
-								    <textarea id="content" class="form-control" name="content" rows="3" placeholder="200자 이내로 작성해주세요."></textarea>
+								    <textarea id="content" class="form-control" name="content" rows="3" placeholder="200자 이내로 작성해주세요." ></textarea>
 								  </div>  
 								  <button type="submit" id="comment-submit-button-${dto.id}" class="btn btn-default">확인</button>
 								</form>

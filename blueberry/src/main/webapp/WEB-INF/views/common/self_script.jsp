@@ -52,7 +52,6 @@
 		//검색 관련
 		function setUrl(form) {
 			form.action="${pageContext.servletContext.contextPath}/main/search/"+form.searchText.value+"/1";
-			console.log(form.action);
 		}
 		
 		//카테고리 리스트

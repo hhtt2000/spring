@@ -23,6 +23,8 @@ public class BoardValidator implements Validator {
 		}
 		
 		if(boardDto.getTitle() == null || boardDto.getTitle().length() > 50){
+			System.out.println(boardDto.getTitle());
+			System.out.println(boardDto.getTitle().length());
 			errors.rejectValue("title", "50자 이하");
 		}
 	}

@@ -23,6 +23,7 @@
 						<a href="#" id="toggle-add-category-form">추가<i class="fa fa-plus-square-o tiny"></i></a>							
 						<c:url value="/main/addCategory" var="addCategoryUrl" />
 						<form id="add-category-form" class="form-inline" action="${addCategoryUrl}" method="post">
+								<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								<div class="form-group">
 									<input type="text" class="form-control input-sm" name="name" autofocus />							
 								</div>

@@ -143,8 +143,27 @@
 					}
 				});
 			}
-		});
-		function delUrlInfoBox(elem) {
+		});//End of $(function())
+		function delUrlInfoBox() {
 			$('#url-info-box').remove();
+		}
+		function doFiltering(form) {
+			var whitelist = '//www.youtube.com/embed/[\\w\\d]+';
+            // build fitting regex
+            var regex = RegExp(whitelist);
+            // Add a hook to enforce URI scheme whitelist
+            DOMPurify.addHook('afterSanitizeAttributes', function(node){
+                // build an anchor to map URLs to
+                var anchor = document.createElement('iframe');
+                // check all src attributes for validity
+                if (node.tagName === 'IFRAME' && node.hasAttribute('src')) {
+                    anchor.src  = node.getAttribute('src');
+                    if (anchor.src && !anchor.src.match(regex)) {
+                        node.parentNode.removeChild(node);
+                    }
+                }
+            });
+			form.title.value = DOMPurify.sanitize(form.title.value);
+			form.content.value = DOMPurify.sanitize(form.content.value);
 		}
 	</script>

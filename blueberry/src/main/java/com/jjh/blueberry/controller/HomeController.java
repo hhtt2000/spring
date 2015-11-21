@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jjh.blueberry.dto.CategoryDto;
 import com.jjh.blueberry.service.HomeService;
+import com.nhncorp.lucy.security.xss.XssSaxFilter;
 
 /**
  * Handles requests for the application home page.
@@ -60,9 +61,11 @@ public class HomeController {
 	
 	@RequestMapping("/search/{searchText}/{page}")
 	public ModelAndView searchText(@PathVariable("searchText") String searchText, @PathVariable("page") int page){
+		XssSaxFilter filter = XssSaxFilter.getInstance();
+		String cleanedSearchText = filter.doFilter(searchText);
 		ModelAndView model = new ModelAndView();
 
-		model = homeService.getBoardListBySearch(searchText, page);
+		model = homeService.getBoardListBySearch(cleanedSearchText, page);
 		model.setViewName("main");
 		
 		return model;
@@ -88,6 +91,9 @@ public class HomeController {
 	
 	@RequestMapping(value = "/addCategory", method = RequestMethod.POST)
 	public String addCategory(CategoryDto categoryDto) {
+		XssSaxFilter filter = XssSaxFilter.getInstance();
+		String name = categoryDto.getName();
+		categoryDto.setName(filter.doFilter(name));
 		homeService.addCategory(categoryDto);
 		
 		return "redirect:/main";			

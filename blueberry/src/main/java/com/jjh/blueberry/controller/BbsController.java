@@ -46,16 +46,18 @@ public class BbsController {
 		return "newText";
 	}
 	
+	//TODO 글쓰기 시에 제목, 내용 동시에 스크립트 추가하는 경우 스크립트가 실행됨.
 	@RequestMapping(value="/newText", method=RequestMethod.POST)
 	public String newTextProcess(Model model, BoardDto boardDto,
-			BindingResult bindingResult) {	
+			BindingResult bindingResult) {
+		//for not being checked by lucy-xss
 		model.addAttribute("boardDto", boardDto);
-		
 		ArrayList<CategoryDto> categories = homeService.getCategoryList();
 		model.addAttribute("categories", categories);
 		
 		new BoardValidator().validate(boardDto, bindingResult);
 		if(bindingResult.hasErrors()){
+			
 			return "newText";
 		} else {	
 			int result = bbsService.insertText(boardDto);
@@ -67,7 +69,7 @@ public class BbsController {
 			}
 		}
 	}
-	
+
 	@RequestMapping("/updateText/id/{id}")
 	public String updateText(@PathVariable("id") int id, Model model){
 		BoardDto dto = bbsService.getInfo4UpdateText(id);

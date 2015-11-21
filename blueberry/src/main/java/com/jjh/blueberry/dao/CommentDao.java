@@ -40,7 +40,7 @@ public class CommentDao {
 			}
 		});
 	}
-	//transactional with insertComment
+	//transactional with insertComment(코멘트 갯수)
 	public int updateCommentNo(int id){
 		String sql = "UPDATE board B INNER JOIN comment C ON B.id = C.postid SET B.commentno = B.commentno + 1 WHERE B.id = ?";
 		return this.jdbcTemplate.update(sql, id);
