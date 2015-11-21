@@ -23,3 +23,4 @@
 * URL Regular Expression : https://gist.github.com/dperini/729294
 * HTML Parsing : http://jsoup.org/
 * XSS Protection : https://github.com/naver/lucy-xss-filter
+                   https://github.com/cure53/DOMPurify
