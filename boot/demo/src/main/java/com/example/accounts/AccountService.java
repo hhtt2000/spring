@@ -9,8 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.accounts.AccountDto.Create;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
 @Transactional
+@Slf4j
 public class AccountService {
 
 	@Autowired
@@ -25,6 +28,7 @@ public class AccountService {
 //		account.setPassword(dto.getPassword());
 		String username = dto.getUsername();
 		if(repository.findByUsername(username) != null) {
+			log.error("user duplicated exception occured. {}", username);
 			throw new UserDuplicatedException(username);
 		}
 		Account account = modelMapper.map(dto, Account.class);
