@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.accounts.AccountDto.Create;
+import com.example.accounts.AccountDto.Update;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,5 +39,20 @@ public class AccountService {
 		account.setUpdated(now);
 		
 		return repository.save(account);
+	}
+
+	public Account updateAccount(Long id, Update updateDto) {
+		Account account = getAccount(id);
+		account.setPassword(updateDto.getPassword());
+		account.setFullName(updateDto.getFullName());
+		return repository.save(account);
+	}
+
+	private Account getAccount(Long id) {
+		Account account = repository.getOne(id);
+		if(account == null) {
+			throw new AccountNotFoundException(id);
+		}
+		return account;
 	}
 }

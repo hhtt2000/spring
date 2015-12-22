@@ -47,9 +47,7 @@ public class AccountControllerTest {
 	
 	@Test
 	public void createAccount() throws JsonProcessingException, Exception {
-		AccountDto.Create create = new AccountDto.Create();
-		create.setUsername("jaehyuk");
-		create.setPassword("springboot");
+		AccountDto.Create create = createAccountDto();
 		
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.post("/accounts")
 				.contentType(MediaType.APPLICATION_JSON)
@@ -83,9 +81,7 @@ public class AccountControllerTest {
 	
 	@Test
 	public void getAccounts() throws Exception {
-		AccountDto.Create createDto = new AccountDto.Create();
-		createDto.setUsername("jaehyuk");
-		createDto.setPassword("springboot");
+		AccountDto.Create createDto = createAccountDto();
 		service.createAccount(createDto);
 		
 		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/accounts"));
@@ -103,6 +99,41 @@ public class AccountControllerTest {
 		//"first":true}
 		result.andDo(MockMvcResultHandlers.print());
 		result.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+
+	private AccountDto.Create createAccountDto() {
+		AccountDto.Create createDto = new AccountDto.Create();
+		createDto.setUsername("jaehyuk");
+		createDto.setPassword("springboot");
+		return createDto;
+	}
+	
+	@Test
+	public void getAccount() throws Exception {
+		AccountDto.Create createDto = createAccountDto();
+		Account account = service.createAccount(createDto);
+		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.get("/accounts/"+account.getId()));
+		
+		result.andDo(MockMvcResultHandlers.print());
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+	}
+	
+	@Test
+	public void updateAccount() throws JsonProcessingException, Exception {
+		AccountDto.Create createDto = createAccountDto();
+		Account account = service.createAccount(createDto);
+		
+		AccountDto.Update updateDto = new AccountDto.Update();
+		updateDto.setFullName("jae hyuk");
+		updateDto.setPassword("newspring");
+		
+		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.put("/accounts/"+account.getId())
+				.contentType(MediaType.APPLICATION_JSON)
+				.content(objectMapper.writeValueAsString(updateDto)));
+		
+		result.andDo(MockMvcResultHandlers.print());
+		result.andExpect(MockMvcResultMatchers.status().isOk());
+		result.andExpect(MockMvcResultMatchers.jsonPath("$.fullName", Is.is("jae hyuk")));
 	}
 
 }
