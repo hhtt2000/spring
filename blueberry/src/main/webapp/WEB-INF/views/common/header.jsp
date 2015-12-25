@@ -14,11 +14,12 @@
 		        <span class="icon-bar"></span>
 		        <span class="icon-bar"></span>
 		      </button>
-		      <a class="navbar-brand nav-font" href="<c:url value="/main" />"><strong>Grape</strong></a>
+		      <a class="navbar-brand nav-font" href="<c:url value="/main" />"><strong>gra.pe</strong></a>
 		    </div>
 		    <div class="collapse navbar-collapse" id="blog-navbar-collapse">
 			<ul class="nav navbar-nav">
-				<li><a class="nav-font" href="<c:url value="/board/newText" />">글쓰기</a></li> 
+				<li><a class="nav-font" href="<c:url value="/board/newText" />">글쓰기</a></li>
+				<li><a class="nav-font" href="<c:url value="/main/epl" />">EPL순위</a></li> 
 				<li><a class="nav-font" href="<c:url value="/main/todo" />">할일</a></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">

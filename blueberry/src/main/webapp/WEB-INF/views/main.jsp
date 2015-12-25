@@ -37,7 +37,7 @@
 				  <ul class="pagination">
 				  	<c:set value="<%=pagingUrl %>" var="pagingUrl" />
 				    <li>
-				      <a href="${pagingUrl}/${paging.prevPage}" aria-label="Previous">
+				      <a href="${pagingUrl}/${paging.prev}" aria-label="Previous">
 				        <span aria-hidden="true">&laquo;</span>
 				      </a>
 				    </li>
@@ -52,7 +52,7 @@
 				    	</c:choose>
 				    </c:forEach>
 				    <li>
-				      <a href="${pagingUrl}/${paging.nextPage}" aria-label="Next">
+				      <a href="${pagingUrl}/${paging.next}" aria-label="Next">
 				        <span aria-hidden="true">&raquo;</span>
 				      </a>
 				    </li>
@@ -103,7 +103,10 @@
 								  	</div>
 								  </div>
 								  <div class="form-group">
-								    <textarea id="content" class="form-control" name="content" rows="3" placeholder="200자 이내로 작성해주세요." ></textarea>
+								    <textarea id="content" class="form-control" name="content" rows="3" onkeyup="countCommentLeft(this)" placeholder="200자 이내로 작성해주세요." ></textarea>
+								  </div>
+								  <div class="form-group">
+								  	<div id="comment-content-count" class="comment-content-count col-xs-offset-11 col-xs-1" style="font-size:14px"></div>
 								  </div>  
 								  <button type="submit" id="comment-submit-button-${dto.id}" class="btn btn-default">확인</button>
 								</form>
@@ -114,8 +117,12 @@
 				</c:forEach>
 				<nav>
 					<ul class="pager">
-						<li><a href="#">Previous</a></li>
-						<li><a href="#">Next</a></li>
+					    <c:if test="${paging.curPage != 1}">
+							<li><a href="${pagingUrl}/${paging.prevPage}">Previous</a></li>
+					    </c:if>
+					    <c:if test="${paging.curPage != paging.totalPage}">
+							<li><a href="${pagingUrl}/${paging.nextPage}">Next</a></li>
+					    </c:if>
 					</ul>
 				</nav>
 
@@ -152,7 +159,7 @@
 						
 						var postId = $(this).attr('href');
 						$('body, html').animate({
-							scrollTop: $(postId).offset().top - 20
+							scrollTop: $(postId).offset().top - 60
 						}, 500);
 					});
 					//글삭제 버튼 클릭시 체크
@@ -254,6 +261,18 @@
 					} else{
 						return false;
 					}
+				}
+				//댓글 남은 자리수
+				function countCommentLeft(elm) {
+					var max = 200;
+					var strLen = elm.value.length;
+					//div tag(content)
+					var curElm = elm.parentElement;
+					//target node
+					var targetElm = curElm.nextElementSibling;
+					var countTag = targetElm.firstElementChild;
+					var count = max - strLen;
+					countTag.innerHTML = count;
 				}
 			</script>	
 	</body>

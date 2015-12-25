@@ -23,4 +23,4 @@
 <!-- Custom styles for this template -->
 <link href="${pageContext.servletContext.contextPath}/resources/bootstrap/theme/blog.css" rel="stylesheet">
 <script src="${pageContext.servletContext.contextPath}/resources/momentjs/moment-with-locales.js"></script>
-<script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/dompurify/src/purify.js"></script>
+<script src="${pageContext.servletContext.contextPath}/resources/dompurify/src/purify.js"></script>

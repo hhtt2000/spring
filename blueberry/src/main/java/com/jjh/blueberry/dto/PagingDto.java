@@ -11,8 +11,11 @@ public class PagingDto {
 	private int startPage;// 페이징 시작 페이지 ex)'1' 2 3 4 5
 	private int endPage;// 페이징 끝 페이지 ex) 1 2 3 4 '5'
 	
-	private int prevPage;//'이전'클릭시 페이지
-	private int nextPage;//'다음'클릭시 페이지
+	private int prev;//'이전'클릭시 페이지
+	private int next;//'다음'클릭시 페이지
+	
+	private int prevPage;
+	private int nextPage;
 	
 	public PagingDto(int curPage) {
 		this.curPage = curPage;
@@ -53,56 +56,41 @@ public class PagingDto {
 		return this.endPage > getTotalPage() ? getTotalPage() : this.endPage;
 	}
 
-	public int getPrevPage() {
+	public int getPrev() {
 		if(getStartPage() == 1){
-			return getStartPage();
+			return 1;
 		} else {
 			return getStartPage() - 1;			
 		}
 	}
 
-	public int getNextPage() {
-		if(getEndPage() < getTotalPage()){
-			return getEndPage() + 1;			
+	public int getNext() {
+		this.endPage = getEndPage();
+		if(this.endPage < getTotalPage()){
+			return this.endPage + 1;			
 		} else{
-			return getEndPage();
+			return this.endPage;
+		}
+	}
+	
+	public int getPrevPage() {
+		if(curPage == 1) {
+			return 1;
+		}else {
+			return curPage - 1;
+		}
+	}
+
+	public int getNextPage() {
+		if(curPage < getTotalPage()) {
+			return curPage + 1;
+		}else {
+			return getTotalPage();
 		}
 	}
 
 	public void setTotalCount(int totalCount) {
 		this.totalCount = totalCount;
-	}
-
-	public void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-	}
-
-	public void setCountList(int countList) {
-		this.countList = countList;
-	}
-
-	public void setCountPage(int countPage) {
-		this.countPage = countPage;
-	}
-
-	public void setCurPage(int curPage) {
-		this.curPage = curPage;
-	}
-
-	public void setStartPage(int startPage) {
-		this.startPage = startPage;
-	}
-
-	public void setEndPage(int endPage) {
-		this.endPage = endPage;
-	}
-
-	public void setPrevPage(int prevPage) {
-		this.prevPage = prevPage;
-	}
-
-	public void setNextPage(int nextPage) {
-		this.nextPage = nextPage;
 	}
 
 }

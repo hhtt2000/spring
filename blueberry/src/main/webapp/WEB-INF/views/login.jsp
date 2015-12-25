@@ -21,13 +21,12 @@
 	                <input type="text" class="form-control" name="userId" placeholder="아이디" autofocus>
 	                <input type="password" class="form-control" name="password" placeholder="비밀번호">
 	                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="checkLogin()">
-	                    Sign in</button>
+	                    로그인</button>
 	                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 	                <label class="checkbox pull-left">
 	                    <input type="checkbox" name="remember-me">
-	                    Remember me
+	                    자동 로그인 사용하기
 	                </label>
-	                <a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>
                 </form>
             </div>
         </div>

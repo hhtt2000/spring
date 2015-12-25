@@ -21,6 +21,9 @@
 			password-parameter="password" />
 		<security:logout logout-success-url="/main" />
 		
+		<security:session-management>
+			<security:concurrency-control max-sessions="1" expired-url="/main"/>
+		</security:session-management>
 		<security:remember-me 
 			token-validity-seconds="1209600"
 			remember-me-parameter="remember-me"

@@ -113,7 +113,7 @@
 										$('#summernote').code(textValue + editedBox);
 									},
 									error : function(exception){
-										console.log(exception);
+										alert(exception);
 									}
 								});	
 								
@@ -143,6 +143,19 @@
 					}
 				});
 			}
+			//TODO 유효성 검증
+			$('#text-frm-btn').on('click', function(e) {
+				e.preventDefault();
+				var title = $('#text-frm input[name=title]').val().trim();
+				var content = $('#summernote').code().trim();
+				if(title === null || title === '') {
+					alert('제목을 입력해 주세요.');
+				} else if(content === null || content === '') {
+					alert('내용을 입력해 주세요.');
+				} else {
+					return true;
+				}
+			});
 		});//End of $(function())
 		function delUrlInfoBox() {
 			$('#url-info-box').remove();

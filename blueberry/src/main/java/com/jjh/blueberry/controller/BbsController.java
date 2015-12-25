@@ -50,7 +50,6 @@ public class BbsController {
 	@RequestMapping(value="/newText", method=RequestMethod.POST)
 	public String newTextProcess(Model model, BoardDto boardDto,
 			BindingResult bindingResult) {
-		//for not being checked by lucy-xss
 		model.addAttribute("boardDto", boardDto);
 		ArrayList<CategoryDto> categories = homeService.getCategoryList();
 		model.addAttribute("categories", categories);

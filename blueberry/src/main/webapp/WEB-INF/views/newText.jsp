@@ -37,7 +37,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<input type="text" class="form-control" name="title" value="${boardDto.title}" placeholder="제목" />
+					<input type="text" id="title" class="form-control" name="title" value="${boardDto.title}" placeholder="제목" />
 				</div>
 				<div class="form-group">
 					<textarea id="summernote" name="content">${boardDto.content}</textarea>

@@ -1,6 +1,10 @@
 /*
  * Globals
  */
+ 
+.error-handle {
+	color: #d9534f;
+}
 
 a:hover {
   color: #8EB9DF;
@@ -185,6 +189,9 @@ h6, .h6 {
   border-radius: 30px;
 }
 
+/*
+* Account
+*/
 
 /*
  * Blog posts
@@ -201,6 +208,12 @@ h6, .h6 {
   color: #999;
 }
 
+.category-title-gap .name {
+	padding-left: 0px;
+}
+.category-title-gap .category {
+	padding-right: 10px;
+}
 
 /*
  * Footer
@@ -217,12 +230,6 @@ h6, .h6 {
   margin-bottom: 0;
 }
 
-.category-title-gap .name {
-	padding-left: 0px;
-}
-.category-title-gap .category {
-	padding-right: 10px;
-}
 /* footer icons */
 i.tiny {font-size: 1em;}
 i.small {font-size: 2em;}

@@ -2,20 +2,25 @@ package com.jjh.blueberry.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jjh.blueberry.dto.AccountDto;
 import com.jjh.blueberry.dto.CategoryDto;
 import com.jjh.blueberry.service.HomeService;
 import com.nhncorp.lucy.security.xss.XssSaxFilter;
@@ -45,18 +50,25 @@ public class HomeController {
 	//TODO 계정 생성 관련(뷰에서는 계정 생성 페이지로 직접 링크하는 페이지는 없게)
 	//로그인 상태인 경우 접근 가능 여부?
 	@RequestMapping(value="/accounts", method=RequestMethod.GET)
-	public String getCreateAccountView(HttpServletRequest request) {
-		HttpSession session = request.getSession();
-		if(session != null) {
-			System.out.println("============>Logged in users cannot access.");
+	public String getCreateAccountView(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String sessionUserName = auth.getName();
+		if("anonymousUser".equals(sessionUserName)) {
+			return "account";
+		} else {
 			return "redirect:/main";
 		}
-		return "account";
 	}
 	
 	@RequestMapping(value="/accounts", method=RequestMethod.POST)
-	public void createAccount() {
-		
+	public String createAccount(@Valid AccountDto account, BindingResult bindingResult, Model model) {
+		model.addAttribute("account", account);
+		if(bindingResult.hasErrors()) {
+			return "account";
+		} else {
+			//TODO 계정 정보 저장
+			return "redirect:/main";
+		}
 	}
 	
 	@RequestMapping("/search/{searchText}/{page}")
@@ -106,6 +118,12 @@ public class HomeController {
 		model.addAttribute("serverTime", formattedDate );
 		
 		return "home";
+	}
+	
+	@RequestMapping(value = "/epl", method = RequestMethod.GET)
+	public String epl() {
+		
+		return "epl";
 	}
 //	
 //	@RequestMapping(value="/getTime", method=RequestMethod.GET)

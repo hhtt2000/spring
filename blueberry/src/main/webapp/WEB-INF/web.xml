@@ -14,6 +14,9 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+	<listener>
+    	<listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+  	</listener>
 
 	<!-- Processes application requests -->
 	<servlet>
@@ -63,4 +66,9 @@
 		<filter-name>httpMethodFilter</filter-name>
 		<servlet-name>/*</servlet-name>
 	</filter-mapping>
+	<!-- Handle errors -->
+	<error-page>
+		<exception-type>org.springframework.security.web.authentication.rememberme.CookieTheftException</exception-type>
+		<location>/WEB-INF/views/login.jsp?error=sessionExpired</location>
+	</error-page>
 </web-app>

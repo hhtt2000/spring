@@ -25,7 +25,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<form:input class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus" />
+					<form:input id="title" class="form-control" type="text" path="title" placeholder="제목" autofocus="autofocus" />
 				</div>
 				<div class="form-group">
 					<form:input class="form-control" type="hidden" path="regdate" />
