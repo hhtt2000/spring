@@ -6,7 +6,7 @@
 	<div class="blog-header"></div>
 	<div class="row">
 		<div class="col-sm-8 blog-main">
-			<div id="rank-table"></div>
+			<div id="rank-table">잠시만 기다려주세요...</div>
 		</div>
 		<!-- End Ranking Table -->
 		<%@ include file="/WEB-INF/views/common/footer.jsp" %>
@@ -22,6 +22,7 @@
 				}).done(function(response) {
 					var tableTitle = "<h2 class='blog-title'>"+response.leagueCaption+"</h2>";
 					var tableHead = "<tr>"
+										+"<th>순위</th>"
 										+"<th>팀</th>"
 										+"<th>경기</th>"
 										+"<th>승</th>"
@@ -36,7 +37,8 @@
 					var teams = response.standing;
 					for(var teamNum in response.standing) {
 						var team = teams[teamNum];
-						tableBody += "<tr><td><img src='"+team.crestURI+"' height='28' width='21'> "+team.teamName+"</td>"
+						tableBody += "<tr><td>"+team.position+"</td>"
+										+"<td><img src='"+team.crestURI+"' height='28' width='21'> "+team.teamName+"</td>"
 										+"<td>"+team.playedGames+"</td>"
 										+"<td>"+team.wins+"</td>"
 										+"<td>"+team.draws+"</td>"
@@ -48,11 +50,16 @@
 					}
 					var totalTable = tableTitle
 									+"<br />"
-									+"<table class='table table-hover'>"
-										+ tableHead
-										+ tableBody
-									+"</table>";
+									+"<div class='table-responsive'>"
+										+"<table class='table table-hover'>"
+											+ tableHead
+											+ tableBody
+										+"</table>"
+									+"</div>";
 					$('#rank-table').html(totalTable);
+				}).fail(function(){
+					var errorMsg = "데이터를 불러오지 못했습니다. 새로고침 버튼을 눌러주세요.";
+					$('#rank-table').html(errorMsg);
 				}); 
 			});
 		</script>
