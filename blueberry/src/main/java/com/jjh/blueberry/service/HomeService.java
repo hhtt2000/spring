@@ -7,21 +7,40 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jjh.blueberry.common.exception.UserDuplicatedException;
 import com.jjh.blueberry.dao.BoardDao;
+import com.jjh.blueberry.dto.AccountDto;
 import com.jjh.blueberry.dto.BoardDto;
 import com.jjh.blueberry.dto.CategoryDto;
 import com.jjh.blueberry.dto.PagingDto;
 
 @Service
+@Transactional
 public class HomeService {
 
 	@Autowired
 	private BoardDao boardDao;
 	
+	@Autowired
+	private BCryptPasswordEncoder passwdEncoder;
+	
+	public void addAccount(AccountDto account) {
+		account.setPassword(passwdEncoder.encode(account.getPassword()));
+		
+		String userId = account.getUserid();
+		if(boardDao.getUserIdByGivenUserId(userId) != null) {
+			throw new UserDuplicatedException(userId);
+		}
+		boardDao.addAccount(account);
+		boardDao.addRoles(userId);
+	}
+
 	public Model getBoardList(int page, Model model){
 		PagingDto paging = new PagingDto(page);
 		paging.setTotalCount(boardDao.getTotalCount(null));
@@ -84,6 +103,4 @@ public class HomeService {
 		
 		return formattedDate;
 	}
-	
-	
 }

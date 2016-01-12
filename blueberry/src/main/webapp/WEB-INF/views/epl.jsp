@@ -58,7 +58,7 @@
 									+"</div>";
 					$('#rank-table').html(totalTable);
 				}).fail(function(){
-					var errorMsg = "데이터를 불러오지 못했습니다. 새로고침 버튼을 눌러주세요.";
+					var errorMsg = "데이터를 불러오지 못했습니다.";
 					$('#rank-table').html(errorMsg);
 				}); 
 			});

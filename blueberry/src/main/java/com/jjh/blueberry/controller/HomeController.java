@@ -2,7 +2,6 @@ package com.jjh.blueberry.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 
 import javax.validation.Valid;
@@ -13,13 +12,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jjh.blueberry.common.exception.UserDuplicatedException;
 import com.jjh.blueberry.dto.AccountDto;
 import com.jjh.blueberry.dto.CategoryDto;
 import com.jjh.blueberry.service.HomeService;
@@ -47,8 +46,6 @@ public class HomeController {
 		return "main";
 	}
 	
-	//TODO 계정 생성 관련(뷰에서는 계정 생성 페이지로 직접 링크하는 페이지는 없게)
-	//로그인 상태인 경우 접근 가능 여부?
 	@RequestMapping(value="/accounts", method=RequestMethod.GET)
 	public String getCreateAccountView(Model model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -66,9 +63,22 @@ public class HomeController {
 		if(bindingResult.hasErrors()) {
 			return "account";
 		} else {
-			//TODO 계정 정보 저장
+			try{
+				homeService.addAccount(account);
+			} catch(UserDuplicatedException e) {
+				String msg = e.getUserId()+"(은)는 이미 존재하는 아이디 입니다.";
+				return setError(model, msg);
+			} catch(RuntimeException e) {
+				String msg = "예기치 않은 오류로 계정이 생성되지 않았습니다.";
+				return setError(model, msg);
+			}
 			return "redirect:/main";
 		}
+	}
+
+	private String setError(Model model, String msg) {
+		model.addAttribute("error", msg);
+		return "account";
 	}
 	
 	@RequestMapping("/search/{searchText}/{page}")
@@ -125,7 +135,7 @@ public class HomeController {
 		
 		return "epl";
 	}
-//	
+
 //	@RequestMapping(value="/getTime", method=RequestMethod.GET)
 //	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
 //		HashMap<String, String> map = new HashMap<String, String>();

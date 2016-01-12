@@ -4,6 +4,11 @@
 <%@ include file="/WEB-INF/views/common/config.jsp" %>
 <title>계정 생성</title>
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
+
+	<c:if test="${not empty error}">
+		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><strong> ${error}</strong></div>	
+	</c:if>
+	
 	<div class="container">
 		<div class="blog-header">
 			<h1>계정 생성</h1>
