@@ -23,4 +23,4 @@
 * URL Regular Expression : https://gist.github.com/dperini/729294
 * HTML Parsing : http://jsoup.org/
 * XSS Protection : https://github.com/naver/lucy-xss-filter, https://github.com/cure53/DOMPurify
-* json data for English Premier League table : http://api.football-data.org/index
+* json data for English Premier League ranking table : http://api.football-data.org/index
