@@ -49,9 +49,9 @@ public class BoardDao {
 		return this.jdbcTemplate.update(sql, userid, role);
 	}
 	
-	public String getUserIdByGivenUserId(String userId) {
-		String sql = "SELECT userid from users WHERE userid = ?";
-		return this.jdbcTemplate.queryForObject(sql, String.class, userId);
+	public int findIfUserExistByGivenUserId(String userId) {
+		String sql = "SELECT count(*) FROM users WHERE userid = ?";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class, userId);
 	}
 	
 	public int insertText(final BoardDto dto){

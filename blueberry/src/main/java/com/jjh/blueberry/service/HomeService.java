@@ -31,12 +31,11 @@ public class HomeService {
 	private BCryptPasswordEncoder passwdEncoder;
 	
 	public void addAccount(AccountDto account) {
-		account.setPassword(passwdEncoder.encode(account.getPassword()));
-		
 		String userId = account.getUserid();
-		if(boardDao.getUserIdByGivenUserId(userId) != null) {
+		if(boardDao.findIfUserExistByGivenUserId(userId) >= 1) {
 			throw new UserDuplicatedException(userId);
 		}
+		account.setPassword(passwdEncoder.encode(account.getPassword()));
 		boardDao.addAccount(account);
 		boardDao.addRoles(userId);
 	}
