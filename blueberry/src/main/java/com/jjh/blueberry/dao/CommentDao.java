@@ -23,8 +23,8 @@ public class CommentDao {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public ArrayList<CommentDto> getComment(int postid) {
-		String sql = "SELECT id, name, password, content, regdate, postid FROM comment WHERE postid = ?";
+	public ArrayList<CommentDto> getComments(int postid) {
+		String sql = "SELECT name, content, regdate, postid FROM comment WHERE postid = ?";
 		return (ArrayList<CommentDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<CommentDto>(CommentDto.class), postid);
 	}
 	//transactional with updateCommentNo

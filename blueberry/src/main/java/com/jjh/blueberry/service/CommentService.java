@@ -25,8 +25,8 @@ public class CommentService {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 
-	public ArrayList<CommentDto> getComment(int postid) {
-		return commentDao.getComment(postid);
+	public ArrayList<CommentDto> getComments(int postid) {
+		return commentDao.getComments(postid);
 	}
 
 	public int insertComment(CommentDto commentDto) {

@@ -22,7 +22,7 @@ public class CommentController {
 	
 	@RequestMapping(value="/comment/{postid}", method=RequestMethod.GET)
 	public @ResponseBody HashMap<String, ArrayList<CommentDto>> getComment(@PathVariable("postid") int postid) {
-		ArrayList<CommentDto> comments = commentService.getComment(postid);
+		ArrayList<CommentDto> comments = commentService.getComments(postid);
 		
 		HashMap<String, ArrayList<CommentDto>> map = new HashMap<String, ArrayList<CommentDto>>();
 		map.put("comments", comments);
