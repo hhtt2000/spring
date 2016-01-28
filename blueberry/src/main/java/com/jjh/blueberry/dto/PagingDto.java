@@ -17,8 +17,12 @@ public class PagingDto {
 	private int prevPage;
 	private int nextPage;
 	
-	public PagingDto(int curPage) {
+	private int fromRowNum;//현재 페이지의 시작 row가 DB상에 몇번째에 있는지 계산
+	
+	public PagingDto(int curPage, int totalCount) {
 		this.curPage = curPage;
+		this.totalCount = totalCount;
+		this.fromRowNum = (this.curPage-1) * countList;
 	}
 
 	public int getTotalCount() {
@@ -89,8 +93,8 @@ public class PagingDto {
 		}
 	}
 
-	public void setTotalCount(int totalCount) {
-		this.totalCount = totalCount;
+	public int getFromRowNum() {
+		return fromRowNum;
 	}
 
 }

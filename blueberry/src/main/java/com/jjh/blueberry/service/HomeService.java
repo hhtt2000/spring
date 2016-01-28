@@ -41,46 +41,35 @@ public class HomeService {
 	}
 
 	public Model getBoardList(int page, Model model){
-		PagingDto paging = new PagingDto(page);
-		paging.setTotalCount(boardDao.getTotalCount(null));
-		//limit 어디서부터, 몇개
-		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
-		int countList = paging.getCountList();
-		ArrayList<BoardDto> list = boardDao.getList(null, fromRowNum, countList);
+		int totalCount = boardDao.getTotalCount();
+		PagingDto paging = new PagingDto(page, totalCount);
+		//카테고리, DB row 어디서부터, 몇개
+		ArrayList<BoardDto> list = boardDao.getList(null, paging.getFromRowNum(), paging.getCountList());
+		
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
-		
 		return model;
 	}
 	
 	public ModelAndView getBoardListBySearch(String searchText, int page){
 		ModelAndView model = new ModelAndView();
 		
-		int countSearchList = boardDao.getSearchListCount(searchText);
-		PagingDto paging = new PagingDto(page);
-		paging.setTotalCount(countSearchList);
-		//limit 어디서부터, 몇개
-		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
-		int countList = paging.getCountList();
-		
-		ArrayList<BoardDto> searchList = boardDao.getSearchList(searchText, fromRowNum, countList);
+		int totalCount = boardDao.getSearchListCount(searchText);
+		PagingDto paging = new PagingDto(page, totalCount);
+		ArrayList<BoardDto> searchList = boardDao.getSearchList(searchText, paging.getFromRowNum(), paging.getCountList());
 		
 		model.addObject("paging", paging);
 		model.addObject("list", searchList);
-		
 		return model;
 	}
 	
 	public Model getBoardListByCategory(String category, int page, Model model){
-		PagingDto paging = new PagingDto(page);
-		paging.setTotalCount(boardDao.getTotalCount(category));
-		//limit 어디서부터, 몇개
-		int fromRowNum = (paging.getCurPage()-1)*paging.getCountList();
-		int countList = paging.getCountList();
-		ArrayList<BoardDto> list = boardDao.getList(category, fromRowNum, countList);
+		int totalCount = boardDao.getTotalCount(category);
+		PagingDto paging = new PagingDto(page, totalCount);
+		ArrayList<BoardDto> list = boardDao.getList(category, paging.getFromRowNum(), paging.getCountList());
+		
 		model.addAttribute("paging", paging);
 		model.addAttribute("list", list);
-		
 		return model;
 	}
 
@@ -92,6 +81,17 @@ public class HomeService {
 		boardDao.insertCategory(categoryDto);
 	}
 
+	public Model getBoardByPostid(int postid, Model model) {
+		PagingDto paging = new PagingDto(1, 1);
+		BoardDto board = boardDao.selectOne(postid);
+		ArrayList<BoardDto> list = new ArrayList<>();
+		list.add(board);
+		
+		model.addAttribute("paging", paging);
+		model.addAttribute("list", list);
+		return model;
+	}
+	
 	public String getServerTime(Locale locale) {
 		Date date = new Date();
 		TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
@@ -102,4 +102,5 @@ public class HomeService {
 		
 		return formattedDate;
 	}
+
 }

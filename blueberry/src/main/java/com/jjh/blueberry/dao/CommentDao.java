@@ -3,6 +3,7 @@ package com.jjh.blueberry.dao;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.sql.DataSource;
 
@@ -22,9 +23,9 @@ public class CommentDao {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public ArrayList<CommentDto> getComment(int id) {
-		String sql = "SELECT name, password, content, regdate, postid FROM comment WHERE postid = ?";
-		return (ArrayList<CommentDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<CommentDto>(CommentDto.class), id);
+	public ArrayList<CommentDto> getComment(int postid) {
+		String sql = "SELECT id, name, password, content, regdate, postid FROM comment WHERE postid = ?";
+		return (ArrayList<CommentDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<CommentDto>(CommentDto.class), postid);
 	}
 	//transactional with updateCommentNo
 	public int insertComment(final CommentDto commentDto) {
@@ -50,5 +51,10 @@ public class CommentDao {
 		String sql = "SELECT B.commentno FROM board B INNER JOIN comment C ON B.id = C.postid WHERE B.id = ? GROUP BY B.commentno";
 		int commentNo = this.jdbcTemplate.queryForObject(sql, Integer.class, id);
 		return commentNo;
+	}
+
+	public ArrayList<CommentDto> getRecentComments(String now) {
+		String sql = "SELECT content, postid FROM comment WHERE DATEDIFF(?, regdate) < 7 ORDER BY regdate DESC";
+		return (ArrayList<CommentDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<CommentDto>(CommentDto.class), now);
 	}
 }

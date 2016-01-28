@@ -35,9 +35,15 @@
 				</div>
 				<div class="sidebar-module">
 					<h4>또다른 페이지</h4>				
-						<a href="https://github.com/hhtt2000"><i class="fa fa-github-square small"></i></a>
-						<a href="https://www.twitter.com/"><i class="fa fa-twitter-square small"></i></a>
-						<a href="https://ko-kr.facebook.com/"><i class="fa fa-facebook-official small"></i></a>
+					<a href="https://github.com/hhtt2000"><i class="fa fa-github-square small"></i></a>
+					<a href="https://www.twitter.com/"><i class="fa fa-twitter-square small"></i></a>
+					<a href="https://ko-kr.facebook.com/"><i class="fa fa-facebook-official small"></i></a>
+				</div>
+				<!-- 최근 댓글 목록 -->
+				<div>
+					<h4>최근 댓글</h4>
+					<ul class="recent-comments" style="padding-left:20px">
+					</ul>
 				</div>
 			</div>
 			<!-- /.blog-sidebar -->

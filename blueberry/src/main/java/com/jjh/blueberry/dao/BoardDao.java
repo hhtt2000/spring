@@ -144,6 +144,11 @@ public class BoardDao {
 		});
 	}
 	
+	public int getTotalCount() {
+		String sql = "SELECT count(*) AS totalCount FROM board";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class);			
+	}
+	
 	public int getTotalCount(String category) {
 		String sql = "SELECT count(*) AS totalCount FROM board";
 		if(category != null){
@@ -163,7 +168,6 @@ public class BoardDao {
 		String sql = "SELECT id, userid, name, title, content, regdate, category, commentno FROM board WHERE title LIKE ? OR content LIKE ? ORDER BY id DESC LIMIT ?, ?";
 		return (ArrayList<BoardDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<BoardDto>(BoardDto.class), "%"+searchText+"%", "%"+searchText+"%", fromRowNum, countList);
 	}
-
 
 }
 

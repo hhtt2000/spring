@@ -88,7 +88,6 @@
 							<div class="comment-list-${dto.id} comment-list">
 								<br/>
 								<div class="comment">
-								
 								</div>
 								<br/>
 								<form id="comment-form-${dto.id}" class="comment-form" action="${pageContext.servletContext.contextPath}/comment" method="post">
@@ -239,15 +238,15 @@
 					}
 				}
 				//댓글 받아오기(get)
-				function getComment(id){
-					if(id !== 'default'){
+				function getComment(postid){
+					if(postid !== 'default'){
 						$.ajax({
-							url: "${pageContext.servletContext.contextPath}/comment/"+id,
+							url: "${pageContext.servletContext.contextPath}/comment/"+postid,
 							type: 'get',
 							success: function(data){
-								$('.comment-list-'+id+' .comment').empty();
+								$('.comment-list-'+postid+' .comment').empty();
 								$(data.comments).each(function(index, comment){
-									$('.comment-list-'+id+' .comment').append('<div class="media">')
+									$('.comment-list-'+postid+' .comment').append('<div class="media">')
 																.append('<div class="media-body">')
 																.append('<h5 class="media-heading"><strong>'+comment.name+'</strong> <small>'+comment.regdate+'</small></h5>')
 																.append(comment.content)

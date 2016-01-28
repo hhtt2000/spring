@@ -20,9 +20,9 @@ public class CommentController {
 	@Autowired
 	private CommentService commentService;
 	
-	@RequestMapping(value="/comment/{id}", method=RequestMethod.GET)
-	public @ResponseBody HashMap<String, ArrayList<CommentDto>> getComment(@PathVariable("id") int id) {
-		ArrayList<CommentDto> comments = commentService.getComment(id);
+	@RequestMapping(value="/comment/{postid}", method=RequestMethod.GET)
+	public @ResponseBody HashMap<String, ArrayList<CommentDto>> getComment(@PathVariable("postid") int postid) {
+		ArrayList<CommentDto> comments = commentService.getComment(postid);
 		
 		HashMap<String, ArrayList<CommentDto>> map = new HashMap<String, ArrayList<CommentDto>>();
 		map.put("comments", comments);
@@ -47,6 +47,13 @@ public class CommentController {
 		
 		return map;
 	}
-		
+	
+	@RequestMapping("/recentComments")
+	public @ResponseBody HashMap<String, ArrayList<CommentDto>> getRecentComments() {
+		HashMap<String, ArrayList<CommentDto>> map = new HashMap<>();
+		ArrayList<CommentDto> comments = commentService.getRecentComments();
+		map.put("comments", comments);
+		return map;
+	}
 	
 }

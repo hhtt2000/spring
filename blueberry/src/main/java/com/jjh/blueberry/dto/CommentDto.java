@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class CommentDto {
-
 	private String name;
 	private String password;
 	private String content;

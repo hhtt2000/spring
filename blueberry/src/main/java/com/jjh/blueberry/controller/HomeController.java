@@ -135,6 +135,12 @@ public class HomeController {
 		
 		return "epl";
 	}
+	
+	@RequestMapping("/postid/{postid}")
+	public String getBoardByPostid(@PathVariable("postid") int postid, Model model) {
+		model = homeService.getBoardByPostid(postid, model);
+		return "main";
+	}
 
 //	@RequestMapping(value="/getTime", method=RequestMethod.GET)
 //	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
