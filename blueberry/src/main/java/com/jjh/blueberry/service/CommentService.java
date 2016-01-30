@@ -5,22 +5,27 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.jjh.blueberry.dao.CommentDao;
+import com.jjh.blueberry.dao.UserDao;
+import com.jjh.blueberry.dto.AccountDto;
 import com.jjh.blueberry.dto.CommentDto;
-
-import lombok.extern.slf4j.Slf4j;
+import com.nhncorp.lucy.security.xss.XssSaxFilter;
 
 @Service
-@Slf4j
 @Transactional
 public class CommentService {
 	
 	@Autowired
 	private CommentDao commentDao;
+	
+	@Autowired
+	private UserDao userDao;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -30,9 +35,19 @@ public class CommentService {
 	}
 
 	public int insertComment(CommentDto commentDto) {
-		String encodedPasswd = bcryptPasswordEncoder.encode(commentDto.getPassword());
-		commentDto.setPassword(encodedPasswd);
-		//Need transaction
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String sessionUserName = auth.getName();
+		XssSaxFilter filter = XssSaxFilter.getInstance();
+		if("anonymousUser".equals(sessionUserName)) {
+			commentDto.setName(filter.doFilter(commentDto.getName()));
+			String encodedPasswd = bcryptPasswordEncoder.encode(commentDto.getPassword());
+			commentDto.setPassword(encodedPasswd);
+		}else {
+			AccountDto user = userDao.getUserInfoById(sessionUserName);
+			commentDto.setName(user.getName());
+			commentDto.setPassword(user.getPassword());
+		}
+		commentDto.setContent(filter.doFilter(commentDto.getContent()));
 		int result = commentDao.insertComment(commentDto);
 		int postId = commentDto.getPostid();
 		commentDao.updateCommentNo(postId);

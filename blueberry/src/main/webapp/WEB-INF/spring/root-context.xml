@@ -35,6 +35,9 @@
 	<bean id="homeService" class="com.jjh.blueberry.service.HomeService" />
 	<bean id="bbsService" class="com.jjh.blueberry.service.BbsService" />
 	<bean id="commentService" class="com.jjh.blueberry.service.CommentService" />
+	<bean id="userDao" class="com.jjh.blueberry.dao.UserDao">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 	<bean id="boardDao" class="com.jjh.blueberry.dao.BoardDao">
 		<property name="dataSource" ref="dataSource" />
 	</bean>

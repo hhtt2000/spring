@@ -16,7 +16,6 @@ import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.stereotype.Repository;
 
-import com.jjh.blueberry.dto.AccountDto;
 import com.jjh.blueberry.dto.BoardDto;
 import com.jjh.blueberry.dto.CategoryDto;
 
@@ -31,29 +30,6 @@ public class BoardDao {
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
 
-	public int addAccount(AccountDto account) {
-		String sql = "INSERT INTO users (userid, name, password, enabled) VALUES (?, ?, ?, true)";
-		return this.jdbcTemplate.update(sql, new PreparedStatementSetter() {
-			@Override
-			public void setValues(PreparedStatement ps) throws SQLException {
-				ps.setString(1, account.getUserid());
-				ps.setString(2, account.getName());
-				ps.setString(3, account.getPassword());
-			}
-		});
-	}
-	
-	public int addRoles(String userid) {
-		final String role = "ROLE_USER";
-		String sql = "INSERT INTO user_roles (userid, role) VALUES (?, ?)";
-		return this.jdbcTemplate.update(sql, userid, role);
-	}
-	
-	public int findIfUserExistByGivenUserId(String userId) {
-		String sql = "SELECT count(*) FROM users WHERE userid = ?";
-		return this.jdbcTemplate.queryForObject(sql, Integer.class, userId);
-	}
-	
 	public int insertText(final BoardDto dto){
 		return this.jdbcTemplate.update(new PreparedStatementCreator() {
 			
@@ -121,11 +97,6 @@ public class BoardDao {
 		int result = 0;
 		this.jdbcTemplate.update(sql, id);
 		return result;
-	}
-
-	public String getBoardUserName(String userId) {
-		String sql = "SELECT name FROM users WHERE userid = ?";
-		return this.jdbcTemplate.queryForObject(sql, String.class, userId);
 	}
 
 	public ArrayList<CategoryDto> getCategories() {		

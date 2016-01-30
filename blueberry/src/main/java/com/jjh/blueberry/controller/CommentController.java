@@ -33,11 +33,7 @@ public class CommentController {
 	@RequestMapping(value="/comment", method=RequestMethod.POST)
 	public @ResponseBody HashMap<String, Integer> newComment(CommentDto commentDto) {
 		HashMap<String, Integer> map = new HashMap<String, Integer>();
-		String name = commentDto.getName();
-		String content = commentDto.getContent();
-		XssSaxFilter filter = XssSaxFilter.getInstance();
-		commentDto.setName(filter.doFilter(name));
-		commentDto.setContent(filter.doFilter(content));
+		
 		int result = commentService.insertComment(commentDto);
 		//댓글 개수 받아서 main.jsp ajax post에 같이 전달
 		int postId = commentDto.getPostid();

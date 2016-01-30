@@ -27,6 +27,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jjh.blueberry.dao.BoardDao;
+import com.jjh.blueberry.dao.UserDao;
 import com.jjh.blueberry.dto.BoardDto;
 import com.jjh.blueberry.dto.CategoryDto;
 
@@ -37,6 +38,9 @@ public class BbsService {
 	
 	@Autowired
 	private BoardDao boardDao;
+	
+	@Autowired
+	private UserDao userDao;
 
 	public Model getInfo4NewText(Model model) {
 		//session id값을 얻는 과정
@@ -44,7 +48,7 @@ public class BbsService {
 		UserDetails userDetail = (UserDetails) auth.getPrincipal();
 		String userId = userDetail.getUsername();
 		
-		String name = boardDao.getBoardUserName(userId);
+		String name = userDao.getUserNameById(userId);
 		model.addAttribute("name", name);
 		
 		ArrayList<CategoryDto> categories = boardDao.getCategories();

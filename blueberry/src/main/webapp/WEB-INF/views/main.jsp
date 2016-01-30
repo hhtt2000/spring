@@ -94,12 +94,21 @@
 								  <input type="hidden" name="postid" value="${dto.id}" />
 								  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 								  <div class="form-group row comment-form-gap">
-								  	<div class="col-xs-6 name">
-								    	<input type="text" class="form-control" id="name" name="name" placeholder="작성자" />								  	
-								  	</div>
-								  	<div class="col-xs-6 password">
-								    	<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" />								  	
-								  	</div>
+								  	<c:choose>
+								  		<c:when test="${userName != null}">
+								  			<div class="col-xs-6 name">
+									  			작성자: <strong>${userName}</strong>
+									  		</div>
+								  		</c:when>
+								  		<c:otherwise>
+										  	<div class="col-xs-6 name">
+										    	<input type="text" class="form-control" id="name" name="name" placeholder="작성자" />								  	
+										  	</div>
+										  	<div class="col-xs-6 password">
+										    	<input type="password" class="form-control" id="password" name="password" placeholder="비밀번호" />								  	
+										  	</div>
+								  		</c:otherwise>
+								  	</c:choose>
 								  </div>
 								  <div class="form-group">
 								    <textarea id="content" class="form-control" name="content" rows="3" onkeyup="countCommentLeft(this)" placeholder="200자 이내로 작성해주세요." ></textarea>
@@ -191,19 +200,23 @@
 						var postid = commentButtonIdValue.substring(commentButtonIdValue.lastIndexOf('-')+1);
 						var url = $('#comment-form-'+postid).attr('action');
 						var data = $('#comment-form-'+postid).serialize();
-						var nameLen = $('#comment-form-'+postid+' input[name=name]').val().length;
-						var passwdLen = $('#comment-form-'+postid+' input[name=password]').val().length;
+						
+						if($('#comment-form-'+postid+' input[name=name]').length) {
+							var nameLen = $('#comment-form-'+postid+' input[name=name]').val().length;
+							var passwdLen = $('#comment-form-'+postid+' input[name=password]').val().length;
+							if(nameLen === null || nameLen === 0 || nameLen > 10){
+								$('#comment-form-'+postid+' div').css('display', 'block');
+								alert('이름은 1 ~ 10자 이내로 입력해주세요.');
+								$('#comment-form-'+postid+' input[name=name]').focus();
+							} else if(passwdLen === null || passwdLen < 4 || passwdLen > 20){
+								$('#comment-form-'+postid+' div').css('display', 'block');
+								alert('비밀번호는 4 ~ 20자 이내로 입력해주세요.');
+								$('#comment-form-'+postid+' input[name=password]').focus();
+							}
+						}
 						var contentLen = $('#comment-form-'+postid+' textarea[name=content]').val().length;
 						
-						if(nameLen === null || nameLen === 0 || nameLen > 10){
-							$('#comment-form-'+postid+' div').css('display', 'block');
-							alert('이름은 1 ~ 10자 이내로 입력해주세요.');
-							$('#comment-form-'+postid+' input[name=name]').focus();
-						} else if(passwdLen === null || passwdLen < 4 || passwdLen > 20){
-							$('#comment-form-'+postid+' div').css('display', 'block');
-							alert('비밀번호는 4 ~ 20자 이내로 입력해주세요.');
-							$('#comment-form-'+postid+' input[name=password]').focus();
-						} else if(contentLen === null || contentLen === 0 || contentLen > 200){
+						 if(contentLen === null || contentLen === 0 || contentLen > 200){
 							$('#comment-form-'+postid+' div').css('display', 'block');
 							alert('내용은 200자 이내로 입력해주세요.');
 							$('#comment-form-'+postid+' textarea[name=content]').focus();
@@ -223,7 +236,9 @@
 									}
 								},
 								error: function(exception){
-									alert(exception);
+									if(exception.status === 500) {
+										alert("댓글 등록에 실패했습니다.");
+									}
 								}
 							});
 						}

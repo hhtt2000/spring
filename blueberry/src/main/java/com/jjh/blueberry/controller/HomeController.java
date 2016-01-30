@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.jjh.blueberry.common.exception.UserDuplicatedException;
 import com.jjh.blueberry.dto.AccountDto;
@@ -24,11 +23,14 @@ import com.jjh.blueberry.dto.CategoryDto;
 import com.jjh.blueberry.service.HomeService;
 import com.nhncorp.lucy.security.xss.XssSaxFilter;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * Handles requests for the application home page.
  */
 @RequestMapping(value={"/", "/main"})
 @Controller
+@Slf4j
 public class HomeController {
 	
 	@Autowired
@@ -42,8 +44,19 @@ public class HomeController {
 	
 	@RequestMapping("/{page}")
 	public String mainPerPage(@PathVariable("page") int page, Model model){
+		//댓글 작성시 로그인 사용자에 대해 저장된 이름을 사용하기 위한 작업
+		getSessionUserName(model);
 		model = homeService.getBoardList(page, model);
 		return "main";
+	}
+
+	private void getSessionUserName(Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String sessionUserName = auth.getName();
+		if(!"anonymousUser".equals(sessionUserName)) {
+			String name = homeService.getUserNameById(sessionUserName);
+			model.addAttribute("userName", name);
+		}
 	}
 	
 	@RequestMapping(value="/accounts", method=RequestMethod.GET)
@@ -82,20 +95,22 @@ public class HomeController {
 	}
 	
 	@RequestMapping("/search/{searchText}/{page}")
-	public ModelAndView searchText(@PathVariable("searchText") String searchText, @PathVariable("page") int page){
+	public String searchText(@PathVariable("searchText") String searchText, @PathVariable("page") int page,
+			Model model){
+		getSessionUserName(model);
+		
 		XssSaxFilter filter = XssSaxFilter.getInstance();
 		String cleanedSearchText = filter.doFilter(searchText);
-		ModelAndView model = new ModelAndView();
 
-		model = homeService.getBoardListBySearch(cleanedSearchText, page);
-		model.setViewName("main");
+		model = homeService.getBoardListBySearch(cleanedSearchText, page, model);
 		
-		return model;
+		return "main";
 	}
 	
 	@RequestMapping("/category/{category}/{page}")
 	public String categorizedMain(@PathVariable("category") String category, 
 			@PathVariable("page") int page, Model model){
+		getSessionUserName(model);
 		model = homeService.getBoardListByCategory(category, page, model);
 		
 		return "main";
@@ -138,6 +153,7 @@ public class HomeController {
 	
 	@RequestMapping("/postid/{postid}")
 	public String getBoardByPostid(@PathVariable("postid") int postid, Model model) {
+		getSessionUserName(model);
 		model = homeService.getBoardByPostid(postid, model);
 		return "main";
 	}
