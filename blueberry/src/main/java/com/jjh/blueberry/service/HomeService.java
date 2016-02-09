@@ -43,7 +43,7 @@ public class HomeService {
 		userDao.addRoles(userId);
 	}
 
-	public Model getBoardList(int page, Model model){
+	public Model getBoardList(Model model, int page){
 		int totalCount = boardDao.getTotalCount();
 		PagingDto paging = new PagingDto(page, totalCount);
 		//카테고리, DB row 어디서부터, 몇개
@@ -54,7 +54,7 @@ public class HomeService {
 		return model;
 	}
 	
-	public Model getBoardListBySearch(String searchText, int page, Model model){
+	public Model getBoardListBySearch(Model model, String searchText, int page){
 		int totalCount = boardDao.getSearchListCount(searchText);
 		PagingDto paging = new PagingDto(page, totalCount);
 		ArrayList<BoardDto> searchList = boardDao.getSearchList(searchText, paging.getFromRowNum(), paging.getCountList());
@@ -64,7 +64,7 @@ public class HomeService {
 		return model;
 	}
 	
-	public Model getBoardListByCategory(String category, int page, Model model){
+	public Model getBoardListByCategory(Model model, String category, int page){
 		int totalCount = boardDao.getTotalCount(category);
 		PagingDto paging = new PagingDto(page, totalCount);
 		ArrayList<BoardDto> list = boardDao.getList(category, paging.getFromRowNum(), paging.getCountList());
@@ -82,7 +82,7 @@ public class HomeService {
 		boardDao.insertCategory(categoryDto);
 	}
 
-	public Model getBoardByPostid(int postid, Model model) {
+	public Model getBoardByPostid(Model model, int postid) {
 		PagingDto paging = new PagingDto(1, 1);
 		BoardDto board = boardDao.selectOne(postid);
 		ArrayList<BoardDto> list = new ArrayList<>();
@@ -103,9 +103,4 @@ public class HomeService {
 		
 		return formattedDate;
 	}
-
-	public String getUserNameById(String sessionUserName) {
-		return userDao.getUserNameById(sessionUserName);
-	}
-
 }

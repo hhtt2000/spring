@@ -45,18 +45,8 @@ public class HomeController {
 	@RequestMapping("/{page}")
 	public String mainPerPage(@PathVariable("page") int page, Model model){
 		//댓글 작성시 로그인 사용자에 대해 저장된 이름을 사용하기 위한 작업
-		getSessionUserName(model);
-		model = homeService.getBoardList(page, model);
+		model = homeService.getBoardList(model, page);
 		return "main";
-	}
-
-	private void getSessionUserName(Model model) {
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		String sessionUserName = auth.getName();
-		if(!"anonymousUser".equals(sessionUserName)) {
-			String name = homeService.getUserNameById(sessionUserName);
-			model.addAttribute("userName", name);
-		}
 	}
 	
 	@RequestMapping(value="/accounts", method=RequestMethod.GET)
@@ -97,12 +87,10 @@ public class HomeController {
 	@RequestMapping("/search/{searchText}/{page}")
 	public String searchText(@PathVariable("searchText") String searchText, @PathVariable("page") int page,
 			Model model){
-		getSessionUserName(model);
-		
 		XssSaxFilter filter = XssSaxFilter.getInstance();
 		String cleanedSearchText = filter.doFilter(searchText);
 
-		model = homeService.getBoardListBySearch(cleanedSearchText, page, model);
+		model = homeService.getBoardListBySearch(model, cleanedSearchText, page);
 		
 		return "main";
 	}
@@ -110,8 +98,7 @@ public class HomeController {
 	@RequestMapping("/category/{category}/{page}")
 	public String categorizedMain(@PathVariable("category") String category, 
 			@PathVariable("page") int page, Model model){
-		getSessionUserName(model);
-		model = homeService.getBoardListByCategory(category, page, model);
+		model = homeService.getBoardListByCategory(model, category, page);
 		
 		return "main";
 	}
@@ -153,8 +140,7 @@ public class HomeController {
 	
 	@RequestMapping("/postid/{postid}")
 	public String getBoardByPostid(@PathVariable("postid") int postid, Model model) {
-		getSessionUserName(model);
-		model = homeService.getBoardByPostid(postid, model);
+		model = homeService.getBoardByPostid(model, postid);
 		return "main";
 	}
 
