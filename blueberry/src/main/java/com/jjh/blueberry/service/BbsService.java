@@ -107,7 +107,7 @@ public class BbsService {
 		}
 		sb.append("<img src='");
 		sb.append(image);
-		sb.append("' class='img-responsive' style='height:auto'>");
+		sb.append("' align='left' width='80px' height='80px'>");
 		map.put("image", sb.toString());			
 		
 		Elements parsedDescriptionByProperty = doc.select("meta[property=\"og:description\"]");

@@ -49,82 +49,111 @@
 					    "(?:[/?#]\\S*)?"
 					  , "i"
 					);
-			$('#summernote').summernote(
-					{
-						lang : ['ko-KR'],
-						fontNames: [
-						    'Nanum Gothic', 'Jeju Hallasan', 'Jeju Myeongjo', 
-						    'Serif', 'Sans', 'Courier', 'Courier New', 'Comic Sans MS'
-						],
-						toolbar : [
-								['small', [ 'style', 'bold', 'italic', 'underline',
-												'clear', 'color',
-												'strikethrough', 'superscript',
-												'subscript', 'ul', 'ol',
-												'picture', 'link', 'video'
-										  ]
-								],
-								['big', [ 'fontsize', 'fontname', 'paragraph', 'height',
-												'table'
-										]
-								]
-						],
-						height : 250,
-						onKeyup : function(e) {
-							var textValue = $('#summernote').code();
-							var keyCode = e.which || keyCode;
-							if(urlRegEx.test(textValue) && keyCode == 32){
-								var urlArr = urlRegEx.exec(textValue);
-								var url = {"url" : urlArr[0]};
-								
-								//ajax
-								$.ajax({
-									//1. bbsController @requestParam 사용할 경우
-									url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
-									method : "get",
-									data : url,
-									//2. bbsController @requestBody 사용할 경우
-									//url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
-									//method : "post",
-									//type : "json",
-									//contentType : "application/json",
-									//data : JSON.stringify(url),
-									beforeSend : function(xhr){
-										xhr.setRequestHeader(header, token);
-									},
-									success : function(data){
-										//url-info-box가 존재하면 박스를 추가하지 않는다.
-										if($('#url-info-box').length > 0) {
-											return;
-										}
-										var editedBox = "<br/>"
-														+ "<a href='"+data.info.url+"'>"
-															+ "<div id='url-info-box' class='row' style='padding-top:5px;padding-bottom:8px;margin-left:5px;margin-right:10px;border:1px solid #999966;'>"
-																+ "<div class='col-xs-2'>"+data.info.image+"</div>"
-																+ "<div class='col-xs-10'>"
-																	+ "<div class='row'>"
-																		+ "<div class='col-xs-11' style='font-size:13px;color:#999966'><b>"+data.info.title+"</b></div>"
-																		+ "<div class='col-xs-1 glyphicon glyphicon-remove' id='url-info-box-del' style='color:#999966' aria-hidden='true' onclick='delUrlInfoBox()'></div>"
+			
+			// 이모지 리스트 로드 & 에디터 생성
+		    $.ajax({
+		        url: 'https://api.github.com/emojis'
+		    }).then(function (data) {
+		        var emojis = Object.keys(data);
+		        var emojiUrls = data;
+		        
+				$('#summernote').summernote({
+							lang : ['ko-KR'],
+							fontNames: [
+							    'Nanum Gothic', 'Jeju Hallasan', 'Jeju Myeongjo', 
+							    'Serif', 'Sans', 'Courier', 'Courier New', 'Comic Sans MS'
+							],
+							toolbar : [
+									['small', [ 'style', 'bold', 'italic', 'underline',
+													'clear', 'color',
+													'strikethrough', 'superscript',
+													'subscript', 'ul', 'ol',
+													'picture', 'link', 'video'
+											  ]
+									],
+									['big', [ 'fontsize', 'fontname', 'paragraph', 'height',
+													'table'
+											]
+									]
+							],
+							height : 250,
+							onKeyup : function(e) {
+								var textValue = $('#summernote').code();
+								var keyCode = e.which || keyCode;
+								if(urlRegEx.test(textValue) && keyCode == 32){
+									var urlArr = urlRegEx.exec(textValue);
+									var url = {"url" : urlArr[0]};
+									
+									//ajax
+									$.ajax({
+										//1. bbsController @requestParam 사용할 경우
+										url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
+										method : "get",
+										data : url,
+										//2. bbsController @requestBody 사용할 경우
+										//url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
+										//method : "post",
+										//type : "json",
+										//contentType : "application/json",
+										//data : JSON.stringify(url),
+										beforeSend : function(xhr){
+											xhr.setRequestHeader(header, token);
+										},
+										success : function(data){
+											//url-info-box가 존재하면 박스를 추가하지 않는다.
+											if($('#url-info-box').length > 0) {
+												return;
+											}
+											var editedBox = "<br/>"
+															+ "<a href='"+data.info.url+"'>"
+																+ "<div id='url-info-box' class='row' style='padding-top:5px;padding-bottom:8px;margin-left:5px;margin-right:10px;border:1px solid #999966;'>"
+																	+ "<div class='col-xs-2'>"+data.info.image+"</div>"
+																	+ "<div class='col-xs-10'>"
+																		+ "<div class='row'>"
+																			+ "<div class='col-xs-11' style='font-size:13px;color:#999966'><b>"+data.info.title+"</b></div>"
+																			+ "<div class='col-xs-1 glyphicon glyphicon-remove-circle' id='url-info-box-del' style='color:#999966' aria-hidden='true' onclick='delUrlInfoBox()'></div>"
+																		+ "</div>"
+																		+ "<div style='font-size:13px;color:#999966'>"+data.info.description+"</div>"
 																	+ "</div>"
-																	+ "<div style='font-size:13px;color:#999966'>"+data.info.description+"</div>"
-																+ "</div>"
-															+"</div>"
-														+"</a>";
-										$('#summernote').code(textValue + editedBox);
-									},
-									error : function(exception){
-										alert(exception);
-									}
-								});	
-								
-							}
-						},
-						onImageUpload : function(files) {
-							for(var i = 0; i < files.length; i++) {
-								sendFile(files[i], this);
-							}
-						}
+																+"</div>"
+															+"</a>";
+											$('#summernote').code(textValue + editedBox);
+										},
+										error : function(exception){
+											alert(exception);
+										}
+									});	
+									
+								}
+							},
+							onImageUpload : function(files) {
+								for(var i = 0; i < files.length; i++) {
+									sendFile(files[i], this);
+								}
+							},
+							hintDirection: 'bottom',
+				            hint: [{
+				              search: function (keyword, callback) {
+				                callback($.grep(emojis, function (item) {
+				                  return item.indexOf(keyword)  === 0;
+				                }));
+				              },
+				              match: /\B:([\-+\w]+)$/,
+				              template: function (item) {
+				                var content = emojiUrls[item];
+				                return '<img src="' + content + '" width="20" /> :' + item + ':';
+				              },
+				              content: function (item) {
+				                var url = emojiUrls[item];
+				                if (url) {
+				                  return $('<img />').attr('src', url).css('width', 20)[0];
+				                }
+				                return '';
+				              }
+				            }]
 					});
+		    }); //summernote
+			
 			function sendFile(file, tagName) {
 				var data = new FormData();
 				data.append('file', file);
@@ -147,28 +176,26 @@
 			$('#text-frm-btn').on('click', function(e) {
 				e.preventDefault();
 				var title = $('#text-frm input[name=title]').val().trim();
-				var content = $('#summernote').code().trim();
 				if(title === null || title === '') {
 					alert('제목을 입력해 주세요.');
-				} else if(content === null || content === '') {
+				} else if($('#summernote').summernote('isEmpty')) {
 					alert('내용을 입력해 주세요.');
 				} else {
 					return true;
 				}
 			});
-		});//End of $(function())
+		}); //$(function())
 		function delUrlInfoBox() {
 			$('#url-info-box').remove();
 		}
 		function doFiltering(form) {
 			var whitelist = '//www.youtube.com/embed/[\\w\\d]+';
-            // build fitting regex
+            // 정규표현식 객체 생성
             var regex = RegExp(whitelist);
-            // Add a hook to enforce URI scheme whitelist
             DOMPurify.addHook('afterSanitizeAttributes', function(node){
-                // build an anchor to map URLs to
                 var anchor = document.createElement('iframe');
-                // check all src attributes for validity
+                //iframe 태크는 유투브만 허용
+                // iframe 태그의 src가 화이트리스트 조건을 만족하는지 검사
                 if (node.tagName === 'IFRAME' && node.hasAttribute('src')) {
                     anchor.src  = node.getAttribute('src');
                     if (anchor.src && !anchor.src.match(regex)) {
