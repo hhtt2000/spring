@@ -1,10 +1,7 @@
 package com.jjh.blueberry.service;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Locale;
-import java.util.TimeZone;
+import java.util.Random;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -93,14 +90,12 @@ public class HomeService {
 		return model;
 	}
 	
-	public String getServerTime(Locale locale) {
-		Date date = new Date();
-		TimeZone tz = TimeZone.getTimeZone("Asia/Seoul");
-		
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		dateFormat.setTimeZone(tz);
-		String formattedDate = dateFormat.format(date);
-		
-		return formattedDate;
+	public int getRandomBoardNumber() {
+		int total = boardDao.getTotalCount();
+		Random random = new Random();
+		//0 ~ (total - 1)
+		int ranNum = random.nextInt(total);
+		int postid = boardDao.getNthBoardId(ranNum);
+		return postid;
 	}
 }

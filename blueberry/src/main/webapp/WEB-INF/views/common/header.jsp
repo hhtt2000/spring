@@ -19,8 +19,8 @@
 		    <div class="collapse navbar-collapse" id="blog-navbar-collapse">
 			<ul class="nav navbar-nav">
 				<li><a class="nav-font" href="<c:url value="/board/newText" />">글쓰기</a></li>
-				<li><a class="nav-font" href="<c:url value="/main/epl" />">EPL순위</a></li> 
-				<li><a class="nav-font" href="<c:url value="/main/todo" />">할일</a></li>
+				<li><a class="nav-font" href="<c:url value="/main/epl" />">EPL순위</a></li>
+				<li><a class="nav-font" href="<c:url value="/main/randomBoard" />">무작위 이전글</a></li> 
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
 				<c:choose>

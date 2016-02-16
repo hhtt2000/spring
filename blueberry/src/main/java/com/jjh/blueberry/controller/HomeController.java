@@ -2,7 +2,6 @@ package com.jjh.blueberry.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Locale;
 
 import javax.validation.Valid;
 
@@ -123,34 +122,21 @@ public class HomeController {
 		return "redirect:/main";			
 	}
 	
-	@RequestMapping(value = "/todo", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		String formattedDate = homeService.getServerTime(locale);
-
-		model.addAttribute("serverTime", formattedDate );
-		
-		return "home";
-	}
-	
 	@RequestMapping(value = "/epl", method = RequestMethod.GET)
 	public String epl() {
-		
 		return "epl";
 	}
 	
 	@RequestMapping("/postid/{postid}")
-	public String getBoardByPostid(@PathVariable("postid") int postid, Model model) {
+	public String getBoardByPostid(@PathVariable("postid") Integer postid, Model model) {
 		model = homeService.getBoardByPostid(model, postid);
 		return "main";
 	}
+	
+	@RequestMapping("/randomBoard")
+	public String getRandomBoard() {
+		int postid = homeService.getRandomBoardNumber();
+		return "redirect:/main/postid/"+postid;
+	}
 
-//	@RequestMapping(value="/getTime", method=RequestMethod.GET)
-//	public @ResponseBody HashMap<String, String> getTime(Locale locale, Model model){
-//		HashMap<String, String> map = new HashMap<String, String>();
-//		
-//		String formattedDate = homeService.getServerTime(locale);	
-//		map.put("serverTime", formattedDate);
-//		
-//		return map;
-//	}
 }

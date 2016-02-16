@@ -140,6 +140,11 @@ public class BoardDao {
 		return (ArrayList<BoardDto>) this.jdbcTemplate.query(sql, new BeanPropertyRowMapper<BoardDto>(BoardDto.class), "%"+searchText+"%", "%"+searchText+"%", fromRowNum, countList);
 	}
 
+	public int getNthBoardId(int ranNum) {
+		String sql = "SELECT id FROM board LIMIT ?, 1";
+		return this.jdbcTemplate.queryForObject(sql, Integer.class, ranNum);
+	}
+
 }
 
 
