@@ -2,14 +2,13 @@
 	pageEncoding="utf-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!-- include libraries(jQuery, bootstrap, fontawesome) -->
-<script type="text/javascript" src="//code.jquery.com/jquery-1.9.1.min.js"></script>
-<script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" />
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> 
+<link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/css/bootstrap.min.css" />
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.5/js/bootstrap.min.js"></script>
 <!-- include summernote css/js-->
 <link href="${pageContext.servletContext.contextPath}/resources/summernote/summernote.css" rel="stylesheet">
 <script src="${pageContext.servletContext.contextPath}/resources/summernote/summernote.min.js"></script>
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/summernote/lang/summernote-ko-KR.js"></script>
-<script src="${pageContext.servletContext.contextPath}/resources/summernote/plugin/summernote-ext-video.js"></script>
 <script>
 		$(function() {
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -50,6 +49,22 @@
 					  , "i"
 					);
 			
+			var removeUrlBoxButton = function (context) {
+				  var ui = $.summernote.ui;
+				  // URL box 삭제 버튼
+				  var button = ui.button({
+				    contents: '<i class="glyphicon glyphicon-trash"/>',
+				    tooltip: 'URL박스 삭제',
+				    click: function () {
+				    	var box = $('.note-editable').find('.url-info-box');
+				    	if(box.length > 0) {
+							box[0].remove();
+				    	}
+				    }
+				 });
+				 return button.render(); 
+			}
+			
 			// 이모지 리스트 로드 & 에디터 생성
 		    $.ajax({
 		        url: 'https://api.github.com/emojis'
@@ -58,6 +73,7 @@
 		        var emojiUrls = data;
 		        
 				$('#summernote').summernote({
+							placeholder : "[팁] 1. ':'+알파벳=이모지, 2. URL 입력+스페이스바=URL 정보 박스",
 							lang : ['ko-KR'],
 							fontNames: [
 							    'Nanum Gothic', 'Jeju Hallasan', 'Jeju Myeongjo', 
@@ -74,63 +90,68 @@
 									['big', [ 'fontsize', 'fontname', 'paragraph', 'height',
 													'table'
 											]
-									]
+									],
+									['mybutton', ['removeUrlBox']]
 							],
+							buttons: {
+								removeUrlBox: removeUrlBoxButton
+							},
 							height : 250,
-							onKeyup : function(e) {
-								var textValue = $('#summernote').code();
-								var keyCode = e.which || keyCode;
-								if(urlRegEx.test(textValue) && keyCode == 32){
-									var urlArr = urlRegEx.exec(textValue);
-									var url = {"url" : urlArr[0]};
-									
-									//ajax
-									$.ajax({
-										//1. bbsController @requestParam 사용할 경우
-										url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
-										method : "get",
-										data : url,
-										//2. bbsController @requestBody 사용할 경우
-										//url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
-										//method : "post",
-										//type : "json",
-										//contentType : "application/json",
-										//data : JSON.stringify(url),
-										beforeSend : function(xhr){
-											xhr.setRequestHeader(header, token);
-										},
-										success : function(data){
-											//url-info-box가 존재하면 박스를 추가하지 않는다.
-											if($('#url-info-box').length > 0) {
-												return;
-											}
-											var editedBox = "<br/>"
-															+ "<a href='"+data.info.url+"'>"
-																+ "<div id='url-info-box' class='row' style='padding-top:5px;padding-bottom:8px;margin-left:5px;margin-right:10px;border:1px solid #999966;'>"
-																	+ "<div class='col-xs-2'>"+data.info.image+"</div>"
-																	+ "<div class='col-xs-10'>"
-																		+ "<div class='row'>"
-																			+ "<div class='col-xs-11' style='font-size:13px;color:#999966'><b>"+data.info.title+"</b></div>"
-																			+ "<div class='col-xs-1 glyphicon glyphicon-remove-circle' id='url-info-box-del' style='color:#999966' aria-hidden='true' onclick='delUrlInfoBox()'></div>"
-																		+ "</div>"
-																		+ "<div style='font-size:13px;color:#999966'>"+data.info.description+"</div>"
-																	+ "</div>"
-																+"</div>"
-															+"</a>";
-											$('#summernote').code(textValue + editedBox);
-										},
-										error : function(exception){
-											alert(exception);
+							callbacks: {
+								onKeyup : function(e) {
+									var textValue = $('#summernote').summernote('code');
+									var keyCode = e.which || keyCode;
+									if(urlRegEx.test(textValue) && keyCode == 32){
+										var urlArr = urlRegEx.exec(textValue);
+										var url = {"url" : urlArr[0]};
+										//url-info-box가 존재하면 박스를 추가하지 않는다.
+										if($('.note-editable').find('.url-info-box').length > 0) {
+											return;
 										}
-									});	
-									
+										
+										$.ajax({
+											//1. bbsController @requestParam 사용할 경우
+											url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
+											method : "get",
+											data : url,
+											//2. bbsController @requestBody 사용할 경우
+											//url : "${pageContext.servletContext.contextPath}/board/getUrlInfo",
+											//method : "post",
+											//type : "json",
+											//contentType : "application/json",
+											//data : JSON.stringify(url),
+											beforeSend : function(xhr){
+												xhr.setRequestHeader(header, token);
+											},
+											success : function(data){
+												var editedBox = "<div class='url-info-box container-fluid'>"
+													 + "<div class='row' style='padding-top:5px;padding-bottom:5px;margin-left:5px;margin-right:10px;border:1px solid #999966;'>"
+													   + "<a href='"+data.info.url+"'>"
+													     + "<div class='col-sm-2' style='padding-left:5px;padding-right:5px;'>"+data.info.image+"</div>"
+													     + "<div class='col-sm-10' style='padding-left:5px'>"
+													       + "<div style='font-size:13px;color:#999966;padding-left:5px;padding-right:10px;padding-top:1px;padding-bottom:7px;'><b>"+data.info.title+"</b></div>"
+													       + "<div style='font-size:13px;color:#999966;padding-left:5px;padding-right:10px;padding-bottom:5px;'>"+data.info.description+"</div>"
+													     + "</div>"
+													   +"</a>"
+													 +"</div>"
+												   +"</div>";
+												$('#summernote').summernote('code', textValue + editedBox);
+											},
+											error : function(exception){
+												if(exception.status === 500) {
+													alert('해당 URL 정보를 불러올 수 없습니다.');
+												}
+											}
+										});	
+									}
+								},
+								onImageUpload : function(files) {
+									for(var i = 0; i < files.length; i++) {
+										sendFile(files[i], this);
+									}
 								}
 							},
-							onImageUpload : function(files) {
-								for(var i = 0; i < files.length; i++) {
-									sendFile(files[i], this);
-								}
-							},
+							
 							hintDirection: 'bottom',
 				            hint: [{
 				              search: function (keyword, callback) {
@@ -172,22 +193,24 @@
 					}
 				});
 			}
-			//TODO 유효성 검증
+	
 			$('#text-frm-btn').on('click', function(e) {
-				e.preventDefault();
+				e.stopImmediatePropagation();
 				var title = $('#text-frm input[name=title]').val().trim();
 				if(title === null || title === '') {
 					alert('제목을 입력해 주세요.');
-				} else if($('#summernote').summernote('isEmpty')) {
-					alert('내용을 입력해 주세요.');
-				} else {
-					return true;
+					$('#text-frm input[name=title]').focus();
+					return false;
 				}
+				if($('#summernote').summernote('isEmpty')) {
+					alert('내용을 입력해 주세요.');
+					$('#summernote').summernote('focus');
+					return false;
+				}
+				return true;
 			});
 		}); //$(function())
-		function delUrlInfoBox() {
-			$('#url-info-box').remove();
-		}
+		
 		function doFiltering(form) {
 			var whitelist = '//www.youtube.com/embed/[\\w\\d]+';
             // 정규표현식 객체 생성

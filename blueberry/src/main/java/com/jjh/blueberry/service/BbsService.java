@@ -79,7 +79,6 @@ public class BbsService {
 			url = url.substring(0, lastIndexOfSpace);
 		}
 		map.put("url", url);
-		log.debug("URL is {}", url);
 //		Connection conn = Jsoup.connect(url).userAgent("Mozilla/5.0").ignoreHttpErrors(true).timeout(100000);
 //		Response response = conn.execute();
 	
@@ -101,14 +100,23 @@ public class BbsService {
 		String image = "";
 		if(!parsedImageByProperty.isEmpty()){
 			image = parsedImageByProperty.attr("content");
+			if(!(image.contains("http://") || image.contains("https://"))) {
+				int indexOf = 0;
+				if(url.contains("http://")) {
+					indexOf = url.indexOf("/", 7);
+				}else if(url.contains("https://")) {
+					indexOf = url.indexOf("/", 8);
+				}
+				image = url.substring(0, indexOf).concat(image);
+			}
 		}
 		if(image.isEmpty()){
 			image = "/blueberry/resources/img/grape.png";
 		}
 		sb.append("<img src='");
 		sb.append(image);
-		sb.append("' align='left' width='80px' height='80px'>");
-		map.put("image", sb.toString());			
+		sb.append("' width='100%' height=auto>");
+		map.put("image", sb.toString());	
 		
 		Elements parsedDescriptionByProperty = doc.select("meta[property=\"og:description\"]");
 		String description = "";

@@ -37,15 +37,7 @@
 				e.preventDefault();
 				$('#add-category-form').toggleClass('active');
 			});
-			//글 저장 전에 url-info-box의 'x'버튼 숨김
-			$('#text-frm-btn').click(function(e) {
-				e.preventDefault();
-				if($('#url-info-box').length > 0) {
-					$('#url-info-box-del').hide();
-				}
-				$('#text-frm').submit();
-			});
-		});//End of $(function())
+		});// $(function())
 		//사용자 인증시
 		function formSubmit() {
 			document.getElementById("logoutForm").submit();
