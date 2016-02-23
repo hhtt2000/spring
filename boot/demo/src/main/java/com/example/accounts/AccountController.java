@@ -90,6 +90,12 @@ public class AccountController {
 				HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="/accounts/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity deleteAccount(@PathVariable Long id) {
+		service.deleteAccount(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+	
 	@ExceptionHandler(UserDuplicatedException.class)
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	public ErrorResponse handleUserDuplicatedException (UserDuplicatedException e) {

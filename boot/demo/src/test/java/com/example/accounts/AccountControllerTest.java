@@ -41,7 +41,7 @@ public class AccountControllerTest {
 	
 	@Before
 	public void setUp() {
-		mockMvc = new MockMvcBuilders().webAppContextSetup(wac)
+		mockMvc = MockMvcBuilders.webAppContextSetup(wac)
 				                               .build();
 	}
 	
@@ -134,6 +134,20 @@ public class AccountControllerTest {
 		result.andDo(MockMvcResultHandlers.print());
 		result.andExpect(MockMvcResultMatchers.status().isOk());
 		result.andExpect(MockMvcResultMatchers.jsonPath("$.fullName", Is.is("jae hyuk")));
+	}
+	
+	@Test
+	public void deleteAccount() throws Exception {
+//		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.delete("/accounts/1"));
+//		result.andDo(MockMvcResultHandlers.print());
+//		result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+		
+		AccountDto.Create createDto = createAccountDto();
+		Account account = service.createAccount(createDto);
+		
+		ResultActions result = mockMvc.perform(MockMvcRequestBuilders.delete("/accounts/" + account.getId()));
+		result.andDo(MockMvcResultHandlers.print());
+		result.andExpect(MockMvcResultMatchers.status().isNoContent());
 	}
 
 }
