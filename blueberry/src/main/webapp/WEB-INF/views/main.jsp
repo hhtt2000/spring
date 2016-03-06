@@ -28,7 +28,7 @@
 					<c:forEach items="${list}" var="dto">
 					<tr>
 						<td>${dto.id}</td>
-						<td><a class="list-title" href="#post-position-${dto.id}">${dto.title}</a></td>
+						<td style="width:70%"><a class="list-title" href="#post-position-${dto.id}">${dto.title}</a></td>
 						<td>${dto.regdate}</td>
 					</tr>
 					</c:forEach>

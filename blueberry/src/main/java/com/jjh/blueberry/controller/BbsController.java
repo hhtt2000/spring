@@ -140,4 +140,10 @@ public class BbsController {
 		return map;
 	}
 	
+	@RequestMapping(value="/keepSession", method=RequestMethod.GET)
+	@ResponseBody
+	public String keepSession() {
+		return "ok";
+	}
+	
 }

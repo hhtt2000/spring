@@ -49,6 +49,19 @@
 					  , "i"
 					);
 			
+			//일정 시간마다(28분) session 유지 요청 보내기
+			var keepSession = function() {
+				$.ajax({
+					type: "get",
+					url: "${pageContext.servletContext.contextPath}/board/keepSession",
+					success: function(result) {
+						alert("글쓰기 시간이 연장되었습니다.");
+					}
+				});
+			}
+			
+			setInterval(keepSession, 28 * 60 * 1000);
+			
 			var removeUrlBoxButton = function (context) {
 				  var ui = $.summernote.ui;
 				  // URL box 삭제 버튼
