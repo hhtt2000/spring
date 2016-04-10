@@ -12,7 +12,11 @@ public class UserController {
 	public ModelAndView login(@RequestParam(value="error", required=false) String error) {
 		ModelAndView model = new ModelAndView();
 		if(error != null) {
-			model.addObject("error", "로그인 실패!");
+			if(error.equals("dismatch")){
+				model.addObject("error", "로그인 실패! 아이디와 비밀번호를 확인해주세요.");
+			} else if(error.equals("timeout")) {
+				model.addObject("error", "시간이 초과되었습니다.");
+			}
 		}
 		model.setViewName("login");
 		

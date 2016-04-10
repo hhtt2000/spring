@@ -17,13 +17,13 @@
 		<security:intercept-url pattern="/main/addCategory"
 			access="hasRole('ROLE_USER')" method="POST" />
 		<security:form-login login-page="/login"
-			default-target-url="/main" authentication-failure-url="/login?error"
+			default-target-url="/main" authentication-failure-url="/login?error=dismatch"
 			username-parameter="userId"
 			password-parameter="password" />
-		<security:logout logout-success-url="/main" delete-cookies="JSESSIONID" />
+		<security:logout logout-success-url="/main" delete-cookies="JSESSIONID, SPRING_SECURITY_REMEMBER_ME_COOKIE" />
 		
 		<security:session-management>
-			<security:concurrency-control max-sessions="1" error-if-maximum-exceeded="true" expired-url="/main"/>
+			<security:concurrency-control max-sessions="1" />
 		</security:session-management>
 		<security:remember-me 
 			token-validity-seconds="1209600"

@@ -7,7 +7,7 @@
 <%@ include file="/WEB-INF/views/common/header.jsp" %>
 
 	<c:if test="${not empty error}">
-		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><strong>${error}</strong> 아이디와 비밀번호를 확인해주세요.</div>	
+		<div class="alert alert-danger" role="alert"><span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span><strong>${error}</strong></div>	
 	</c:if>
 
 	<div class="container">
