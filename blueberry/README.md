@@ -13,12 +13,12 @@
 * GitHub
 
 ### 참고
-* To-do list : https://github.com/tastejs/todomvc
-* Design for main page : http://getbootstrap.com/examples/blog/
-* WYSIWYG : https://github.com/summernote/summernote.git
-* Date showing on articles : https://github.com/moment/moment.git
-* Database Connection Pool : https://github.com/brettwooldridge/HikariCP
-* URL Regular Expression : https://gist.github.com/dperini/729294
-* HTML Parsing : http://jsoup.org/
-* XSS Protection : https://github.com/naver/lucy-xss-filter, https://github.com/cure53/DOMPurify
-* json data for English Premier League ranking table : http://api.football-data.org/index
+* [Bootstrap](http://getbootstrap.com/examples/blog/)
+* [Summernote](https://github.com/summernote/summernote.git)
+* [Moment.js](https://github.com/moment/moment.git)
+* [HikariCP](https://github.com/brettwooldridge/HikariCP)
+* [URL regular Expression](https://gist.github.com/dperini/729294)
+* [Jsoup](http://jsoup.org/)
+* [Lucy-xss-filter](https://github.com/naver/lucy-xss-filter)
+* [DOMPurify](https://github.com/cure53/DOMPurify)
+* [English Premier League ranking table](http://api.football-data.org/index)
